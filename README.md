@@ -12,7 +12,7 @@ A website designed to make grocery trips efficient and affordable! Creates the i
    ```
 
 2. Make a new branch of this repository. `main` is a protected branch, **so you cannot push to it**.
-   a. For branch naming, follow this convention: `<issue-number>_<change-you-made>` (e.g. `88_animate_cookies`).
+   a. For branch naming, follow this convention: `<change-you-made>` (e.g. `animate_map`).
    ```
    git checkout -b <your-branch-name>
    ```
