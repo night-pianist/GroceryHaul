@@ -16,17 +16,15 @@ A website designed to make grocery trips efficient and affordable! Creates the i
    ```
    git checkout -b <your-branch-name>
    ```
-3. Implement your code changes for your feature:
-   - Before committing, run `npm lint`.
-4. Once you're ready, stage and commit your changes.
+3. Once you're ready, stage and commit your changes.
    - Please include the # followed by the issue number in your commit message to create a reference.
    ```
    git commit -m <your-message>
    ```
-5. Move your local branch changes to remote repository.
+4. Move your local branch changes to remote repository.
    **Before pushing**, make sure that your app builds with `npm run build`, without any errors.
    ```
    git push --set-upstream origin <your-branch-name>
    ```
-6. Make a pull request with your changes, and let someone on your project team know. Assign a reviewer.
-7. If your code passes code review, then we can **squash and merge** it into `main`. Congratulations! If you'd like, it's now safe to delete your branch locally.
+5. Make a pull request with your changes, and let someone on your project team know. Assign a reviewer.
+6. If your code passes code review, then we can **squash and merge** it into `main`. Congratulations! If you'd like, it's now safe to delete your branch locally.
