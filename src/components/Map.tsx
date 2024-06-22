@@ -1,6 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl, { Control } from 'mapbox-gl'; 
+import mapboxgl, { Map, Control } from 'mapbox-gl'; 
+import 'mapbox-gl/dist/mapbox-gl.css'; // for mapbox styling
 import '../styles/Map.css';
+
+// import geoJson from "./chicago-parks.json"; // used to import data to display
 
 // const dotenv = require('dotenv');
 // dotenv.config();
@@ -8,9 +11,8 @@ import '../styles/Map.css';
 // console.log('Mapbox Token:', process.env.REACT_APP_MAPBOX_TOKEN);
 // const mapbox_token: string = (process.env.REACT_APP_MAPBOX_TOKEN as string);
 // console.log('Mapbox Token as string:', mapbox_token);
+
 // mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
-
-
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
 
     
@@ -33,6 +35,17 @@ export default function DestinationScreen() {
             attributionControl: false
         });
 
+        // add navigation control 
+        map.current.addControl(
+            new mapboxgl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true
+                },
+                trackUserLocation: true,
+                showUserHeading: true
+            }), 'top-right'
+        );
+
         // update lat/long values when map is moved 
         const onMove = () => {
             if (map.current) {
@@ -46,6 +59,11 @@ export default function DestinationScreen() {
             }
         };
         map.current.on('move', onMove);    
+
+        // Create default markers
+        // geoJson.features.map((feature) =>
+        //     new mapboxgl.Marker().setLngLat(feature.geometry.coordinates).addTo(map)
+        // );
     })
     
     return (
