@@ -1,32 +1,35 @@
-import React, { useState } from 'react';
-import ReactMapGL from "react-map-gl";
+import React, { useRef, useEffect, useState } from 'react';
+import mapboxgl, { Control } from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import '../styles/Map.css';
 
-const Map = () => {
-    const [viewport, setViewport] = useState({
-        latitude: 34.0699, // ucla latitude and longitude as default
-        longitude: -118.4441,
-        width: "100vw", // fix map isnt showing full screen
-        height: "100vh",
-        zoom: 10
-    });
+mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
 
-    const handleViewportChange = () => {
-        setViewport(viewport);
-      };    
-
-    return ( 
-        <div className="map">
-            <ReactMapGL
-              { ...viewport } 
-              mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-              mapStyle = "mapbox://styles/mapbox/dark-v11"
-            //   onViewportChange={handleViewportChange}
-            >
-
-            </ReactMapGL>
+    
+export default function DestinationScreen() {
+    const container = useRef<HTMLDivElement>(null); // specify type for map container
+    const map = useRef<mapboxgl.Map | null>(null); // specify type for map instance
+    const mapContainer = useRef(null);
+    const [lng, setLng] = useState(-118.4441);
+    const [lat, setLat] = useState(34.0699);
+    const [zoom, setZoom] = useState(15);
+    
+    useEffect(() => {
+        if (map.current) return;
+    
+        map.current = new mapboxgl.Map({
+            container: mapContainer.current as unknown as HTMLElement, // Type guard
+            style: 'mapbox://styles/mapbox/dark-v11',
+            center: [lng, lat],
+            zoom: zoom,
+            attributionControl: false
+        });
+    })
+    
+    return (
+        <div>
+            <div ref={mapContainer} className="map-container" />
         </div>
-     );
+    );
+    
 }
- 
-export default Map;
+
