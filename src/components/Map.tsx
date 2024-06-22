@@ -23,19 +23,39 @@ export default function DestinationScreen() {
     const [zoom, setZoom] = useState(15);
     
     useEffect(() => {
-        if (map.current) return;
+        if (map.current) return; // initialize map only once
     
         map.current = new mapboxgl.Map({
-            container: mapContainer.current as unknown as HTMLElement, // Type guard
+            container: mapContainer.current as unknown as HTMLElement, // type guard
             style: 'mapbox://styles/mapbox/dark-v11',
             center: [lng, lat],
             zoom: zoom,
             attributionControl: false
         });
+
+        map.current.addControl(
+            new mapboxgl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true
+                },
+                trackUserLocation: true,
+                showUserHeading: true
+            }), 'top-right'
+        );
+        
+        // FIX: GET THE LAT/LONG & ZOOM UPDATED
+        // map.current.on('move', () => {
+        //     setLng(map.current.getCenter().lng.toFixed(4));
+        //     setLat(map.current.getCenter().lat.toFixed(4));
+        //     setZoom(map.current.getZoom().toFixed(2));
+        // });
     })
     
     return (
         <div>
+            <div className="sidebar">
+                Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+            </div>  
             <div ref={mapContainer} className="map-container" />
         </div>
     );
