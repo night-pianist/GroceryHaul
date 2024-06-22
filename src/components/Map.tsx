@@ -33,32 +33,28 @@ export default function DestinationScreen() {
             attributionControl: false
         });
 
-        map.current.addControl(
-            new mapboxgl.GeolocateControl({
-                positionOptions: {
-                    enableHighAccuracy: true
-                },
-                trackUserLocation: true,
-                showUserHeading: true
-            }), 'top-right'
-        );
-        
-        // FIX: GET THE LAT/LONG & ZOOM UPDATED
-        // map.current.on('move', () => {
-        //     setLng(map.current.getCenter().lng.toFixed(4));
-        //     setLat(map.current.getCenter().lat.toFixed(4));
-        //     setZoom(map.current.getZoom().toFixed(2));
-        // });
+        // update lat/long values when map is moved 
+        const onMove = () => {
+            if (map.current) {
+                const newLng = parseFloat(map.current.getCenter().lng.toFixed(4)); // convert to number to be used in setState
+                const newLat = parseFloat(map.current.getCenter().lat.toFixed(4));
+                const newZoom = parseFloat(map.current.getZoom().toFixed(2)); 
+    
+                setLng(newLng); // update states with respective new values 
+                setLat(newLat); 
+                setZoom(newZoom); 
+            }
+        };
+        map.current.on('move', onMove);    
     })
     
     return (
-        <div>
+        <div className="map">
             <div className="sidebar">
                 Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
             </div>  
             <div ref={mapContainer} className="map-container" />
         </div>
     );
-    
 }
 
