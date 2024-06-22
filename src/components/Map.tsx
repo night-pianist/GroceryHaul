@@ -8,10 +8,10 @@ import '../styles/Map.css';
 // console.log('Mapbox Token:', process.env.REACT_APP_MAPBOX_TOKEN);
 // const mapbox_token: string = (process.env.REACT_APP_MAPBOX_TOKEN as string);
 // console.log('Mapbox Token as string:', mapbox_token);
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+// mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 
-// mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
+mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
 
     
 export default function DestinationScreen() {
