@@ -29,7 +29,7 @@ export default function DestinationScreen() {
     
         map.current = new mapboxgl.Map({
             container: mapContainer.current as unknown as HTMLElement, // type guard
-            style: 'mapbox://styles/mapbox/dark-v11',
+            style: 'mapbox://styles/mapbox/dark-v11', // can change style to whatever
             center: [lng, lat],
             zoom: zoom,
             attributionControl: false
@@ -64,6 +64,11 @@ export default function DestinationScreen() {
         // geoJson.features.map((feature) =>
         //     new mapboxgl.Marker().setLngLat(feature.geometry.coordinates).addTo(map)
         // );
+        // const marker = new mapboxgl.Marker({
+        //     color: "green"
+        // }).setLngLat([-118.4441, 34.0699])
+        //     .addTo(map.current);
+        // });
     })
     
     return (
