@@ -15,10 +15,10 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc
 
     
 export default function DestinationScreen() {
-    const container = useRef<HTMLDivElement>(null); // specify type for map container
-    const map = useRef<mapboxgl.Map | null>(null); // specify type for map instance
+    const container = useRef<HTMLDivElement>(null); // specify type for container and map
+    const map = useRef<mapboxgl.Map | null>(null); 
     const mapContainer = useRef(null);
-    const [lng, setLng] = useState(-118.4441);
+    const [lng, setLng] = useState(-118.4441); // use UCLA lat, lng as default 
     const [lat, setLat] = useState(34.0699);
     const [zoom, setZoom] = useState(15);
     
