@@ -17,15 +17,18 @@ function Home(): JSX.Element {
   
     return (
       <div className="fullscreen-container">
-        <nav> 
-            <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/login">Login</Link></li>
-                <li><Link to="/signup">Signup</Link></li>
-            </ul>
-        </nav>
         <div className="background" style={{ backgroundImage: `url(${src})` }}>
-            
+          <nav className="btn-nav"> 
+              <button className="home-btn">
+                <a href="/">home</a>
+              </button>
+              <button className="login-btn">
+                <a href="/login">login</a>
+              </button>
+              <button className="signup-btn">
+                <a href="/signup">signup</a>
+              </button>
+          </nav>
         </div>
       </div>
     );
