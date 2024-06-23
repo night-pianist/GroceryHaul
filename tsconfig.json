@@ -22,8 +22,8 @@
     "types": [
       "node",
       "bcryptjs",
-      "strictNullChecks": true,
-    ]
+    ],
+    "strictNullChecks": true,
   },
   "include": [
     "src",
