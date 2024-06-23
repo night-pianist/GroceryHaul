@@ -32,6 +32,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "build-css": "sass src/styles/main.scss dist/styles/main.css",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
