@@ -19,7 +19,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "strictNullChecks": true,
+    "types": [
+      "node",
+      "bcryptjs",
+      "strictNullChecks": true,
+    ]
   },
   "include": [
     "src",
