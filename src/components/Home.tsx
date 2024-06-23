@@ -17,9 +17,6 @@ function Home(): JSX.Element {
   
     return (
       <div className="fullscreen-container">
-        <div className="background" style={{ backgroundImage: `url(${src})` }}>
-            
-        </div>
         <nav> 
             <ul>
                 <li><Link to="/">Home</Link></li>
@@ -27,6 +24,9 @@ function Home(): JSX.Element {
                 <li><Link to="/signup">Signup</Link></li>
             </ul>
         </nav>
+        <div className="background" style={{ backgroundImage: `url(${src})` }}>
+            
+        </div>
       </div>
     );
   }
