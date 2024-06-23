@@ -21,10 +21,13 @@
     "jsx": "preserve",
     "types": [
       "node",
-      "bcryptjs"
+      "bcryptjs",
+      "strictNullChecks": true,
     ]
   },
   "include": [
-    "src"
+    "src",
+    ".env", // include .env files if needed
+    "dotenv" // include dotenv to access .env file
   ]
 }
