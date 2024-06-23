@@ -1,0 +1,13 @@
+.login-container {
+    display: flex;
+    flex-direction: column; /* arrange children vertically */
+    justify-content: center; /* center children horizontally */
+    align-items: center; /* center children vertically */
+    background-color: #dbdbce;
+    height: 100vh;
+}
+
+.title {
+    display: block;
+    font-size: 2em;   
+}

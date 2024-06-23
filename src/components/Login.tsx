@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../styles/Login.css';
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState<string>('');
@@ -22,11 +23,11 @@ const Login: React.FC = () => {
 
     return (
         <div className="login-container">
-            <h2>Login</h2>
+            <h2 className="title">Login</h2>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Username:</label>
+                    <label className="subtitle">Username:</label>
                     <input 
                         type="text" 
                         value={username} 
@@ -35,7 +36,7 @@ const Login: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label>Password:</label>
+                    <label className="subtitle">Password:</label>
                     <input 
                         type="password" 
                         value={password} 
@@ -43,7 +44,7 @@ const Login: React.FC = () => {
                         required 
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button className="login-btn" type="submit">Login</button>
             </form>
         </div>
     );
