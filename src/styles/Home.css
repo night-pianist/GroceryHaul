@@ -62,6 +62,9 @@
     font-weight: bold;
     background-color: #E22400;
     border-width: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* disable hover effect */

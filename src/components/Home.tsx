@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import '../styles/Home.css'
+import { Link } from 'react-router-dom';
+
 
 
 function Home(): JSX.Element {
@@ -21,9 +23,9 @@ function Home(): JSX.Element {
         <div className="whitebox-container">
             <img src={whiteBox} alt="white box"></img>
             <div className="buttons-container">
-            <button type="button" className="btn btn-primary btn-lg">LOGIN</button>
-            <button type="button" className="btn btn-primary btn-lg">SIGNUP</button>
-        </div>
+              <Link to="/login" className="btn btn-primary btn-lg" role="button">LOGIN</Link>
+              <Link to="/signup" className="btn btn-primary btn-lg" role="button">SIGNUP</Link>
+            </div>
         </div>
         <div className="logo-container">
             <img src={groceryLogo} alt="grocery logo"></img>
