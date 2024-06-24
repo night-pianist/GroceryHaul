@@ -23,29 +23,39 @@ const Login: React.FC = () => {
 
     return (
         <div className="login-container">
-            <h2 className="title">Login</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label className="subtitle">Username:</label>
-                    <input 
-                        type="text" 
-                        value={username} 
-                        onChange={(e) => setUsername(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <div>
-                    <label className="subtitle">Password:</label>
-                    <input 
-                        type="password" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <button className="login-btn" type="submit">Login</button>
-            </form>
+            <div className="login-card">
+                <h2 className="title">
+                    <div className="text">
+                        <span className="letter">L</span>
+                        <span className="letter">o</span>
+                        <span className="letter">g</span>
+                        <span className="letter">i</span>
+                        <span className="letter">n</span>
+                    </div>
+                </h2>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label className="subtitle">Username:</label>
+                        <input 
+                            type="text" 
+                            value={username} 
+                            onChange={(e) => setUsername(e.target.value)} 
+                            required 
+                        />
+                    </div>
+                    <div>
+                        <label className="subtitle">Password:</label>
+                        <input 
+                            type="password" 
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)} 
+                            required 
+                        />
+                    </div>
+                    <button className="login-btn" type="submit">Login</button>
+                </form>
+            </div>
         </div>
     );
 };
