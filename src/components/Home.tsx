@@ -28,10 +28,6 @@ function Home(): JSX.Element {
         <div className="logo-container">
             <img src={groceryLogo} alt="grocery logo"></img>
         </div>
-        {/* <div className="buttons-container">
-          <button type="button" className="btn btn-primary btn-lg" style={{ flex: '1', marginRight: '50px'}}>LOGIN</button>
-          <button type="button" className="btn btn-primary btn-lg" style={{ flex: '1'}}>SIGNUP</button>
-        </div> */}
       </div>
     );
   }

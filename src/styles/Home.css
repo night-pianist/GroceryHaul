@@ -64,6 +64,7 @@
     border-width: 3px;
 }
 
+/* disable hover effect */
 .btn:hover {
     background-color: #E22400 !important;
     color: inherit !important;
