@@ -18,9 +18,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "types": [
+      "node",
+      "bcryptjs",
+    ],
+    "strictNullChecks": true,
   },
   "include": [
-    "src"
+    "src",
+    ".env", // include .env files if needed
+    "dotenv" // include dotenv to access .env file
   ]
 }

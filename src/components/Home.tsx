@@ -2,8 +2,6 @@ import React, {useState} from 'react'
 import '../styles/Home.css'
 import { Link } from 'react-router-dom';
 
-
-
 function Home(): JSX.Element {
     const mapAnimationPath = `${process.env.PUBLIC_URL}/MapArrowAnimation.gif`;
     const staticMapPath = `${process.env.PUBLIC_URL}/StaticBackgroundMap.svg`;
