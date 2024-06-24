@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 
+
 const Login: React.FC = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -69,6 +70,10 @@ const Login: React.FC = () => {
                         <button className="login-btn" type="submit">Login</button>
                     </div>
                 </form>
+                <button className="signup-btn">
+                    <a href="/signup">First time here? Click here to create an account!</a>
+                </button>
+                 {/* <Route path="/signup" element={<Signup />} /> */}
             </div>
         </div>
     );
