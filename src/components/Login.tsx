@@ -26,34 +26,48 @@ const Login: React.FC = () => {
             <div className="login-card">
                 <h2 className="title">
                     <div className="text">
-                        <span className="letter">L</span>
+                        {/* <span className="letter">L</span>
                         <span className="letter">o</span>
                         <span className="letter">g</span>
                         <span className="letter">i</span>
-                        <span className="letter">n</span>
+                        <span className="letter">n</span> */}
+                        <span className="letter">W</span>
+                        <span className="letter">e</span>
+                        <span className="letter">l</span>
+                        <span className="letter">c</span>
+                        <span className="letter">o</span>
+                        <span className="letter">m</span>
+                        <span className= "letter" id="letter-before-space">e</span>
+                        <span className="letter"> </span>
+                        <span className="letter">B</span>
+                        <span className="letter">a</span>
+                        <span className="letter">c</span>
+                        <span className="letter">k</span>
                     </div>
                 </h2>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <label className="subtitle">Username:</label>
-                        <input 
-                            type="text" 
-                            value={username} 
-                            onChange={(e) => setUsername(e.target.value)} 
-                            required 
-                        />
+                    <div className="user-input">
+                        <div className="username">
+                            <label className="subtitle">Username:</label>
+                            <input 
+                                type="text" 
+                                value={username} 
+                                onChange={(e) => setUsername(e.target.value)} 
+                                required 
+                            />
+                        </div>
+                        <div className="password">
+                            <label className="subtitle">Password:</label>
+                            <input 
+                                type="password" 
+                                value={password} 
+                                onChange={(e) => setPassword(e.target.value)} 
+                                required 
+                            />
+                        </div>
+                        <button className="login-btn" type="submit">Login</button>
                     </div>
-                    <div>
-                        <label className="subtitle">Password:</label>
-                        <input 
-                            type="password" 
-                            value={password} 
-                            onChange={(e) => setPassword(e.target.value)} 
-                            required 
-                        />
-                    </div>
-                    <button className="login-btn" type="submit">Login</button>
                 </form>
             </div>
         </div>
