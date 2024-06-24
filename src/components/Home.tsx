@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
 import '../styles/Home.css'
-import mapAnimation from 'public/MapArrowAnimation.gif'
-import staticMap from 'public/StaticBackgroundMap.svg'
 import { Link } from 'react-router-dom';
-
 
 function Home(): JSX.Element {
     const mapAnimationPath = `${process.env.PUBLIC_URL}/MapArrowAnimation.gif`;
     const staticMapPath = `${process.env.PUBLIC_URL}/StaticBackgroundMap.svg`;
+    const whiteBox = `${process.env.PUBLIC_URL}/WhiteBox.png`;
+    const groceryLogo = `${process.env.PUBLIC_URL}/GroceryLogo.png`;
+
   
     const [src, setSrc] = useState(mapAnimationPath);
   
@@ -16,19 +16,17 @@ function Home(): JSX.Element {
     };
   
     return (
-      <div className="fullscreen-container">
-        <div className="background" style={{ backgroundImage: `url(${src})` }}>
-          <nav className="btn-nav"> 
-              <button className="home-btn">
-                <a href="/">home</a>
-              </button>
-              <button className="login-btn">
-                <a href="/login">login</a>
-              </button>
-              <button className="signup-btn">
-                <a href="/signup">signup</a>
-              </button>
-          </nav>
+      <div className="home-container">
+        <div className="background" style={{ backgroundImage: `url(${src})` }} onError={handleError}></div>
+        <div className="whitebox-container">
+            <img src={whiteBox} alt="white box"></img>
+            <div className="buttons-container">
+              <Link to="/login" className="btn btn-primary btn-lg" role="button">LOGIN</Link>
+              <Link to="/signup" className="btn btn-primary btn-lg" role="button">SIGNUP</Link>
+            </div>
+        </div>
+        <div className="logo-container">
+            <img src={groceryLogo} alt="grocery logo"></img>
         </div>
       </div>
     );

@@ -1,18 +1,79 @@
-.fullscreen-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999; /* Adjust the z-index as needed */
-    overflow: hidden; /* Prevent scrolling in the container */
-  }
+.home-container {
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
 
 .background {
+    position: absolute;
     background-size: cover;
     background-position: center;
-    width: 100vw; /* Full width of the viewport */
-    height: 100vh; /* Full height of the viewport */
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+.whitebox-container {
+    position: absolute;
+    z-index: 1;
+    left: 20%;
+    top: 20%;
+}
+
+.whitebox-container img {
+    width: auto;
+    height: auto;
+    max-width: 78%;
+    max-height: 78%;
+}
+
+.logo-container {
+    position: absolute;
+    z-index: 2;
+    left: 22%;
+    top: 26%;
+}
+
+.logo-container img {
+    width: auto;
+    height: auto;
+    max-width: 75%;
+    max-height: 70%;
+}
+
+.buttons-container {
+    position: absolute;
+    z-index: 2;
+    top: 50%; /* Adjust as needed */
+    left: 10%; /* Adjust as needed */
+    display: flex;
+    flex-direction: row;
+    gap: 5%; /* Adjust spacing as needed */
+}
+
+.btn {
+    min-width: 22vw;
+    min-height: 15vh;
+    font-size: 200%;
+    border-color: black;
+    color: black; 
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+    background-color: #E22400;
+    border-width: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* disable hover effect */
+.btn:hover {
+    background-color: #E22400 !important;
+    color: inherit !important;
+    border-color: inherit !important;
+    text-decoration: none !important;
+    box-shadow: none !important;      
 }
 
 .btn-nav {
