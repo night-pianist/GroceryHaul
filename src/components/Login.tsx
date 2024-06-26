@@ -27,11 +27,6 @@ const Login: React.FC = () => {
             <div className="login-card">
                 <h2 className="title">
                     <div className="text">
-                        {/* <span className="letter">L</span>
-                        <span className="letter">o</span>
-                        <span className="letter">g</span>
-                        <span className="letter">i</span>
-                        <span className="letter">n</span> */}
                         <span className="letter">W</span>
                         <span className="letter">e</span>
                         <span className="letter">l</span>
