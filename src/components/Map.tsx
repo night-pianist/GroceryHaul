@@ -15,69 +15,55 @@ import '../styles/Map.css';
 // mapboxgl.accessToken = String(process.env.REACT_APP_MAPBOX_TOKEN);
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
 
-    
-export default function DestinationScreen() {
-    const container = useRef<HTMLDivElement>(null); // specify type for container and map
-    const map = useRef<mapboxgl.Map | null>(null); 
-    const mapContainer = useRef(null);
-    const [lng, setLng] = useState(-118.4441); // use UCLA lat, lng as default 
-    const [lat, setLat] = useState(34.0699);
-    const [zoom, setZoom] = useState(15);
-    
+const successLocation = (position: GeolocationPosition) => {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    // Pass coordinates to DestinationScreen component
+    return <DestinationScreen center={[longitude, latitude]} />;
+};
+
+const errorLocation = () => {
+    console.error('Error getting location');
+};
+
+// Usage in React component or elsewhere
+navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
+    enableHighAccuracy: true
+});
+
+ DestinationScreen: React.FC<{ center: [number, number] }> = ({ center }) => {
+    const mapContainer = useRef<HTMLDivElement>(null);
+    const map = useRef<mapboxgl.Map | null>(null);
+    const [zoom, setZoom] = useState<number>(15); // Initialize with default zoom level
+
     useEffect(() => {
-        if (map.current) return; // initialize map only once
-    
+        if (!mapContainer.current) return;
+
         map.current = new mapboxgl.Map({
-            container: mapContainer.current as unknown as HTMLElement, // type guard
-            style: 'mapbox://styles/mapbox/dark-v11', // can change style to whatever
-            center: [lng, lat],
-            zoom: zoom,
+            container: mapContainer.current,
+            style: 'mapbox://styles/mapbox/dark-v11',
+            center,
+            zoom,
             attributionControl: false
         });
 
-        // add navigation control 
-        map.current.addControl(
-            new mapboxgl.GeolocateControl({
-                positionOptions: {
-                    enableHighAccuracy: true
-                },
-                trackUserLocation: true,
-                showUserHeading: true
-            }), 'top-right'
-        );
-
-        // update lat/long values when map is moved 
-        const onMove = () => {
+        // Cleanup function to remove map instance on unmount or re-render
+        return () => {
             if (map.current) {
-                const newLng = parseFloat(map.current.getCenter().lng.toFixed(4)); // convert to number to be used in setState
-                const newLat = parseFloat(map.current.getCenter().lat.toFixed(4));
-                const newZoom = parseFloat(map.current.getZoom().toFixed(2)); 
-    
-                setLng(newLng); // update states with respective new values 
-                setLat(newLat); 
-                setZoom(newZoom); 
+                map.current.remove();
             }
         };
-        map.current.on('move', onMove);    
+    }, [center]); // Update map when center coordinates change
 
-        // Create default markers
-        // geoJson.features.map((feature) =>
-        //     new mapboxgl.Marker().setLngLat(feature.geometry.coordinates).addTo(map)
-        // );
-        // const marker = new mapboxgl.Marker({
-        //     color: "green"
-        // }).setLngLat([-118.4441, 34.0699])
-        //     .addTo(map.current);
-        // });
-    })
-    
     return (
         <div className="map">
             <div className="sidebar">
-                Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-            </div>  
+                Longitude: {center[0]} | Latitude: {center[1]} | Zoom: {zoom}
+            </div>
             <div ref={mapContainer} className="map-container" />
         </div>
     );
-}
+};
+
 
