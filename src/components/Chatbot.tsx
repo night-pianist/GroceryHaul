@@ -4,6 +4,16 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // const genAI = new GoogleGenerativeAI('AIzaSyDS_r9lIGkYi-v2k014NTI-1nW4dvzJTTU');
 
+// Extend the Window interface directly in the same file
+declare global {
+    interface Window {
+      GeminiChatbot: {
+        init: (config: { apiKey: string; containerId: string }) => void;
+        destroy: () => void;
+      };
+    }
+  }
+
 const Chatbot: React.FC = () => {
   useEffect(() => {
     // Function to load the external script
@@ -28,6 +38,7 @@ const Chatbot: React.FC = () => {
     };
 
     // Load the script and initialize the chatbot
+    // FIX THIS BC ITS NOT DISPLAY CUZ OF THIS
     loadScript('https://path.to.gemini.chatbot/sdk.js', initializeChatbot);
 
     // Cleanup function to remove the script and destroy the chatbot instance if necessary
