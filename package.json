@@ -18,17 +18,16 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/jest": "^27.5.2",
     "@types/mapbox-gl": "^3.1.0",
-    "@types/node": "^16.18.99",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.4.3",
     "dotenv": "^16.4.5",
+    "jsonwebtoken": "^9.0.2",
     "mapbox-gl": "^3.4.0",
+    "mongoose": "^8.4.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-map-gl": "^7.1.7",
@@ -64,6 +63,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/node": "^20.14.9"
   }
 }

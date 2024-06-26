@@ -2178,10 +2178,12 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^16.18.99":
-  version "16.18.101"
-  resolved "https://registry.npmjs.org/@types/node/-/node-16.18.101.tgz"
-  integrity sha512-AAsx9Rgz2IzG8KJ6tXd6ndNkVcu+GYB6U/SnFAaokSPNx2N7dcIIfnighYUNumvj6YS2q39Dejz5tT0NCV7CWA==
+"@types/node@*", "@types/node@^20.14.9":
+  version "20.14.9"
+  resolved "https://registry.npmjs.org/@types/node/-/node-20.14.9.tgz"
+  integrity sha512-06OCtnTXtWOZBJlRApleWndH4JsRVs1pDCc8dLSQp+7PpUpX3ePdHyeNSFTeSe7FtKyQkrlPvHwJOW3SLd8Oyg==
+  dependencies:
+    undici-types "~5.26.4"
 
 "@types/parse-json@^4.0.0":
   version "4.0.2"
@@ -4424,9 +4426,9 @@ es-iterator-helpers@^1.0.19:
     safe-array-concat "^1.1.2"
 
 es-module-lexer@^1.2.1:
-  version "1.5.3"
-  resolved "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-1.5.3.tgz"
-  integrity sha512-i1gCgmR9dCl6Vil6UKPI/trA69s08g/syhiDK9TG0Nf1RJjjFI+AzoWW7sPufzkgYAn861skuCwJa0pIIHYxvg==
+  version "1.5.4"
+  resolved "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-1.5.4.tgz"
+  integrity sha512-MVNK56NiMrOwitFB7cqDwq0CQutbw+0BvLshJSse0MUNU+y1FC3bUS/AQg7oUng+/wKrrki7JfmwtVHkVfPLlw==
 
 es-object-atoms@^1.0.0:
   version "1.0.0"
@@ -9934,6 +9936,11 @@ underscore@1.12.1:
   version "1.12.1"
   resolved "https://registry.npmjs.org/underscore/-/underscore-1.12.1.tgz"
   integrity sha512-hEQt0+ZLDVUMhebKxL4x1BTtDY7bavVofhZ9KZ4aI26X9SRaE+Y3m83XUL1UP2jn8ynjndwCCpEHdUG+9pP1Tw==
+
+undici-types@~5.26.4:
+  version "5.26.5"
+  resolved "https://registry.npmjs.org/undici-types/-/undici-types-5.26.5.tgz"
+  integrity sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==
 
 unicode-canonical-property-names-ecmascript@^2.0.0:
   version "2.0.0"
