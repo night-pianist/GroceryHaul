@@ -4,8 +4,9 @@
     display: flex; 
     justify-content: center;
     padding: 20px;
-    background-color: #dbdbce;
-    /* align-items: center; */
+    /* background-color: #dbdbce; */
+    background-image: url('../../public/StaticBackgroundMap.svg');
+    align-items: center;
 }
 
 .login-card {
