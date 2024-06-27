@@ -18,7 +18,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc
 const successLocation = (position: GeolocationPosition) => {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
-
+    DestinationScreen(center)
     // Pass coordinates to DestinationScreen component
     return <DestinationScreen center={[longitude, latitude]} />;
 };
@@ -31,8 +31,8 @@ const errorLocation = () => {
 navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
     enableHighAccuracy: true
 });
-
- DestinationScreen: React.FC<{ center: [number, number] }> = ({ center }) => {
+function DestinationScreen(ce
+{
     const mapContainer = useRef<HTMLDivElement>(null);
     const map = useRef<mapboxgl.Map | null>(null);
     const [zoom, setZoom] = useState<number>(15); // Initialize with default zoom level
@@ -43,7 +43,7 @@ navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox/dark-v11',
-            center,
+            center: <center></center>,
             zoom,
             attributionControl: false
         });
