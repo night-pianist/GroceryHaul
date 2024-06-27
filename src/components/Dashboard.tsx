@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();
-    const [userData, setUserData] = useState<any>(null); // State to hold user data
+    const [userData, setUserData] = useState<any>(null);  
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -21,8 +21,7 @@ const Dashboard: React.FC = () => {
 
             try {
                 const response = await axios.post('http://localhost:5002/verify-token', { token });
-                // Assuming response.data contains user information
-                setUserData(response.data.user); // Adjust according to your API response structure
+                setUserData(response.data.user);  
             } catch (err) {
                 localStorage.removeItem('token');
                 navigate('/login');
@@ -39,7 +38,6 @@ const Dashboard: React.FC = () => {
                 <div>
                     <p>Welcome, {userData.name}!</p>
                     <p>Email: {userData.email}</p>
-                    {/* Display other user information as needed */}
                 </div>
             )}
             <button onClick={handleLogout}>Logout</button>
