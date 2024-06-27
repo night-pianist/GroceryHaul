@@ -7,14 +7,14 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
-import DisplayChatbot from './components/DisplayChatbot';
+import Chatbot from './components/Chatbot';
 
 
 function App() {
   return (
       <>
         <Routes>
-          { <Route path="/" element={<DisplayChatbot />} /> }
+          { <Route path="/" element={<Chatbot />} /> }
           {/* { <Route path="/" element={<Home />} /> }
           { <Route path="/login" element={<Login />} /> }
           { <Route path="/signup" element={<Signup />} />}
