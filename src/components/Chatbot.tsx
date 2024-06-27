@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { GoogleGenerativeAI } from "@google/generative-ai";
-// apiKey: 'AIzaSyDS_r9lIGkYi-v2k014NTI-1nW4dvzJTTU',
+// apiKey: 'AIzaSyAqUCPu2C3BrFCf2urbF6aksW_bRs0prjc',
 
-const genAI = new GoogleGenerativeAI('AIzaSyAqUCPu2C3BrFCf2urbF6aksW_bRs0prjc');
+const genAI = new GoogleGenerativeAI('AIzaSyB5rLcXCczp92gxKXTORk3g_LJAzyBm9zA');
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
 
 const Chatbot = () => {
@@ -25,7 +25,7 @@ const Chatbot = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async () => { // now need this to output as a list format
       const result = await getIngredients("give me a list of ingredients to make macarons");
       setResponse(result);
     };
