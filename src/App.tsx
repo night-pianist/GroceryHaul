@@ -16,9 +16,8 @@ function App() {
     const successLocation = (position: GeolocationPosition) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        // const latitude = 18;
-        // const longitude = 18;
-        console.log("latitude is "+ latitude + " and longitude is " + longitude);
+        console.log("position is " + position);
+        console.log("latitude is " + latitude + " and longitude is " + longitude);
         setCenter([longitude, latitude]);
     };
 
@@ -40,11 +39,11 @@ function App() {
   return (
       <>
         <Routes>
-          <Route path="/map" element={<DestinationScreen center={center} />} />
-          {/* { <Route path="/login" element={<Login />} /> }
+          { <Route path="/" element={<Home />} /> } 
+          { <Route path="/map" element={<DestinationScreen center={center} />} /> }
+          { <Route path="/login" element={<Login />} /> }
           { <Route path="/signup" element={<Signup />} />}
           { <Route path="/dashboard" element={<Dashboard />} /> }
-          { <Route path="/map" element={<Map/>} /> }  */}
         </Routes>
       </>
   )
