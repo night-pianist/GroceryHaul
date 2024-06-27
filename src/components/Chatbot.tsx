@@ -6,12 +6,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI('AIzaSyAqUCPu2C3BrFCf2urbF6aksW_bRs0prjc');
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
 
-// const result = await model.generateContent([
-//     "What's in this photo?",
-//     {inlineData: {data: imgDataInBase64, mimeType: 'image/png'}}
-// ]);
-
-
 const Chatbot = () => {
   const [response, setResponse] = useState<string | null>(null);
 
@@ -41,7 +35,7 @@ const Chatbot = () => {
 
   return ( 
     <div className="chatbot">
-      {response ? <p>{response}</p> : <p>Loading...</p>}
+      {response ? <p>{response}</p> : <p>Loading...</p>} 
     </div>
    );
 }
