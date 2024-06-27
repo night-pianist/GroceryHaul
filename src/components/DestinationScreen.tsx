@@ -39,7 +39,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc
     // const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
 
 const defaultLatitude = 34.0699; 
-const defaultLongitude = -118.4441;
+const defaultLongitude = -10.4441;
 
 interface DestinationScreenProps {
     // center: [latitude: number, longitude: number]; // Define center as a tuple with named properties
@@ -102,15 +102,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
         //     .addTo(map.current);
         // });
     })
-    
-    // return (
-    //     <div className="map">
-    //         <div className="sidebar">
-    //             Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-    //         </div>  
-    //         <div ref={mapContainer} className="map-container" />
-    //     </div>
-    // );
+
     return (
         <div className="map">
             <div className="sidebar">
@@ -123,21 +115,22 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
 
 export default DestinationScreen;
 
-const successLocation = (position: GeolocationPosition) => {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    // DestinationScreen(center)
-    // Pass coordinates to DestinationScreen component
-    return <DestinationScreen center={[longitude, latitude]} />;
-};
+// const successLocation = (position: GeolocationPosition) => {
+//     const latitude = position.coords.latitude;
+//     const longitude = position.coords.longitude;
+//     // DestinationScreen(center)
+//     // Pass coordinates to DestinationScreen component
+//     return <DestinationScreen center={[longitude, latitude]} />;
+// };
 
-const errorLocation = () => {
-    console.error('Error getting location');
-};
+// const errorLocation = () => {
+//     console.error('Error getting location');
+// };
 
-navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
-    enableHighAccuracy: true
-});
+// navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
+//     enableHighAccuracy: true
+// });
+
 
 // export default DestinationScreen();
 
