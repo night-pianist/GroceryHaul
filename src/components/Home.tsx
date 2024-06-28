@@ -11,6 +11,8 @@ function Home(): JSX.Element {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/login">Login</Link></li>
                     <li><Link to="/signup">Signup</Link></li>
+                    <li><Link to="/forgot-password">ForgotPassword</Link></li>
+                    <li><Link to="/reset-password">ResetPassword</Link></li>
                 </ul>
             </nav>
         </div>
