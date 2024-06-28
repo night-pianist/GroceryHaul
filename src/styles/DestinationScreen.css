@@ -1,5 +1,6 @@
 .map-container { /* size map to webpage size */
     height: 100vh; 
+    width: 70%;
 }
 
 .sidebar { /* formats info bar (lat, lng, zoom) at top */

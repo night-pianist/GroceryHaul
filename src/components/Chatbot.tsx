@@ -25,25 +25,29 @@ const Chatbot = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => { 
-      const result = await getIngredients("generate a list of ingredients to make ");
-      setResponse(result);
-    };
+  const fetchData = async (input: string) => {
+    const result = await getIngredients(`generate a list of ingredients to make ${input}`);
+    setResponse(result);
+  };
 
-    fetchData();
-  }, []);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchData(userInput);
+  };
 
   return ( 
     <div className="chatbot">
-          <label className="subtitle">Username:</label>
-          <input 
-              type="text" 
-              value={userInput} 
-              onChange={(e) => setUserInput(e.target.value)} 
-              required 
-          />
-      {/* {response ? <p>{response}</p> : <p>Loading...</p>}  */}
+      <form onSubmit={handleSubmit}>
+        <label className="subtitle">Enter your request:</label>
+        <input 
+          type="text" 
+          value={userInput} 
+          onChange={(e) => setUserInput(e.target.value)} 
+          required 
+        />
+        <button type="submit">Submit</button>
+      </form>
+      {response ? <p>{response}</p> : <p>Loading...</p>}
     </div>
    );
 }
