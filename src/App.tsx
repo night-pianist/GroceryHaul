@@ -18,7 +18,7 @@ function App() {
         const longitude = position.coords.longitude;
         console.log("position is " + position);
         console.log("latitude is " + latitude + " and longitude is " + longitude);
-        setCenter([longitude, latitude]);
+        setCenter([latitude, longitude]);
     };
 
     const errorLocation = () => {
