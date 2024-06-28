@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map, Control } from 'mapbox-gl'; 
 import 'mapbox-gl/dist/mapbox-gl.css'; // for mapbox styling
-import '../styles/Map.css';
+import '../styles/DestinationScreen.css';
 
 // import geoJson from "./chicago-parks.json"; // used to import data to display
 
