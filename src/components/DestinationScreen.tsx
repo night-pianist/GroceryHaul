@@ -2,6 +2,11 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map, Control } from 'mapbox-gl'; 
 import 'mapbox-gl/dist/mapbox-gl.css'; // for mapbox styling
 import '../styles/DestinationScreen.css';
+import axios, { AxiosError } from 'axios';
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI('AIzaSyB5rLcXCczp92gxKXTORk3g_LJAzyBm9zA');
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
 
 // import geoJson from "./chicago-parks.json"; // used to import data to display
 
@@ -91,60 +96,57 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             }
         };
         map.current.on('move', onMove);    
-
-        // Create default markers
-        // geoJson.features.map((feature) =>
-        //     new mapboxgl.Marker().setLngLat(feature.geometry.coordinates).addTo(map)
-        // );
-        // const marker = new mapboxgl.Marker({
-        //     color: "green"
-        // }).setLngLat([-118.4441, 34.0699])
-        //     .addTo(map.current);
-        // });
     })
+
+    const [response, setResponse] = useState<string | null>(null);
+    const [userInput, setUserInput] = useState<string>(''); // get user input
+
+    const getIngredients = async (prompt: string): Promise<string> => {
+        try {
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = await response.text();
+        return text;
+        } catch {
+        if ((Error as unknown as AxiosError).response && (Error as unknown as AxiosError).response!.status === 429) {
+            throw new Error('Quota exceeded. Please try again later.');
+        } else {
+            throw new Error('An error occurred while fetching data.');
+        }
+        }
+    };
+
+    const fetchData = async (input: string) => {
+        const result = await getIngredients(`generate a list of ingredients to make ${input}`);
+        setResponse(result);
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        fetchData(userInput);
+    };
 
     return (
         <div className="map">
             <div className="sidebar">
                 Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
             </div>
-            <div ref={mapContainer} className="map-container" />
+            <div ref={mapContainer} className="map-container" /> 
+            <div className="chatbot">
+                <form onSubmit={handleSubmit} className="form">
+                    {/* <label className="subtitle">Enter your request:</label> */}
+                    <input 
+                        type="text" 
+                        value={userInput} 
+                        onChange={(e) => setUserInput(e.target.value)} 
+                        required 
+                    />
+                    <button type="submit">Submit</button>
+                </form>
+                {response ? <p>{response}</p> : <p>Loading...</p>}
+            </div>
         </div>
     );
 }
 
 export default DestinationScreen;
-
-// const successLocation = (position: GeolocationPosition) => {
-//     const latitude = position.coords.latitude;
-//     const longitude = position.coords.longitude;
-//     // DestinationScreen(center)
-//     // Pass coordinates to DestinationScreen component
-//     return <DestinationScreen center={[longitude, latitude]} />;
-// };
-
-// const errorLocation = () => {
-//     console.error('Error getting location');
-// };
-
-// navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
-//     enableHighAccuracy: true
-// });
-
-
-// export default DestinationScreen();
-
-// export default function App() {
-//     // Example usage: Trigger successLocation to get current coordinates
-//     useEffect(() => {
-//         navigator.geolocation.getCurrentPosition(successLocation);
-//     }, []);
-
-//     return (
-//         <div className="App">
-//             {/* This is where your DestinationScreen component will be rendered */}
-//         </div>
-//     );
-// }
-
-
