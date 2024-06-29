@@ -43,9 +43,6 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc
 // export default function DestinationScreen() {
     // const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
 
-const defaultLatitude = 34.0699; 
-const defaultLongitude = -10.4441;
-
 interface DestinationScreenProps {
     // center: [latitude: number, longitude: number]; // Define center as a tuple with named properties
     center: [ number, number ]; // Define center as a tuple with named properties
@@ -133,7 +130,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             </div>
             <div ref={mapContainer} className="map-container" /> 
             <div className="chatbot">
-                <form onSubmit={handleSubmit} className="form">
+                <form onSubmit={handleSubmit}>
                     {/* <label className="subtitle">Enter your request:</label> */}
                     <input 
                         type="text" 

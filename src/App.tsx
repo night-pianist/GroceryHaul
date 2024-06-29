@@ -40,8 +40,8 @@ function App() {
   return (
       <>
         <Routes>
-          { <Route path="/chatbot" element={<Chatbot />} /> } 
-          { <Route path="/map" element={<DestinationScreen center={center} />} /> }
+          {/* { <Route path="/chatbot" element={<Chatbot />} /> }  */}
+          { <Route path="/" element={<DestinationScreen center={center} />} /> }
           {/* { <Route path="/login" element={<Login />} /> }
           { <Route path="/signup" element={<Signup />} />}
           { <Route path="/dashboard" element={<Dashboard />} /> } */}
