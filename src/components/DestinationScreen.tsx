@@ -8,6 +8,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI('AIzaSyB5rLcXCczp92gxKXTORk3g_LJAzyBm9zA');
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
 
+const PROMPT_PATH = './prompt.txt'
+
 // import geoJson from "./chicago-parks.json"; // used to import data to display
 
 // const dotenv = require('dotenv');
