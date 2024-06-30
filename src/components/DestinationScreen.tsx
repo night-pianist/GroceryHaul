@@ -22,31 +22,7 @@ const PROMPT_PATH = './prompt.txt'
 // mapboxgl.accessToken = String(process.env.REACT_APP_MAPBOX_TOKEN);
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
 
-  
-// const successLocation = (position: GeolocationPosition) => {
-//     const latitude = position.coords.latitude;
-//     const longitude = position.coords.longitude;
-//     // Pass coordinates to DestinationScreen component
-//     return <DestinationScreen center={[longitude, latitude]} />;
-// };
-// Define props interface for DestinationScreen component
-// interface DestinationScreenProps {
-//     center: [number, number]; // Tuple for longitude and latitude
-// }
-
-// // Function to render the DestinationScreen component with coordinates
-// const successLocation = (position: GeolocationPosition) => {
-//     const latitude = position.coords.latitude;
-//     const longitude = position.coords.longitude;
-//     // Pass coordinates to DestinationScreen component
-//     return <DestinationScreen center={[longitude, latitude]} />;
-// };
-
-// export default function DestinationScreen() {
-    // const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
-
 interface DestinationScreenProps {
-    // center: [latitude: number, longitude: number]; // Define center as a tuple with named properties
     center: [ number, number ]; // Define center as a tuple with named properties
 }
 
@@ -54,13 +30,37 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     const container = useRef<HTMLDivElement>(null); // specify type for container and map
     const map = useRef<mapboxgl.Map | null>(null); 
     const mapContainer = useRef(null);
-    // const [lng, setLng] = useState(-118.4441); // use UCLA lat, lng as default 
-    // const [lat, setLat] = useState(34.0699);
     const [lng, setLng] = useState(center[1]); // Access longitude from the tuple
     const [lat, setLat] = useState(center[0]); // Access latitude from the tuple
     const [zoom, setZoom] = useState(15);
+
+    const [promptText, setPromptText] = useState<string>(''); // to read prompt for gemini
+    const readPromptFile = async (): Promise<string> => {
+        try {
+          const response = await fetch('/prompt.txt');
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const text = await response.text();
+          return text;
+        } catch (error) {
+          console.error('Error reading the prompt file:', error);
+          throw error;
+        }
+    };
     
     useEffect(() => {
+        const fetchPromptText = async () => {
+            try {
+              const text = await readPromptFile();
+              setPromptText(text);
+            } catch (error) {
+              console.error('Failed to fetch prompt text:', error);
+            }
+        };
+      
+        fetchPromptText();
+
         if (map.current) return; // initialize map only once
     
         map.current = new mapboxgl.Map({
@@ -94,7 +94,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                 setZoom(newZoom); 
             }
         };
-        map.current.on('move', onMove);    
+        map.current.on('move', onMove);   
     })
 
     const [response, setResponse] = useState<string | null>(null);
@@ -107,16 +107,16 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
         const text = await response.text();
         return text;
         } catch {
-        if ((Error as unknown as AxiosError).response && (Error as unknown as AxiosError).response!.status === 429) {
-            throw new Error('Quota exceeded. Please try again later.');
-        } else {
-            throw new Error('An error occurred while fetching data.');
-        }
+            if ((Error as unknown as AxiosError).response && (Error as unknown as AxiosError).response!.status === 429) {
+                throw new Error('Quota exceeded. Please try again later.');
+            } else {
+                throw new Error('An error occurred while fetching data.');
+            }
         }
     };
 
     const fetchData = async (input: string) => {
-        const result = await getIngredients(`generate a list of ingredients to make ${input}`);
+        const result = await getIngredients(`${promptText} ${input}`);
         setResponse(result);
     };
 
@@ -143,6 +143,10 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                     <button type="submit">Submit</button>
                 </form>
                 {response ? <p>{response}</p> : <p>Loading...</p>}
+
+                {/* <div className="prompt">
+                    <p>prompt is {promptText}</p>
+                </div> */}
             </div>
         </div>
     );
