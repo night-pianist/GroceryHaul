@@ -22,8 +22,13 @@ const PROMPT_PATH = './prompt.txt'
 // mapboxgl.accessToken = String(process.env.REACT_APP_MAPBOX_TOKEN);
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
 
-interface DestinationScreenProps {
+interface DestinationScreenProps { // for the map display
     center: [ number, number ]; // Define center as a tuple with named properties
+}
+
+interface Message { // for the chat history
+    user: string;
+    text: string;
 }
 
 const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
@@ -48,6 +53,8 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
           throw error;
         }
     };
+
+    const [messages, setMessages] = useState<Message[]>([]); // for the chat history
     
     useEffect(() => {
         const fetchPromptText = async () => {
@@ -97,7 +104,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
         map.current.on('move', onMove);   
     })
 
-    const [response, setResponse] = useState<string | null>(null);
+    // const [response, setResponse] = useState<string | null>(null);
     const [userInput, setUserInput] = useState<string>(''); // get user input
 
     const getIngredients = async (prompt: string): Promise<string> => {
@@ -117,12 +124,16 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
 
     const fetchData = async (input: string) => {
         const result = await getIngredients(`${promptText} ${input}`);
-        setResponse(result);
+        setMessages((prevMessages) => [...prevMessages, { user: 'bot', text: result }]);
+        // setResponse(result);
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        const newMessage = { user: 'user', text: userInput };
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
         fetchData(userInput);
+        setUserInput('');
     };
 
     return (
@@ -132,8 +143,15 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             </div>
             <div ref={mapContainer} className="map-container" /> 
             <div className="chatbot">
+                <div className="chat-history">
+                    {messages.map((message, index) => (
+                        <div key={index} className={message.user === 'user' ? 'user-message' : 'bot-message'}>
+                        <strong>{message.user}: </strong>
+                        {message.text}
+                        </div>
+                    ))}
+                </div>
                 <form onSubmit={handleSubmit}>
-                    {/* <label className="subtitle">Enter your request:</label> */}
                     <input 
                         type="text" 
                         value={userInput} 
@@ -142,11 +160,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                     />
                     <button type="submit">Submit</button>
                 </form>
-                {response ? <p>{response}</p> : <p>Loading...</p>}
-
-                {/* <div className="prompt">
-                    <p>prompt is {promptText}</p>
-                </div> */}
+                {/* {response ? <p>{response}</p> : <p>Loading...</p>} */}
             </div>
         </div>
     );
