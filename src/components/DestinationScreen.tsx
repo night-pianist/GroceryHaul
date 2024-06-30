@@ -8,38 +8,29 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI('AIzaSyB5rLcXCczp92gxKXTORk3g_LJAzyBm9zA');
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
 
-const PROMPT_PATH = './prompt.txt'
-
-// import geoJson from "./chicago-parks.json"; // used to import data to display
-
-// const dotenv = require('dotenv');
-// dotenv.config();
-
-// console.log('Mapbox Token:', process.env.REACT_APP_MAPBOX_TOKEN);
-// const mapbox_token: string = (process.env.REACT_APP_MAPBOX_TOKEN as string);
-// console.log('Mapbox Token as string:', mapbox_token);
-
-// mapboxgl.accessToken = String(process.env.REACT_APP_MAPBOX_TOKEN);
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
 
 interface DestinationScreenProps { // for the map display
-    center: [ number, number ]; // Define center as a tuple with named properties
+    center: [ number, number ]; // define center as a tuple with named properties
 }
 
-interface Message { // for the chat history
+interface Message { // message interface to display the chat history
     user: string;
     text: string;
 }
 
 const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
-    const container = useRef<HTMLDivElement>(null); // specify type for container and map
+    const container = useRef<HTMLDivElement>(null); // specify the type for container and map
     const map = useRef<mapboxgl.Map | null>(null); 
     const mapContainer = useRef(null);
-    const [lng, setLng] = useState(center[1]); // Access longitude from the tuple
-    const [lat, setLat] = useState(center[0]); // Access latitude from the tuple
-    const [zoom, setZoom] = useState(15);
+    const [lng, setLng] = useState(center[1]); // access longitude from the tuple
+    const [lat, setLat] = useState(center[0]); // access latitude from the tuple
+    const [zoom, setZoom] = useState(15); // set the default zoom 
+    const [promptText, setPromptText] = useState<string>(''); // set up to read prompt for gemini
+    const [messages, setMessages] = useState<Message[]>([]); // set up for the chat history
+    const [userInput, setUserInput] = useState<string>(''); // set up to get user input
 
-    const [promptText, setPromptText] = useState<string>(''); // to read prompt for gemini
+    // READ IN THE PROMPT FROM PROMPT.TXT IN THE PUBLIC DIRECTORY
     const readPromptFile = async (): Promise<string> => {
         try {
           const response = await fetch('/prompt.txt');
@@ -53,10 +44,9 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
           throw error;
         }
     };
-
-    const [messages, setMessages] = useState<Message[]>([]); // for the chat history
     
     useEffect(() => {
+        // PARSES THE PROMPT.TXT FILE TO GET ITS CONTENT
         const fetchPromptText = async () => {
             try {
               const text = await readPromptFile();
@@ -65,11 +55,11 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
               console.error('Failed to fetch prompt text:', error);
             }
         };
-      
         fetchPromptText();
 
         if (map.current) return; // initialize map only once
     
+        // DISPLAYS THE MAP
         map.current = new mapboxgl.Map({
             container: mapContainer.current as unknown as HTMLElement, // type guard
             style: 'mapbox://styles/mapbox/dark-v11', // can change style to whatever
@@ -78,8 +68,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             attributionControl: false
         });
 
-        // add navigation control 
-        map.current.addControl(
+        map.current.addControl( // add navigation control 
             new mapboxgl.GeolocateControl({
                 positionOptions: {
                     enableHighAccuracy: true
@@ -89,8 +78,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             }), 'top-right'
         );
 
-        // update lat/long values when map is moved 
-        const onMove = () => {
+        const onMove = () => { // update lat/long values when the user moves the map 
             if (map.current) {
                 const newLng = parseFloat(map.current.getCenter().lng.toFixed(4)); // convert to number to be used in setState
                 const newLat = parseFloat(map.current.getCenter().lat.toFixed(4));
@@ -104,15 +92,13 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
         map.current.on('move', onMove);   
     })
 
-    // const [response, setResponse] = useState<string | null>(null);
-    const [userInput, setUserInput] = useState<string>(''); // get user input
-
-    const getIngredients = async (prompt: string): Promise<string> => {
+    // GET THE CHATBOTS RESPONSE
+    const getChatbotResponse = async (prompt: string): Promise<string> => {
         try {
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = await response.text();
-        return text;
+            const result = await model.generateContent(prompt);
+            const response = await result.response;
+            const text = await response.text();
+            return text;
         } catch {
             if ((Error as unknown as AxiosError).response && (Error as unknown as AxiosError).response!.status === 429) {
                 throw new Error('Quota exceeded. Please try again later.');
@@ -121,13 +107,12 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             }
         }
     };
-
     const fetchData = async (input: string) => {
-        const result = await getIngredients(`${promptText} ${input}`);
+        const result = await getChatbotResponse(`${promptText} ${input}`);
         setMessages((prevMessages) => [...prevMessages, { user: 'bot', text: result }]);
-        // setResponse(result);
     };
 
+    // HANDLES WHEN USER INPUTS THEIR RESPONSE 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const newMessage = { user: 'user', text: userInput };
@@ -160,7 +145,6 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                     />
                     <button type="submit">Submit</button>
                 </form>
-                {/* {response ? <p>{response}</p> : <p>Loading...</p>} */}
             </div>
         </div>
     );
