@@ -29,6 +29,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     const [promptText, setPromptText] = useState<string>(''); // set up to read prompt for gemini
     const [messages, setMessages] = useState<Message[]>([]); // set up for the chat history
     const [userInput, setUserInput] = useState<string>(''); // set up to get user input
+    const initialResponseFetched = useRef<boolean>(false); // set up chatbot greeting
 
     // READ IN THE PROMPT FROM PROMPT.TXT IN THE PUBLIC DIRECTORY
     const readPromptFile = async (): Promise<string> => {
@@ -46,11 +47,19 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     };
     
     useEffect(() => {
+        // console.log("here");
         // PARSES THE PROMPT.TXT FILE TO GET ITS CONTENT
         const fetchPromptText = async () => {
             try {
-              const text = await readPromptFile();
-              setPromptText(text);
+                const text = await readPromptFile();
+                setPromptText(text);
+
+                // fetch initial bot response based on prompt text
+                if (!initialResponseFetched.current) {
+                    const initialResponse = await getChatbotResponse(text);
+                    setMessages((prevMessages) => [...prevMessages, { user: 'bot', text: initialResponse }]);
+                    initialResponseFetched.current = true; // ensure initial response is only fetched once
+                }
             } catch (error) {
               console.error('Failed to fetch prompt text:', error);
             }
@@ -90,7 +99,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             }
         };
         map.current.on('move', onMove);   
-    })
+    }, []);
 
     // GET THE CHATBOTS RESPONSE
     const getChatbotResponse = async (prompt: string): Promise<string> => {
@@ -108,7 +117,8 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
         }
     };
     const fetchData = async (input: string) => {
-        const result = await getChatbotResponse(`${promptText} ${input}`);
+        // const result = await getChatbotResponse(`${promptText} ${input}`);
+        const result = await getChatbotResponse(`${input}`);
         setMessages((prevMessages) => [...prevMessages, { user: 'bot', text: result }]);
     };
 
@@ -130,9 +140,15 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             <div className="chatbot">
                 <div className="chat-history">
                     {messages.map((message, index) => (
-                        <div key={index} className={message.user === 'user' ? 'user-message' : 'bot-message'}>
-                        <strong>{message.user}: </strong>
-                        {message.text}
+                        <div key={index}>
+                            {message.user === 'user' ? (
+                                <strong className="user-message">You: </strong>
+                            ) : (
+                                <strong className="bot-message">Grocery-Haul: </strong>
+                            )}
+                            <div className="chat-response">
+                                <p>{message.text}</p>
+                            </div>
                         </div>
                     ))}
                 </div>

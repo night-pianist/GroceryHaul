@@ -66,3 +66,47 @@ button {
     width: 20%;
     box-sizing: border-box; /* Include padding and border in width */
 }
+
+.chat-history {
+    max-height: 92vh;
+    overflow-y: auto;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; 
+}
+
+.bot-message {
+    display: flex; 
+    align-self: flex-start;
+    padding: 5px;
+    background-color: #e38471;
+    border-radius: 5px;
+    border: 2px solid black;
+    margin-bottom: 5px;
+    margin-top: 0px;
+    display: inline-block; 
+}
+
+.user-message {
+    position: relative;
+    right: 0px;
+    display: flex; 
+    /* align-self: flex-end;         */
+    padding: 5px;
+    background-color: #69dea7;
+    border-radius: 5px;
+    border: 2px solid black;
+    margin-bottom: 5px;
+    margin-top: 0px;
+    display: inline-block; 
+}
+
+.chat-response {
+    background-color: #dbdbce;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}

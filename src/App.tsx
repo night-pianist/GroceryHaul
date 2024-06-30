@@ -14,6 +14,7 @@ function App() {
   const [center, setCenter] = useState<[number, number] | null>(null);
 
   useEffect(() => {
+    // console.log("HERE");
     const successLocation = (position: GeolocationPosition) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
@@ -40,11 +41,11 @@ function App() {
   return (
       <>
         <Routes>
-          {/* { <Route path="/chatbot" element={<Chatbot />} /> }  */}
-          { <Route path="/" element={<DestinationScreen center={center} />} /> }
-          {/* { <Route path="/login" element={<Login />} /> }
+          { <Route path="/" element={<Home />} /> } 
+          { <Route path="/map" element={<DestinationScreen center={center} />} /> }
+          { <Route path="/login" element={<Login />} /> }
           { <Route path="/signup" element={<Signup />} />}
-          { <Route path="/dashboard" element={<Dashboard />} /> } */}
+          { <Route path="/dashboard" element={<Dashboard />} /> }
         </Routes>
       </>
   )
