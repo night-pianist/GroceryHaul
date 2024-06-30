@@ -27,9 +27,12 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     const [lat, setLat] = useState(center[0]); // access latitude from the tuple
     const [zoom, setZoom] = useState(15); // set the default zoom 
     const [promptText, setPromptText] = useState<string>(''); // set up to read prompt for gemini
-    const [messages, setMessages] = useState<Message[]>([]); // set up for the chat history
     const [userInput, setUserInput] = useState<string>(''); // set up to get user input
     const initialResponseFetched = useRef<boolean>(false); // set up chatbot greeting
+    const [messages, setMessages] = useState<Message[]>(() => { // set up for the msg interface 
+        const savedMessages = localStorage.getItem('messages'); // set up for chat history
+        return savedMessages ? JSON.parse(savedMessages) : []; 
+    });
 
     // READ IN THE PROMPT FROM PROMPT.TXT IN THE PUBLIC DIRECTORY
     const readPromptFile = async (): Promise<string> => {
@@ -101,13 +104,20 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
         map.current.on('move', onMove);   
     }, []);
 
+    useEffect(() => { // access the chatbot's history
+        localStorage.setItem('messages', JSON.stringify(messages));
+    }, [messages]);
+
     // GET THE CHATBOTS RESPONSE
     const getChatbotResponse = async (prompt: string): Promise<string> => {
-        try {
+        try { // NEED TO CHANGE THIS SO THAT IT GENERATES A RESPONSE USING ITS STORED LOCAL HISTORY
             const result = await model.generateContent(prompt);
             const response = await result.response;
             const text = await response.text();
             return text;
+            // Simulating a chatbot response for the example
+            // const response = `Simulated response to: ${prompt}`;
+            // return response;
         } catch {
             if ((Error as unknown as AxiosError).response && (Error as unknown as AxiosError).response!.status === 429) {
                 throw new Error('Quota exceeded. Please try again later.');
