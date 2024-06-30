@@ -140,20 +140,21 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             <div className="chatbot">
                 <div className="chat-history">
                     {messages.map((message, index) => (
-                        <div key={index}>
-                            {message.user === 'user' ? (
-                                <strong className="user-message">You: </strong>
-                            ) : (
-                                <strong className="bot-message">Grocery-Haul: </strong>
-                            )}
-                            <div className="chat-response">
-                                <p>{message.text}</p>
+                        <div key={index} className={message.user === 'user' ? 'user-message' : 'bot-message'}>
+                            <strong className={message.user === 'user' ? 'user-label' : 'bot-label'}>
+                                {message.user === 'user' ? 'You: ' : 'Grocery-Haul: '}
+                            </strong>
+                            <div>
+                                <p className={message.user === 'user' ? 'user-response' : 'bot-response'}>
+                                    {message.text}
+                                </p>
                             </div>
                         </div>
                     ))}
                 </div>
                 <form onSubmit={handleSubmit}>
                     <input 
+                        className="user-input"
                         type="text" 
                         value={userInput} 
                         onChange={(e) => setUserInput(e.target.value)} 
