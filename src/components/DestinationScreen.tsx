@@ -34,6 +34,11 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
         return savedMessages ? JSON.parse(savedMessages) : []; 
     });
 
+    useEffect(() => {
+        // Clear local storage on component load
+        localStorage.clear();
+    }, []);
+
     // READ IN THE PROMPT FROM PROMPT.TXT IN THE PUBLIC DIRECTORY
     const readPromptFile = async (): Promise<string> => {
         try {
@@ -128,7 +133,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     };
     const fetchData = async (input: string) => {
         // const result = await getChatbotResponse(`${promptText} ${input}`);
-        const result = await getChatbotResponse(`${input}`);
+        const result = await getChatbotResponse(`${promptText} ${input}`);
         setMessages((prevMessages) => [...prevMessages, { user: 'bot', text: result }]);
     };
 
