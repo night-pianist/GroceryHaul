@@ -26,6 +26,7 @@
     position: relative;
     height: 100vh;
     width: 30%;
+    background: #dbdbce;
 }
 
 /* .form {
@@ -45,11 +46,15 @@ input {
     border: none;
     border-radius: 5px;
     font-size: 1.3em;
-    background-color: #dbdbce; /* PLACEHOLDER */
+    /* background: white;  */
     margin-right: 3%;
     margin-left: 3%;
     width: 70%;
     box-sizing: border-box; /* Include padding and border in width */
+}
+
+.user-input {
+    background-color: white;
 }
 
 button {
@@ -62,7 +67,7 @@ button {
     padding: 2%;
     text-align: center; /* Center text horizontally */
     line-height: 1.3em; /* Set line-height to match font-size */
-    background-color: #dbdbce; /* PLACEHOLDER */
+    background-color: white; /* PLACEHOLDER */
     width: 20%;
     box-sizing: border-box; /* Include padding and border in width */
 }
@@ -76,37 +81,70 @@ button {
     align-items: flex-end; 
 }
 
+.user-message {
+    display: flex; 
+    flex-direction: column;
+    align-self: flex-end;
+}
+
 .bot-message {
+    display: flex; 
+    flex-direction: column;
+    align-self: flex-start;
+}
+
+.bot-label {
     display: flex; 
     align-self: flex-start;
     padding: 5px;
-    background-color: #e38471;
+    /* background-color: #e38471; */
+    background-color: white;
     border-radius: 5px;
     border: 2px solid black;
+    color:  #E22400;
     margin-bottom: 5px;
     margin-top: 0px;
     display: inline-block; 
 }
 
-.user-message {
+.user-label {
+    display: flex; 
+    align-self: flex-end;
     position: relative;
     right: 0px;
     display: flex; 
-    /* align-self: flex-end;         */
     padding: 5px;
-    background-color: #69dea7;
+    background-color: white;
     border-radius: 5px;
     border: 2px solid black;
+    color:  #e28000;
     margin-bottom: 5px;
     margin-top: 0px;
     display: inline-block; 
 }
 
-.chat-response {
-    background-color: #dbdbce;
+.bot-response {
+    display: flex; 
+    align-self: flex-start;
+    background-color: white;
     color: black;
     padding: 5px;
     border-radius: 5px;
     border: 1px solid black;
     margin-bottom: 30px;
+    /* text-align: left; */
+}
+
+.user-response {
+    display: flex; 
+    align-self: flex-end;
+    position: relative;
+    right: 0px;
+    background-color: white;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-bottom: 30px;
+    /* text-align: right; */
 }
