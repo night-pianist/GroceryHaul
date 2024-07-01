@@ -4,9 +4,13 @@ import 'mapbox-gl/dist/mapbox-gl.css'; // for mapbox styling
 import '../styles/DestinationScreen.css';
 import axios, { AxiosError } from 'axios';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { ConvexProvider, ConvexReactClient } from "convex/react";
+// import { ConvexHttpClient } from "@convex-dev/http";
 
 const genAI = new GoogleGenerativeAI('AIzaSyB5rLcXCczp92gxKXTORk3g_LJAzyBm9zA');
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+const convex = new ConvexReactClient('https://fleet-guanaco-936.convex.cloud');
+const db = new ConvexReactDBClient(convex);
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
 
@@ -109,9 +113,35 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
         map.current.on('move', onMove);   
     }, []);
 
-    useEffect(() => { // access the chatbot's history
-        localStorage.setItem('messages', JSON.stringify(messages));
+    // useEffect(() => { // access the chatbot's history
+    //     localStorage.setItem('messages', JSON.stringify(messages));
+    // }, [messages]);
+    useEffect(() => {
+        // Fetch messages from Convex on component load
+        const fetchMessages = async () => {
+          try {
+            const response = await convex.db.table("messages").order("desc").collect();
+            setMessages(response.data);
+          } catch (error) {
+            console.error('Error fetching messages:', error);
+          }
+        };
+        fetchMessages();
+    }, []);
+
+    // Store messages in Convex database
+    useEffect(() => {
+        const storeMessages = async () => {
+        try {
+            await convex.db.insert("messages", messages);
+        } catch (error) {
+            console.error('Error storing messages:', error);
+        }
+        };
+        storeMessages();
     }, [messages]);
+
+    
 
     // GET THE CHATBOTS RESPONSE
     const getChatbotResponse = async (prompt: string): Promise<string> => {
@@ -120,9 +150,6 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             const response = await result.response;
             const text = await response.text();
             return text;
-            // Simulating a chatbot response for the example
-            // const response = `Simulated response to: ${prompt}`;
-            // return response;
         } catch {
             if ((Error as unknown as AxiosError).response && (Error as unknown as AxiosError).response!.status === 429) {
                 throw new Error('Quota exceeded. Please try again later.');
@@ -133,7 +160,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     };
     const fetchData = async (input: string) => {
         // const result = await getChatbotResponse(`${promptText} ${input}`);
-        const result = await getChatbotResponse(`${promptText} ${input}`);
+        const result = await getChatbotResponse(`${input}`);
         setMessages((prevMessages) => [...prevMessages, { user: 'bot', text: result }]);
     };
 
