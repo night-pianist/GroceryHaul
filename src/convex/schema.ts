@@ -1,5 +1,5 @@
-import { defineSchema, defineTable } from "convex/server";
-import { v } from "convex/values"; 
+import { defineSchema, defineTable } from 'convex/server';
+import { v } from 'convex/values';
 
 export default defineSchema({
     chatHistory: defineTable({
@@ -8,9 +8,8 @@ export default defineSchema({
         timestamp: v.number(),
         message: v.string(),
     })
-    .index("byUserId", ["userId"])
-    .index("byTimestamp", ["timestamp"]),
-    
+    .index('byUserId', ['userId'])
+    .index('byTimestamp', ['timestamp']),
 
     user: defineTable({
         userId: v.string(),
@@ -21,6 +20,7 @@ export default defineSchema({
     .index('byEmail', ['email'])
     .index('byName', ['fullName']),
 });
+
 
 
 

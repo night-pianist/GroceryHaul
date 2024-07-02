@@ -1,9 +1,9 @@
-import { internalMutation, internalQuery, mutation, query } from "./_generated/server";
-import { v } from "convex/values";
+import { internalMutation, internalQuery, query, mutation } from './_generated/server';
+import { v } from 'convex/values';
 
 // GET CURRENT USER
 export const getCurrentUser = query({
-    args: { userId: v.string() }, 
+    args: { userId: v.string() }, // Ensure userId is correctly typed
     handler: async (ctx, args) => {
         const { userId } = args; // Destructure userId from args
         const user = await ctx.db.query('user')
@@ -13,17 +13,7 @@ export const getCurrentUser = query({
             throw new Error('User not found');
         }
         return user;
-        
-        // const userId = await ctx.auth.getUserIdentity();
-        // if (!userId) {
-        //     throw new Error('Not Authenticated');
-        // }
-        // const user = await ctx.db.query('user')
-        //     .withIndex('byUserId', (q) => q.eq("userId", userId.subject))
-        //     .first();
-
-        // return user; 
-    }
+    },
 });
 
 // GET A USER'S DATA

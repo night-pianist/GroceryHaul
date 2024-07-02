@@ -24,6 +24,10 @@
       "bcryptjs",
     ],
     "strictNullChecks": true,
+    // "baseUrl": "./",
+    // "paths": {
+    //     "@/*": ["src/*"]
+    // }
   },
   "include": [
     "src",
