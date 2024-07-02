@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ConvexProvider } from "convex/react";
+import convex from './components/Convex';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <Router>
     <React.StrictMode>
-      <App />
+      <ConvexProvider client={convex}>
+        <App />
+      </ConvexProvider>
     </React.StrictMode>
   </Router>
 );
