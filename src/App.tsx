@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
+import ConvexTest from './components/ConvexTest';
 
 
 function App() {
@@ -39,11 +40,12 @@ function App() {
   return (
       <>
         <Routes>
-          { <Route path="/" element={<Home />} /> } 
+          { <Route path="/" element={<ConvexTest />} /> } 
+          {/* { <Route path="/" element={<Home />} /> } 
           { <Route path="/map" element={<DestinationScreen center={center} />} /> }
           { <Route path="/login" element={<Login />} /> }
           { <Route path="/signup" element={<Signup />} />}
-          { <Route path="/dashboard" element={<Dashboard />} /> }
+          { <Route path="/dashboard" element={<Dashboard />} /> } */}
         </Routes>
       </>
   )

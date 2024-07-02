@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ConvexProvider } from "convex/react";
-import convex from './components/Convex';
+import convex from './components/ConvexClient';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

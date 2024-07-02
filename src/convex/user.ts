@@ -30,7 +30,7 @@ export const getUserData = internalQuery({
     }
 });
 
-export const update = internalMutation({
+export const updateUser = internalMutation({
     args: {
         userId: v.string(),
         email: v.string(),
