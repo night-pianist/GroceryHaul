@@ -18,7 +18,7 @@ const Signup: React.FC = () => {
         password,
       });
       console.log('Signup successful:', response.data);
-      //navigate('/login');
+      // navigate('/login');
       // Optionally, redirect to login page or display success message
     } catch (error) {
       console.error('Signup failed:', error);
