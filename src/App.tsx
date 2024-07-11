@@ -7,6 +7,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
+import { SignInButton, UserButton } from "@clerk/clerk-react";
+import { Authenticated, Unauthenticated, useQuery } from "convex/react";
+import { api } from "./convex/_generated/api";
 
 
 function App() {
@@ -38,6 +41,15 @@ function App() {
 
   return (
       <>
+      <main>
+      <Unauthenticated>
+        <SignInButton />
+      </Unauthenticated>
+      <Authenticated>
+        <UserButton />
+        <Content />
+      </Authenticated>
+    </main>
         <Routes>
           { <Route path="/" element={<Home />} /> } 
           { <Route path="/map" element={<DestinationScreen center={center} />} /> }
@@ -49,4 +61,9 @@ function App() {
   )
 }
 
-export default App
+function Content() {
+  const messages = useQuery(api.messages.getForCurrentUser);
+  return <div>Authenticated content: {messages?.length}</div>;
+}
+
+export default App 
