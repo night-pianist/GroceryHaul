@@ -27,6 +27,11 @@ const Login: React.FC = () => {
             <div className="login-card">
                 <h2 className="title">
                     <div className="text">
+                        {/* <span className="letter">L</span>
+                        <span className="letter">o</span>
+                        <span className="letter">g</span>
+                        <span className="letter">i</span>
+                        <span className="letter">n</span> */}
                         <span className="letter">W</span>
                         <span className="letter">e</span>
                         <span className="letter">l</span>
@@ -62,13 +67,12 @@ const Login: React.FC = () => {
                                 required 
                             />
                         </div>
-                        <button className="login-page-btn" type="submit">Login</button>
+                        <button className="login-btn" type="submit">Login</button>
                     </div>
                 </form>
                 <button className="signup-btn">
                     <a href="/signup">First time here? Click here to create an account!</a>
                 </button>
-                 {/* <Route path="/signup" element={<Signup />} /> */}
             </div>
         </div>
     );

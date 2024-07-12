@@ -4,10 +4,16 @@ const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
+const {
+    GoogleGenerativeAI,
+  } = require('@google/generative-ai');
+
+require('dotenv').config(); // Load environment variables from .env file  
 
 const app = express();
 const PORT = 5002;
 const JWT_SECRET = 'your_jwt_secret'; 
+const apiKey = process.env.REACTREACT_APP_GEMINI_API_KEY;
 
 app.use(cors());
 app.use(express.json());
@@ -75,6 +81,49 @@ app.post('/verify-token', (req, res) => {
     } catch (error) {
         res.status(401).send('Invalid token');
     }
+});
+
+// Google Generative AI setup
+const genAI = new GoogleGenerativeAI(apiKey);
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-pro",
+});
+
+const generationConfig = {
+  temperature: 1,
+  topP: 0.95,
+  topK: 64,
+  maxOutputTokens: 8192,
+  responseMimeType: "text/plain",
+};
+
+app.post('/api/chat', async (req, res) => {
+  const { userMessage } = req.body;
+
+  const chatSession = model.startChat({
+    generationConfig,
+    history: [
+      {
+        role: "user",
+        parts: [
+          { text: "You are a friendly assistant that helps users with their shopping errands..." },
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          { text: "Okay! I'm ready to help you whip up something delicious. First, tell me..." },
+        ],
+      },
+    ],
+  });
+
+  try {
+    const result = await chatSession.sendMessage(userMessage);
+    res.json({ response: result.response.text() });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.listen(PORT, () => {

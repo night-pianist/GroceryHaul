@@ -41,12 +41,11 @@ function App() {
   return (
       <>
         <Routes>
-          { <Route path="/" element={<Home />} /> } 
-          { <Route path="/map" element={<DestinationScreen center={center} />} /> }
+          { <Route path="/" element={<DestinationScreen center={center}/>} /> } 
+          {/* { <Route path="/map" element={<DestinationScreen center={center} />} /> }
           { <Route path="/login" element={<Login />} /> }
           { <Route path="/signup" element={<Signup />} />}
-          { <Route path="/dashboard" element={<Dashboard />} /> }
-          {/* { <Route path="/" element={<Chatbot />} /> }  */}
+          { <Route path="/dashboard" element={<Dashboard />} /> } */}
         </Routes>
       </>
   )

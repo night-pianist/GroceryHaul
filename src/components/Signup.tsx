@@ -31,6 +31,7 @@ const Signup: React.FC = () => {
       <div className = "signup-card">
         <h2 className="title">
           <div className="text">
+            {/* letter by letter */}
             <span className="letter">W</span>
             <span className="letter">e</span>
             <span className="letter">l</span>
@@ -55,6 +56,13 @@ const Signup: React.FC = () => {
             <span className="letter">u</span>
             <span className="letter">l</span>
             <span className="letter">!</span>
+            {/* word by word - need to fix because adopting animation from login.css instead of signup.css*/}
+            {/* <span className="letter" id = "letter-before-space">Welcome </span>
+            <span className="letter"> </span>
+            <span className="letter" id = "letter-before-space">to</span>
+            <span className="letter"> </span>
+            <span className="letter"> Grocery-Haul!</span> */}
+
           </div>
         </h2>
         <div className = "user-input">
