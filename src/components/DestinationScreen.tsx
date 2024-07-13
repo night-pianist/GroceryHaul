@@ -409,7 +409,6 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                                                     }
                                                 </li>
                                             );
-
                                             if (selectedRoute.stepsDist[i] === "") {storeIndex += 1}
                                         }
                                         return items;
