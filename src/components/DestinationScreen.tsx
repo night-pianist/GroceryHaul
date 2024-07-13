@@ -378,7 +378,13 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                             <span style={{color: '#757575', fontSize: '18px', fontWeight: 'bold'}}> ({selectedRoute.distFormatted})</span>
                         </div>
                         <div className="white-background" style={{ overflowY: 'auto', maxHeight: '75vh' }}>
-                        <span style={{fontSize: '18px', fontWeight: 'bold'}}>Current Location</span>
+                        <div className="pink-background">
+                            <div className="text-styling">
+                                <span style={{fontSize: '18px', fontWeight: 'bold'}}>Current Location</span>
+                                <br />
+                                <span style={{ color: 'grey', fontSize: '0.8em'}}>Starting your adventures!</span>
+                            </div>
+                        </div>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                                 {selectedRoute && (
                                     // Use a for loop to iterate through selectedRoute.stepsInstr length
@@ -390,7 +396,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                                             const step = selectedRoute.stepsInstr[i];
 
                                             items.push(
-                                                <li key={i}>
+                                                <li key={i} className="step-item">
                                                     {step} 
                                                     <br />
                                                     {
@@ -400,10 +406,12 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                                                                 <span className="grey-line"></span>
                                                             </span>
                                                         ) : (
-                                                            <div>
-                                                                <span style={{ fontSize: '18px', fontWeight: 'bold' }}>{selectedRoute.storeList[storeIndex]}</span>
-                                                                <br />
-                                                                <span style={{ color: 'grey', fontSize: '0.8em' }}>{selectedRoute.addressList[storeIndex]}</span>
+                                                            <div className="pink-background">
+                                                                <div className="text-styling">
+                                                                    <span style={{ fontSize: '18px', fontWeight: 'bold'}}>{selectedRoute.storeList[storeIndex]}</span>
+                                                                    <br />
+                                                                    <span style={{ color: 'grey', fontSize: '0.8em'}}>{selectedRoute.addressList[storeIndex]}</span>
+                                                                </div>
                                                             </div>
                                                         )
                                                     }

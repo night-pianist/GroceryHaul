@@ -52,6 +52,23 @@
     margin-left: 5px;
 }
 
+.step-item {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.pink-background {
+    background-color: #FFE7E7;
+    border: 1px solid #FF958C;
+    width: calc(100% + 20px); 
+    margin-left: -10px; /* Negative margin to offset padding */
+}
+
+.text-styling {
+    margin-left: 10px;
+}
+
 /* formats info bar (lat, lng, zoom) at top */
 /* .sidebar { 
     background-color: rgb(35 55 75 / 90%);
