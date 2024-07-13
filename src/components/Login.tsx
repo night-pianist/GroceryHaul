@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../styles/Login.css';
-
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
+
+    const mapAnimationPath = `${process.env.PUBLIC_URL}/MapArrowAnimation.gif`;
+    const staticMapPath = `${process.env.PUBLIC_URL}/StaticBackgroundMap.svg`;
+
+    const [src, setSrc] = useState(mapAnimationPath);
+
+    const handleError = () => {
+        setSrc(staticMapPath);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -24,8 +32,10 @@ const Login: React.FC = () => {
 
     return (
         <div className="login-container">
+            <div className="background" style={{ backgroundImage: `url(${src})` }} onError={handleError}></div>
             <div className="login-card">
                 <h2 className="title">
+<<<<<<< HEAD
                     <div className="text">
                         {/* <span className="letter">L</span>
                         <span className="letter">o</span>
@@ -45,6 +55,20 @@ const Login: React.FC = () => {
                         <span className="letter">c</span>
                         <span className="letter">k</span>
                     </div>
+=======
+                    <span>W</span>
+                    <span>e</span>
+                    <span>l</span>
+                    <span>c</span>
+                    <span>o</span>
+                    <span>m</span>
+                    <span>e</span>
+                    <span className="space"></span>
+                    <span>B</span>
+                    <span>a</span>
+                    <span>c</span>
+                    <span>k</span>
+>>>>>>> fcaa80821677c1fd9e59e5c66c993ec5e87cf9e7
                 </h2>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 <form onSubmit={handleSubmit}>
@@ -70,9 +94,20 @@ const Login: React.FC = () => {
                         <button className="login-btn" type="submit">Login</button>
                     </div>
                 </form>
+<<<<<<< HEAD
                 <button className="signup-btn">
                     <a href="/signup">First time here? Click here to create an account!</a>
                 </button>
+=======
+                <div className="signup-btn">
+                    <Link to="/signup" style={{ color: '#007bff' }}>
+                        First time here?
+                    </Link>
+                    <Link to="/signup" style={{ color: '#007bff' }}>
+                        Click here to create an account!
+                    </Link>
+                </div>
+>>>>>>> fcaa80821677c1fd9e59e5c66c993ec5e87cf9e7
             </div>
         </div>
     );

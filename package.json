@@ -31,6 +31,10 @@
     "jsonwebtoken": "^9.0.2",
     "mapbox-gl": "^3.4.0",
     "mongoose": "^8.4.3",
+<<<<<<< HEAD
+=======
+    "next-auth": "^5.0.0-beta.19",
+>>>>>>> fcaa80821677c1fd9e59e5c66c993ec5e87cf9e7
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-map-gl": "^7.1.7",

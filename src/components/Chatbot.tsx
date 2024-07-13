@@ -98,8 +98,7 @@
 // export default ChatBot;
 
 
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Import the necessary modules from the Google Generative AI SDK
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -113,11 +112,9 @@ const ChatBot: React.FC = () => {
   const [savedResponse, setSavedResponse] = useState('');
   const [stores, setStores] = useState<string[]>([]);
   const ogStores: string[] = [];
-  // setStores(string[] = []);
-  // stores.push("starting point");
-  // stores.push("starting point");
-  
-  
+  //debugging 
+  // const testing = 'testing';
+  // const [debugResult, setDebugResult] = useState('');
 
   // Initialize the Generative AI model
   const genAI = new GoogleGenerativeAI(apiKey!);
@@ -130,6 +127,42 @@ const ChatBot: React.FC = () => {
     maxOutputTokens: 8192,
     responseMimeType: 'text/plain',
   };
+  //debugging 
+  // useEffect(() => {
+  //   if (testing.includes('testing')) {
+  //     setDebugResult('Message updated');
+  //     setBotResponse('Here is the finalized list of stores you should stop at: Ralphs, Costco, Smart & Final.')
+  //   }
+  // }, [userMessage]);
+
+  useEffect(() => {
+    if (botResponse.includes('finalized')) {
+      const responseText = botResponse;
+      setSavedResponse(responseText);
+      // setDebugResult('if statement for botresponse works')
+
+      const ogStores: string[] = [];
+      let startIndex = responseText.indexOf(':') + 1;
+      let endIndex = responseText.indexOf('.', startIndex);
+
+      while (startIndex < endIndex) {
+        const commaIndex = responseText.indexOf(',', startIndex);
+        const store = commaIndex !== -1 && commaIndex < endIndex 
+          ? responseText.slice(startIndex, commaIndex).trim()
+          : responseText.slice(startIndex, endIndex).trim();
+
+        if (store) {
+          ogStores.push(store);
+        }
+
+        startIndex = commaIndex !== -1 && commaIndex < endIndex 
+          ? commaIndex + 1
+          : endIndex + 1;
+      }
+
+      setStores((prevStores) => [...prevStores, ...ogStores]);
+    }
+  }, [botResponse]);
 
   const sendMessage = async () => {
     try {
@@ -154,24 +187,10 @@ const ChatBot: React.FC = () => {
       const result = await chatSession.sendMessage(userMessage);
       const responseText = await result.response.text();
       setBotResponse(responseText);
-
-      // setBotResponse("Here is the finalized list of stores you should stop at: Trader Joe's, Ralphs.")
-      
-      // Save the specific response to a variable (for example, the first response)
-      if (responseText.includes('Here is the finalized list of stores you should shop at:')) {
-        //need to separate stores from the actual botresponse 
-        setSavedResponse(responseText); // Adjust the condition as needed
-        ogStores.push('if statement works');
-        let i = savedResponse.indexOf(';') + 1;
-        while(i > savedResponse.indexOf(".")){
-          stores.push(savedResponse.slice(i, savedResponse.indexOf(",", i)));
-          i = savedResponse.indexOf("," , i) + 1;
-        }
-        setStores((prevResponses) => [...prevResponses, ...ogStores]);
-      }
     } catch (error) {
       console.error('Error sending message:', error);
     }
+
   };
 
   return (
@@ -194,6 +213,8 @@ const ChatBot: React.FC = () => {
           ))}
         </ul>
         <p>{ogStores}</p>
+        {/* debugging */}
+        {/* <p>{debugResult}</p> */}
       </div>
     </div>
   );

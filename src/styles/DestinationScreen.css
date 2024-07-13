@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .map {
     display: flex;
     margin: 0;
@@ -7,6 +8,10 @@
 .map-container { /* size map to webpage size */
     height: 100vh; 
     width: 70%;
+=======
+.map-container { /* size map to webpage size */
+    height: 100vh; 
+>>>>>>> fcaa80821677c1fd9e59e5c66c993ec5e87cf9e7
 }
 
 .sidebar { /* formats info bar (lat, lng, zoom) at top */
@@ -20,6 +25,7 @@
     left: 0;
     margin: 12px;
     border-radius: 4px;
+<<<<<<< HEAD
 } 
 
 .chatbot {
@@ -148,3 +154,6 @@ button {
     margin-bottom: 30px;
     /* text-align: right; */
 }
+=======
+} 
+>>>>>>> fcaa80821677c1fd9e59e5c66c993ec5e87cf9e7

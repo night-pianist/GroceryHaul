@@ -2,10 +2,13 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map, Control } from 'mapbox-gl'; 
 import 'mapbox-gl/dist/mapbox-gl.css'; // for mapbox styling
 import '../styles/DestinationScreen.css';
+<<<<<<< HEAD
 import axios, { AxiosError } from 'axios';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 // import { ConvexHttpClient } from "@convex-dev/http";
+=======
+>>>>>>> fcaa80821677c1fd9e59e5c66c993ec5e87cf9e7
 
 const genAI = new GoogleGenerativeAI('AIzaSyB5rLcXCczp92gxKXTORk3g_LJAzyBm9zA');
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
