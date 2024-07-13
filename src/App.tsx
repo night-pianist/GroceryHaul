@@ -8,6 +8,7 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
 import Chatbot from './components/Chatbot';
+import ShoppingAssistant from './components/ShoppingAssistant';
 
 
 function App() {
@@ -41,7 +42,8 @@ function App() {
   return (
       <>
         <Routes>
-          { <Route path="/" element={<DestinationScreen center={center}/>} /> } 
+          {/* { <Route path="/" element={<DestinationScreen center={center}/>} /> }  */}
+          {<Route path ="/" element = {<ShoppingAssistant/>}/>}
           {/* { <Route path="/map" element={<DestinationScreen center={center} />} /> }
           { <Route path="/login" element={<Login />} /> }
           { <Route path="/signup" element={<Signup />} />}

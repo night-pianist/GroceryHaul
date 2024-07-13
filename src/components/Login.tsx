@@ -35,27 +35,6 @@ const Login: React.FC = () => {
             <div className="background" style={{ backgroundImage: `url(${src})` }} onError={handleError}></div>
             <div className="login-card">
                 <h2 className="title">
-<<<<<<< HEAD
-                    <div className="text">
-                        {/* <span className="letter">L</span>
-                        <span className="letter">o</span>
-                        <span className="letter">g</span>
-                        <span className="letter">i</span>
-                        <span className="letter">n</span> */}
-                        <span className="letter">W</span>
-                        <span className="letter">e</span>
-                        <span className="letter">l</span>
-                        <span className="letter">c</span>
-                        <span className="letter">o</span>
-                        <span className="letter">m</span>
-                        <span className= "letter" id="letter-before-space">e</span>
-                        <span className="letter"> </span>
-                        <span className="letter">B</span>
-                        <span className="letter">a</span>
-                        <span className="letter">c</span>
-                        <span className="letter">k</span>
-                    </div>
-=======
                     <span>W</span>
                     <span>e</span>
                     <span>l</span>
@@ -68,7 +47,6 @@ const Login: React.FC = () => {
                     <span>a</span>
                     <span>c</span>
                     <span>k</span>
->>>>>>> fcaa80821677c1fd9e59e5c66c993ec5e87cf9e7
                 </h2>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 <form onSubmit={handleSubmit}>
@@ -94,11 +72,6 @@ const Login: React.FC = () => {
                         <button className="login-btn" type="submit">Login</button>
                     </div>
                 </form>
-<<<<<<< HEAD
-                <button className="signup-btn">
-                    <a href="/signup">First time here? Click here to create an account!</a>
-                </button>
-=======
                 <div className="signup-btn">
                     <Link to="/signup" style={{ color: '#007bff' }}>
                         First time here?
@@ -107,7 +80,6 @@ const Login: React.FC = () => {
                         Click here to create an account!
                     </Link>
                 </div>
->>>>>>> fcaa80821677c1fd9e59e5c66c993ec5e87cf9e7
             </div>
         </div>
     );

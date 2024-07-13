@@ -2,88 +2,63 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map, Control } from 'mapbox-gl'; 
 import 'mapbox-gl/dist/mapbox-gl.css'; // for mapbox styling
 import '../styles/DestinationScreen.css';
-<<<<<<< HEAD
-import axios, { AxiosError } from 'axios';
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { ConvexProvider, ConvexReactClient } from "convex/react";
-// import { ConvexHttpClient } from "@convex-dev/http";
-=======
->>>>>>> fcaa80821677c1fd9e59e5c66c993ec5e87cf9e7
 
-const genAI = new GoogleGenerativeAI('AIzaSyB5rLcXCczp92gxKXTORk3g_LJAzyBm9zA');
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
-const convex = new ConvexReactClient('https://fleet-guanaco-936.convex.cloud');
-const db = new ConvexReactDBClient(convex);
+// import geoJson from "./chicago-parks.json"; // used to import data to display
 
+// const dotenv = require('dotenv');
+// dotenv.config();
+
+// console.log('Mapbox Token:', process.env.REACT_APP_MAPBOX_TOKEN);
+// const mapbox_token: string = (process.env.REACT_APP_MAPBOX_TOKEN as string);
+// console.log('Mapbox Token as string:', mapbox_token);
+
+// mapboxgl.accessToken = String(process.env.REACT_APP_MAPBOX_TOKEN);
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
 
-interface DestinationScreenProps { // for the map display
-    center: [ number, number ]; // define center as a tuple with named properties
-}
+  
+// const successLocation = (position: GeolocationPosition) => {
+//     const latitude = position.coords.latitude;
+//     const longitude = position.coords.longitude;
+//     // Pass coordinates to DestinationScreen component
+//     return <DestinationScreen center={[longitude, latitude]} />;
+// };
+// Define props interface for DestinationScreen component
+// interface DestinationScreenProps {
+//     center: [number, number]; // Tuple for longitude and latitude
+// }
 
-interface Message { // message interface to display the chat history
-    user: string;
-    text: string;
+// // Function to render the DestinationScreen component with coordinates
+// const successLocation = (position: GeolocationPosition) => {
+//     const latitude = position.coords.latitude;
+//     const longitude = position.coords.longitude;
+//     // Pass coordinates to DestinationScreen component
+//     return <DestinationScreen center={[longitude, latitude]} />;
+// };
+
+// export default function DestinationScreen() {
+    // const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
+
+const defaultLatitude = 34.0699; 
+const defaultLongitude = -10.4441;
+
+interface DestinationScreenProps {
+    // center: [latitude: number, longitude: number]; // Define center as a tuple with named properties
+    center: [ number, number ]; // Define center as a tuple with named properties
 }
 
 const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
-    const container = useRef<HTMLDivElement>(null); // specify the type for container and map
+    const container = useRef<HTMLDivElement>(null); // specify type for container and map
     const map = useRef<mapboxgl.Map | null>(null); 
     const mapContainer = useRef(null);
-    const [lng, setLng] = useState(center[1]); // access longitude from the tuple
-    const [lat, setLat] = useState(center[0]); // access latitude from the tuple
-    const [zoom, setZoom] = useState(15); // set the default zoom 
-    const [promptText, setPromptText] = useState<string>(''); // set up to read prompt for gemini
-    const [userInput, setUserInput] = useState<string>(''); // set up to get user input
-    const initialResponseFetched = useRef<boolean>(false); // set up chatbot greeting
-    const [messages, setMessages] = useState<Message[]>(() => { // set up for the msg interface 
-        const savedMessages = localStorage.getItem('messages'); // set up for chat history
-        return savedMessages ? JSON.parse(savedMessages) : []; 
-    });
-
-    useEffect(() => {
-        // Clear local storage on component load
-        localStorage.clear();
-    }, []);
-
-    // READ IN THE PROMPT FROM PROMPT.TXT IN THE PUBLIC DIRECTORY
-    const readPromptFile = async (): Promise<string> => {
-        try {
-          const response = await fetch('/prompt.txt');
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          const text = await response.text();
-          return text;
-        } catch (error) {
-          console.error('Error reading the prompt file:', error);
-          throw error;
-        }
-    };
+    // const [lng, setLng] = useState(-118.4441); // use UCLA lat, lng as default 
+    // const [lat, setLat] = useState(34.0699);
+    const [lng, setLng] = useState(center[1]); // Access longitude from the tuple
+    const [lat, setLat] = useState(center[0]); // Access latitude from the tuple
+    const [zoom, setZoom] = useState(15);
     
     useEffect(() => {
-        // console.log("here");
-        // PARSES THE PROMPT.TXT FILE TO GET ITS CONTENT
-        const fetchPromptText = async () => {
-            try {
-                const text = await readPromptFile();
-                setPromptText(text);
-
-                // fetch initial bot response based on prompt text
-                if (!initialResponseFetched.current) {
-                    const initialResponse = await getChatbotResponse(text);
-                    setMessages((prevMessages) => [...prevMessages, { user: 'bot', text: initialResponse }]);
-                    initialResponseFetched.current = true; // ensure initial response is only fetched once
-                }
-            } catch (error) {
-              console.error('Failed to fetch prompt text:', error);
-            }
-        };
-        fetchPromptText();
-
         if (map.current) return; // initialize map only once
     
-        // DISPLAYS THE MAP
         map.current = new mapboxgl.Map({
             container: mapContainer.current as unknown as HTMLElement, // type guard
             style: 'mapbox://styles/mapbox/dark-v11', // can change style to whatever
@@ -92,7 +67,8 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             attributionControl: false
         });
 
-        map.current.addControl( // add navigation control 
+        // add navigation control 
+        map.current.addControl(
             new mapboxgl.GeolocateControl({
                 positionOptions: {
                     enableHighAccuracy: true
@@ -102,7 +78,8 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             }), 'top-right'
         );
 
-        const onMove = () => { // update lat/long values when the user moves the map 
+        // update lat/long values when map is moved 
+        const onMove = () => {
             if (map.current) {
                 const newLng = parseFloat(map.current.getCenter().lng.toFixed(4)); // convert to number to be used in setState
                 const newLat = parseFloat(map.current.getCenter().lat.toFixed(4));
@@ -113,103 +90,59 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                 setZoom(newZoom); 
             }
         };
-        map.current.on('move', onMove);   
-    }, []);
+        map.current.on('move', onMove);    
 
-    // useEffect(() => { // access the chatbot's history
-    //     localStorage.setItem('messages', JSON.stringify(messages));
-    // }, [messages]);
-    useEffect(() => {
-        // Fetch messages from Convex on component load
-        const fetchMessages = async () => {
-          try {
-            const response = await convex.db.table("messages").order("desc").collect();
-            setMessages(response.data);
-          } catch (error) {
-            console.error('Error fetching messages:', error);
-          }
-        };
-        fetchMessages();
-    }, []);
-
-    // Store messages in Convex database
-    useEffect(() => {
-        const storeMessages = async () => {
-        try {
-            await convex.db.insert("messages", messages);
-        } catch (error) {
-            console.error('Error storing messages:', error);
-        }
-        };
-        storeMessages();
-    }, [messages]);
-
-    
-
-    // GET THE CHATBOTS RESPONSE
-    const getChatbotResponse = async (prompt: string): Promise<string> => {
-        try { // NEED TO CHANGE THIS SO THAT IT GENERATES A RESPONSE USING ITS STORED LOCAL HISTORY
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = await response.text();
-            return text;
-        } catch {
-            if ((Error as unknown as AxiosError).response && (Error as unknown as AxiosError).response!.status === 429) {
-                throw new Error('Quota exceeded. Please try again later.');
-            } else {
-                throw new Error('An error occurred while fetching data.');
-            }
-        }
-    };
-    const fetchData = async (input: string) => {
-        // const result = await getChatbotResponse(`${promptText} ${input}`);
-        const result = await getChatbotResponse(`${input}`);
-        setMessages((prevMessages) => [...prevMessages, { user: 'bot', text: result }]);
-    };
-
-    // HANDLES WHEN USER INPUTS THEIR RESPONSE 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        const newMessage = { user: 'user', text: userInput };
-        setMessages((prevMessages) => [...prevMessages, newMessage]);
-        fetchData(userInput);
-        setUserInput('');
-    };
+        // Create default markers
+        // geoJson.features.map((feature) =>
+        //     new mapboxgl.Marker().setLngLat(feature.geometry.coordinates).addTo(map)
+        // );
+        // const marker = new mapboxgl.Marker({
+        //     color: "green"
+        // }).setLngLat([-118.4441, 34.0699])
+        //     .addTo(map.current);
+        // });
+    })
 
     return (
         <div className="map">
             <div className="sidebar">
                 Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
             </div>
-            <div ref={mapContainer} className="map-container" /> 
-            <div className="chatbot">
-                <div className="chat-history">
-                    {messages.map((message, index) => (
-                        <div key={index} className={message.user === 'user' ? 'user-message' : 'bot-message'}>
-                            <strong className={message.user === 'user' ? 'user-label' : 'bot-label'}>
-                                {message.user === 'user' ? 'You: ' : 'Grocery-Haul: '}
-                            </strong>
-                            <div>
-                                <p className={message.user === 'user' ? 'user-response' : 'bot-response'}>
-                                    {message.text}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-                <form onSubmit={handleSubmit}>
-                    <input 
-                        className="user-input"
-                        type="text" 
-                        value={userInput} 
-                        onChange={(e) => setUserInput(e.target.value)} 
-                        required 
-                    />
-                    <button type="submit">Submit</button>
-                </form>
-            </div>
+            <div ref={mapContainer} className="map-container" />
         </div>
     );
 }
 
 export default DestinationScreen;
+
+// const successLocation = (position: GeolocationPosition) => {
+//     const latitude = position.coords.latitude;
+//     const longitude = position.coords.longitude;
+//     // DestinationScreen(center)
+//     // Pass coordinates to DestinationScreen component
+//     return <DestinationScreen center={[longitude, latitude]} />;
+// };
+
+// const errorLocation = () => {
+//     console.error('Error getting location');
+// };
+
+// navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
+//     enableHighAccuracy: true
+// });
+
+
+// export default DestinationScreen();
+
+// export default function App() {
+//     // Example usage: Trigger successLocation to get current coordinates
+//     useEffect(() => {
+//         navigator.geolocation.getCurrentPosition(successLocation);
+//     }, []);
+
+//     return (
+//         <div className="App">
+//             {/* This is where your DestinationScreen component will be rendered */}
+//         </div>
+//     );
+// }
