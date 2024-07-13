@@ -1,8 +1,58 @@
+.display-container {
+    display: flex;
+    height: 100vh;
+}
+
+.graybox {
+    background-color: gray;
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 2em;
+}
+
 .map-container { /* size map to webpage size */
+    flex-grow: 1;
     height: 100vh; 
 }
 
-.sidebar { /* formats info bar (lat, lng, zoom) at top */
+.dropdown-btn {
+    background-color: white;
+}
+
+.route-info {
+    width: 100%;
+}
+
+.first-white-background {
+    padding-top: 1.5em;
+}
+
+.white-background {
+    background-color: white;
+    border: 1px solid gainsboro; 
+    border-radius: 0; 
+    margin: -1px; 
+    padding: 10px; 
+    width: 80%;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.grey-line {
+    display: block;
+    flex: 1;
+    height: 1px;
+    background-color: gainsboro;
+    margin-left: 5px;
+}
+
+/* formats info bar (lat, lng, zoom) at top */
+/* .sidebar { 
     background-color: rgb(35 55 75 / 90%);
     color: #fff;
     padding: 6px 12px;
@@ -13,5 +63,5 @@
     left: 0;
     margin: 12px;
     border-radius: 4px;
-} 
+}  */
 

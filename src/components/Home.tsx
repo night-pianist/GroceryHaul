@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import '../styles/Home.css'
 import { Link } from 'react-router-dom';
 
+
 function Home(): JSX.Element {
     const mapAnimationPath = `${process.env.PUBLIC_URL}/MapArrowAnimation.gif`;
     const staticMapPath = `${process.env.PUBLIC_URL}/StaticBackgroundMap.svg`;
@@ -21,8 +22,8 @@ function Home(): JSX.Element {
         <div className="whitebox-container">
             <img src={whiteBox} alt="white box"></img>
             <div className="buttons-container">
-              <Link to="/login" className="btn btn-primary btn-lg" role="button">LOGIN</Link>
-              <Link to="/signup" className="btn btn-primary btn-lg" role="button">SIGNUP</Link>
+              <Link to="/login" className="btn">LOGIN</Link>
+              <Link to="/signup" className="btn">SIGNUP</Link>
             </div>
         </div>
         <div className="logo-container">

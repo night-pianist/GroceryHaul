@@ -1726,6 +1726,11 @@
     "schema-utils" "^4.2.0"
     "source-map" "^0.7.3"
 
+"@popperjs/core@^2.11.8":
+  "integrity" "sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A=="
+  "resolved" "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz"
+  "version" "2.11.8"
+
 "@remix-run/router@1.16.1":
   "integrity" "sha512-es2g3dq6Nb07iFxGk5GuHN20RwBZOsuDQN7izWIisUcv9r+d2C5jQxqmgkdebXgReWfiyUabcki6Fg77mSNrig=="
   "resolved" "https://registry.npmjs.org/@remix-run/router/-/router-1.16.1.tgz"
