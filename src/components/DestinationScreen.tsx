@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map, Control, GeoJSONSourceRaw } from 'mapbox-gl'; 
 import 'mapbox-gl/dist/mapbox-gl.css'; // for mapbox styling
 import '../styles/Map.css';
+import Dropdown from './DropdownBtn';
 
 // mapboxgl.accessToken = String(process.env.REACT_APP_MAPBOX_TOKEN);
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
@@ -18,10 +19,11 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     const [lat, setLat] = useState(center[0]); // Access latitude from the tuple
     const [zoom, setZoom] = useState(15);
     // Array of all the routeInfos
-    //[array_name, function that sets the array]
-    const [routeInfos, setRouteInfos] = useState<Array<{ distance: number; duration: number; steps: string[]; routeCoordinates: any; routeName: string }>>([]); 
+    const [routeInfos, setRouteInfos] = useState<Array<{ distFormatted: string; duration: string; stepsInstr: string[]; stepsDist: string[]; routeCoordinates: any; routeName: string; storeList: string[]; addressList: string[] }>>([]); 
+    // Input data from the chatbot will be stored in this array
     const [inputData, addInputData] = useState<Array<{ routeName: string; storeList: string[]}>>([]);
-    const [artists, setArtists] = useState([]);
+    // Keeps track of selected route
+    const [selectedRoute, setSelectedRoute] = useState<{ distFormatted: string; duration: string; stepsInstr: string[]; stepsDist: string[]; routeCoordinates: any; routeName: string; storeList: string[]; addressList: string[] } | null>(null);
     
     useEffect(() => {
         if (map.current) return; // initialize map only once
@@ -83,13 +85,9 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             try {
                 // Processing Input Data
                 for (const route of inputData) {
-                    //console.log("entered for loop");
-                    const result = await getCoordinateForAddresses(route.storeList);
-                    const coordDest = result.coordinatesString;
-                    const geoPoints = result.geoPointsArr
-                    //console.log("obtained route coordinates");
-                    const routeCoords = await generateRouteInfo(coordDest, route.routeName);
-                    //console.log("generated routeInfo");
+                    const coordDest = await getCoordinateForAddresses(route.storeList);
+                    const pathName = await formatPathName(route.storeList);
+                    await generateRouteInfo(coordDest.coordinates, route.routeName, route.storeList, coordDest.matchingPlaceNames);
                 }
             } catch (error) {
                 console.error('Error geocoding address:', error);
@@ -119,6 +117,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             + `&geometries=geojson`
             + `&overview=full`
             + `&annotations=distance,duration`
+            + `&voice_instructions=true`
             + `&access_token=${mapboxgl.accessToken}`,      
             { method: 'GET' }
         );
@@ -130,12 +129,13 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
         const data = json.routes[0];
         const route = data.geometry.coordinates;
 
-        let allSteps: { instruction: string; distance: number }[] = [];
+        let allSteps: { instruction: string; distance: string; announcement: string }[] = [];
 
         data.legs.forEach((leg: any) => {
             let stepsWithDistance = leg.steps.map((step: any) => ({
                 instruction: step.maneuver.instruction,
-                distance: step.distance
+                distance: formatDistance2(step.distance),
+                announcement: step.voiceInstructions && step.voiceInstructions[0]?.announcement || ""
             }));
             allSteps = allSteps.concat(stepsWithDistance);
         });
@@ -149,26 +149,58 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     }
 
     // Store Route Information
-    const storeRouteInfo = (routeInfo: any, routeName: string, geoPoints: [[int]]) => {
+    const storeRouteInfo = (routeInfo: any, routeName: string, storeList: string[], addressList: string[]) => {
+        const distance = formatDistance1(routeInfo.distance);
+        
+        const durationInSeconds = routeInfo.duration;
+        const hours = Math.floor(durationInSeconds / 3600);
+        const minutes = Math.floor((durationInSeconds % 3600) / 60);
+
+        const durationFormatted = hours > 0
+            ? `${hours} hr ${minutes} min`
+            : `${minutes} min`;
+
         setRouteInfos(prevRouteInfos => [
             ...prevRouteInfos,
             {
-                distance: routeInfo.distance,
-                duration: routeInfo.duration,
-                steps: routeInfo.steps.map((step: any) => step.instruction),
+                distFormatted: distance,
+                duration: durationFormatted,
+                stepsInstr: routeInfo.steps.map((step: any) => step.instruction),
+                stepsDist: routeInfo.steps.map((step: any) => step.distance),
                 routeCoordinates: routeInfo.routeCoordinates,
-                routeName: routeName
-                //geopoint declaration
+                routeName: routeName,
+                storeList: storeList,
+                addressList: addressList
             }
         ]);
     }
 
-    //[[lattitude, longitude],[lattitude, longitude]]
-    // var routeGeopoint = function (routeName, geoPoints)
-    // var Card = function(rank, suit){
-    //     this.rank = rank; 
-    //     this.suit = suit
-    //   }
+    // storeRouteInfo helper function
+    const formatDistance1 = (distance: number) => {
+        let distanceFormatted = "";
+        if (distance < 160 && distance > 0) {
+            const distInFeet = Math.floor(distance * 3);
+            distanceFormatted = `${distInFeet} feet`;
+        }
+        else if (distance >= 160) {
+            const distInMiles = Math.round(distance * 0.000621371192237 * 10) / 10;
+            distanceFormatted = `${distInMiles} miles`;
+        }
+        return distanceFormatted;
+    }
+
+    const formatDistance2 = (distance: number) => {
+        let distanceFormatted = "";
+        if (distance < 160 && distance > 0) {
+            const distInFeet = Math.floor(distance * 3);
+            distanceFormatted = `${distInFeet} ft`;
+        }
+        else if (distance >= 160) {
+            const distInMiles = Math.round(distance * 0.000621371192237 * 10) / 10;
+            distanceFormatted = `${distInMiles} mi`;
+        }
+        return distanceFormatted;
+    }
 
     // displayRoute function
     // add geopoint parameter routInfo.geoPoints
@@ -188,10 +220,10 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             // if the route already exists on the map, we'll reset it using setData
             if (currentMap.getSource('route')) {
                 (currentMap.getSource('route') as mapboxgl.GeoJSONSource).setData(geojson);
-                //console.log("no route displayed");
+                console.log("Route updated");
             } else {
                 // otherwise, we'll make a new request
-               // console.log("displaying a route");
+                console.log("Displaying a new route");
                 currentMap.addLayer({
                     id: 'route',
                     type: 'line',
@@ -213,8 +245,22 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
         }
     };
 
+    // formatPathName
+    const formatPathName = (addressNameList: string[]) => {
+        let formattedPathName: string = "";
+        for (let addressName of addressNameList) {
+            formattedPathName += addressName + ' → ';
+        }
+
+        if (formattedPathName.endsWith(' → ')) {
+            formattedPathName = formattedPathName.slice(0, -3);
+        }
+
+        return formattedPathName;
+    };
+
     // generateRouteInfo returning routeCoordinates or null if failed
-    const generateRouteInfo = async (coordRoute: string, routeName: string) => {
+    const generateRouteInfo = async (coordRoute: string, routeName: string, storeList: string[], addressList: string[]) => {
         const routeInfo = await fetchRouteInfo(coordRoute);
         if (routeInfo) {
             storeRouteInfo(routeInfo, routeName); //pass in geopoints [lattitude, longitude]
@@ -229,9 +275,9 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     const generateAndStoreRoutes = async (routes: { name: string, addresses: string[]} []) => {
         for (const route of routes) {
             const coordRoute = await getCoordinateForAddresses(route.addresses);
-            const routeInfo = await fetchRouteInfo(coordRoute);
+            const routeInfo = await fetchRouteInfo(coordRoute.coordinates);
             if (routeInfo) {
-                storeRouteInfo(routeInfo, route.name);
+                storeRouteInfo(routeInfo, route.name, route.addresses, coordRoute.matchingPlaceNames);
             }
         }
     }
@@ -253,7 +299,11 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             const data = await response.json();
             if (data.features && data.features.length > 0) {
                 // Return the coordinates of the first feature
-                return data.features[0].center;
+                const feature = data.features[0];
+                return {
+                    coordinates: feature.center,
+                    matchingPlaceName: feature.matching_place_name || feature.place_name
+                };
             } else {
                 console.error('No features found for the given address');
                 return null;
@@ -263,55 +313,129 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             return null;
         }
     }
-    
-    async function getCoordinateForAddresses(addressNamesList: string[]): Promise<{geoPointsArr: any[], coordinatesString: string}> {
-        const currentMap = map.current;
+
+    // getCoordinate helper function
+    const formatMatchingPlaceName = (address: string) => {
+        // Split the address by commas
+        const parts = address.split(',');
+
+        // Remove store name (first part) and country name (last part)
+        const storeAndCountryRemoved = parts.slice(1, -1).join(', ').trim();
+
+        return storeAndCountryRemoved;
+    }
+
+    // geoCode address list (converts list of names to a list of pairs of location (lng, lat))
+    async function getCoordinateForAddresses(addressNamesList: string[]): Promise<{ coordinates: string; matchingPlaceNames: string[], geoPointsArr: any[]}> {
         let coordinatesString: string = "";
         let geoPointsArr: any = []
-
-        if (!currentMap) {
-            console.error("Map is not initialized.");
-            return geoPointsArr;
-        }
-        
+        let matchingPlaceNames: string[] = [];
         for (let addressName of addressNamesList) {
             console.log(addressName);
-            let coordinate = await getCoordinate(addressName);
-            coordinatesString += `${coordinate[0]},${coordinate[1]};`
-            new mapboxgl.Marker().setLngLat(coordinate).addTo(currentMap)
-            geoPointsArr.push(coordinate)
+            let feature = await getCoordinate(addressName);
+            if (feature) {
+                console.log('Feature found:', feature);
+                coordinatesString += `${feature.coordinates[0]},${feature.coordinates[1]};`
+                matchingPlaceNames.push(formatMatchingPlaceName(feature.matchingPlaceName));
+                //new mapboxgl.Marker().setLngLat(feature.coordinates).addTo(currentMap)
+                geoPointsArr.push(feature.coordinates)
+            } else {
+                console.error('Feature is null for address:', addressName);
+            }
         }
           //     // Remove the trailing semicolon if it exists
         if (coordinatesString.endsWith(';')) {
             coordinatesString = coordinatesString.slice(0, -1);
         }
-
-        console.log(geoPointsArr)
-        // Remove the trailing semicolon if it exists
-        return {geoPointsArr, coordinatesString}
+        return {
+            coordinates: coordinatesString,
+            matchingPlaceNames: matchingPlaceNames,
+            geoPointsArr: geoPointsArr
+        };
     }
-        
+
+    console.log("routeInfos:", routeInfos);
     return (
-        <div className="map">
-            <div ref={mapContainer} className="map-container" />
-            <div className="sidebar">
-                {/* <div>
-                    Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-                </div> */}
-                {routeInfos.length > 0 ? (
-                    <div className="route-buttons">
-                        {routeInfos.map((routeInfo, index) => (
-                            <button key={index} onClick={() => displayRoute(routeInfo.routeCoordinates)}>
-                                Display {routeInfo.routeName}
-                            </button>
-                        ))}
+        <div className="display-container">
+            <div className="graybox">
+                <Dropdown 
+                    routes={routeInfos.map(route => ({ 
+                        name: route.routeName, 
+                        coordinates: route.routeCoordinates 
+                    }))} 
+                    onSelectRoute={(routeName, routeCoordinates) => {
+                        const selected = routeInfos.find(route => route.routeName === routeName);
+                        if (selected) {
+                            setSelectedRoute(selected);
+                        }
+                        console.log(`Selected route: ${routeName}`);
+                        displayRoute(routeCoordinates)
+                    }}
+                />
+                {selectedRoute && (
+                    <div className="route-info">
+                        <div className="first-white-background">
+                            <div className="white-background" style={{textAlign: 'center'}}>
+                                <span style={{fontSize: '1.2em', fontWeight: 'bold'}}>{formatPathName(selectedRoute.storeList)}</span>
+                            </div>
+                        </div>
+                        <div className="white-background">
+                            <span style={{color: '#0D99FF', fontSize: '18px', fontWeight: 'bold'}}>{selectedRoute.duration}</span>
+                            <span style={{color: '#757575', fontSize: '18px', fontWeight: 'bold'}}> ({selectedRoute.distFormatted})</span>
+                        </div>
+                        <div className="white-background" style={{ overflowY: 'auto', maxHeight: '75vh' }}>
+                        <div className="pink-background">
+                            <div className="text-styling">
+                                <span style={{fontSize: '18px', fontWeight: 'bold'}}>Current Location</span>
+                                <br />
+                                <span style={{ color: 'grey', fontSize: '0.8em'}}>Starting your adventures!</span>
+                            </div>
+                        </div>
+                            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                                {selectedRoute && (
+                                    // Use a for loop to iterate through selectedRoute.stepsInstr length
+                                    (() => {
+                                        const items = [];
+                                        let storeIndex = 0; // Initialize storeIndex
+
+                                        for (let i = 0; i < selectedRoute.stepsInstr.length; i++) {
+                                            const step = selectedRoute.stepsInstr[i];
+
+                                            items.push(
+                                                <li key={i} className="step-item">
+                                                    {step} 
+                                                    <br />
+                                                    {
+                                                        selectedRoute.stepsDist[i] !== "" ? (
+                                                            <span style={{ display: 'flex', alignItems: 'center', color: 'grey', fontSize: '0.8em' }}>
+                                                                {selectedRoute.stepsDist[i]}
+                                                                <span className="grey-line"></span>
+                                                            </span>
+                                                        ) : (
+                                                            <div className="pink-background">
+                                                                <div className="text-styling">
+                                                                    <span style={{ fontSize: '18px', fontWeight: 'bold'}}>{selectedRoute.storeList[storeIndex]}</span>
+                                                                    <br />
+                                                                    <span style={{ color: 'grey', fontSize: '0.8em'}}>{selectedRoute.addressList[storeIndex]}</span>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    }
+                                                </li>
+                                            );
+                                            if (selectedRoute.stepsDist[i] === "") {storeIndex += 1}
+                                        }
+                                        return items;
+                                    })()
+                                )}
+                            </ul>
+                        </div>
                     </div>
-                ) : (
-                    <div>Loading routes...</div>
                 )}
             </div>
+            <div ref={mapContainer} className = "map-container" />
         </div>
-    );
+    )
 }
 
 export default DestinationScreen;

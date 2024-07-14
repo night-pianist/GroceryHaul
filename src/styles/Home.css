@@ -75,23 +75,3 @@
     text-decoration: none !important;
     box-shadow: none !important;      
 }
-
-.btn-nav {
-  padding: 5px;
-}
-
-.home-btn, .login-btn, .signup-btn {
-  background-color: #ff002b;
-  padding: 15px;
-  margin: 10px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  text-decoration: none
-}
-
-a {
-  text-decoration: none;
-  font-size: 1.5em;
-  color: black;
-}
