@@ -18,12 +18,13 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     const [lat, setLat] = useState(center[0]); // Access latitude from the tuple
     const [zoom, setZoom] = useState(15);
     // Array of all the routeInfos
+    //[array_name, function that sets the array]
     const [routeInfos, setRouteInfos] = useState<Array<{ distance: number; duration: number; steps: string[]; routeCoordinates: any; routeName: string }>>([]); 
     const [inputData, addInputData] = useState<Array<{ routeName: string; storeList: string[]}>>([]);
+    const [artists, setArtists] = useState([]);
     
     useEffect(() => {
         if (map.current) return; // initialize map only once
-    
         map.current = new mapboxgl.Map({
             container: mapContainer.current as unknown as HTMLElement, // type guard
             style: 'mapbox://styles/mapbox/streets-v12', // can change style to whatever
@@ -62,10 +63,10 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     useEffect(() => {
         const addRoutes = async () => {
             try {
-                addNewRoute('Route 1', ['Ralphs', 'Walmart']);
-                console.log('Route 1 added');
+                addNewRoute('Route 1', ['Walmart', 'Ralphs']);
+                //console.log('Route 1 added');
                 addNewRoute('Route 2', ['99 Ranch', 'Home Depot']);
-                console.log('Route 2 added');
+                //console.log('Route 2 added');
             } catch (error) {
                 console.error('Error adding routes:', error);
             }
@@ -82,11 +83,13 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             try {
                 // Processing Input Data
                 for (const route of inputData) {
-                    console.log("entered for loop");
-                    const coordDest = await getCoordinateForAddresses(route.storeList);
-                    console.log("obtained route coordinates");
+                    //console.log("entered for loop");
+                    const result = await getCoordinateForAddresses(route.storeList);
+                    const coordDest = result.coordinatesString;
+                    const geoPoints = result.geoPointsArr
+                    //console.log("obtained route coordinates");
                     const routeCoords = await generateRouteInfo(coordDest, route.routeName);
-                    console.log("generated routeInfo");
+                    //console.log("generated routeInfo");
                 }
             } catch (error) {
                 console.error('Error geocoding address:', error);
@@ -110,7 +113,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     // Routing Function
     const fetchRouteInfo = async (coordRoute: string) => {
         const query = await fetch(
-            `https://api.mapbox.com/directions/v5/mapbox/driving/${center[1]},${center[0]};${coordRoute}`
+            `https://api.mapbox.com/directions/v5/mapbox/driving/${coordRoute}`
             + `?steps=true`
             + `&banner_instructions=true`
             + `&geometries=geojson`
@@ -146,7 +149,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     }
 
     // Store Route Information
-    const storeRouteInfo = (routeInfo: any, routeName: string) => {
+    const storeRouteInfo = (routeInfo: any, routeName: string, geoPoints: [[int]]) => {
         setRouteInfos(prevRouteInfos => [
             ...prevRouteInfos,
             {
@@ -155,13 +158,23 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                 steps: routeInfo.steps.map((step: any) => step.instruction),
                 routeCoordinates: routeInfo.routeCoordinates,
                 routeName: routeName
+                //geopoint declaration
             }
         ]);
     }
 
+    //[[lattitude, longitude],[lattitude, longitude]]
+    // var routeGeopoint = function (routeName, geoPoints)
+    // var Card = function(rank, suit){
+    //     this.rank = rank; 
+    //     this.suit = suit
+    //   }
+
     // displayRoute function
+    // add geopoint parameter routInfo.geoPoints
     const displayRoute = (routeCoordinates: any) => {
-        console.log("executing display route function");
+        // add markers here
+        //console.log("executing display route function");
         if (map.current) {
             const currentMap = map.current;
             const geojson: GeoJSON.Feature<GeoJSON.LineString> = {
@@ -175,10 +188,10 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             // if the route already exists on the map, we'll reset it using setData
             if (currentMap.getSource('route')) {
                 (currentMap.getSource('route') as mapboxgl.GeoJSONSource).setData(geojson);
-                console.log("no route displayed");
+                //console.log("no route displayed");
             } else {
                 // otherwise, we'll make a new request
-                console.log("displaying a route");
+               // console.log("displaying a route");
                 currentMap.addLayer({
                     id: 'route',
                     type: 'line',
@@ -204,7 +217,9 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     const generateRouteInfo = async (coordRoute: string, routeName: string) => {
         const routeInfo = await fetchRouteInfo(coordRoute);
         if (routeInfo) {
-            storeRouteInfo(routeInfo, routeName);
+            storeRouteInfo(routeInfo, routeName); //pass in geopoints [lattitude, longitude]
+            //storeRouteInfo is to update the array
+            //change the declaration o f
             return routeInfo.routeCoordinates;
         }
         return null;
@@ -225,7 +240,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     async function getCoordinate(addressName: string) {
         try {
             const encodedAddress = encodeURIComponent(addressName);
-            const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodedAddress}.json`
+            const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${center[1], center[0]};${encodedAddress}.json`
                 + `?proximity=${center[1]},${center[0]}`
                 + `&types=poi`
                 + `&fuzzyMatch=true`
@@ -248,24 +263,34 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             return null;
         }
     }
-
-    // geoCode address list (converts list of names to a list of pairs of location (lng, lat))
-    async function getCoordinateForAddresses(addressNamesList: string[]): Promise<string> {
+    
+    async function getCoordinateForAddresses(addressNamesList: string[]): Promise<{geoPointsArr: any[], coordinatesString: string}> {
+        const currentMap = map.current;
         let coordinatesString: string = "";
+        let geoPointsArr: any = []
+
+        if (!currentMap) {
+            console.error("Map is not initialized.");
+            return geoPointsArr;
+        }
+        
         for (let addressName of addressNamesList) {
             console.log(addressName);
             let coordinate = await getCoordinate(addressName);
-            coordinatesString += `${coordinate[0]},${coordinate[1]};`;
-            console.log(coordinatesString);
+            coordinatesString += `${coordinate[0]},${coordinate[1]};`
+            new mapboxgl.Marker().setLngLat(coordinate).addTo(currentMap)
+            geoPointsArr.push(coordinate)
         }
-        // Remove the trailing semicolon if it exists
+          //     // Remove the trailing semicolon if it exists
         if (coordinatesString.endsWith(';')) {
             coordinatesString = coordinatesString.slice(0, -1);
         }
-        return coordinatesString;
+
+        console.log(geoPointsArr)
+        // Remove the trailing semicolon if it exists
+        return {geoPointsArr, coordinatesString}
     }
         
-
     return (
         <div className="map">
             <div ref={mapContainer} className="map-container" />
