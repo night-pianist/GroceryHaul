@@ -19,11 +19,12 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     const [lat, setLat] = useState(center[0]); // Access latitude from the tuple
     const [zoom, setZoom] = useState(15);
     // Array of all the routeInfos
-    const [routeInfos, setRouteInfos] = useState<Array<{ distFormatted: string; duration: string; stepsInstr: string[]; stepsDist: string[]; routeCoordinates: any; routeName: string; storeList: string[]; addressList: string[] }>>([]); 
+    const [routeInfos, setRouteInfos] = useState<Array<{ distFormatted: string; duration: string; stepsInstr: string[]; stepsDist: string[]; routeCoordinates: any; routeName: string; storeList: string[]; addressList: string[]; geoPointsArr: any[]}>>([]); 
     // Input data from the chatbot will be stored in this array
     const [inputData, addInputData] = useState<Array<{ routeName: string; storeList: string[]}>>([]);
     // Keeps track of selected route
     const [selectedRoute, setSelectedRoute] = useState<{ distFormatted: string; duration: string; stepsInstr: string[]; stepsDist: string[]; routeCoordinates: any; routeName: string; storeList: string[]; addressList: string[] } | null>(null);
+    const [prevMarkers, setPrevMarkers] = useState<mapboxgl.Marker[]>([]);
     
     useEffect(() => {
         if (map.current) return; // initialize map only once
@@ -87,7 +88,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                 for (const route of inputData) {
                     const coordDest = await getCoordinateForAddresses(route.storeList);
                     const pathName = await formatPathName(route.storeList);
-                    await generateRouteInfo(coordDest.coordinates, route.routeName, route.storeList, coordDest.matchingPlaceNames);
+                    await generateRouteInfo(coordDest.coordinates, route.routeName, route.storeList, coordDest.matchingPlaceNames, coordDest.geoPointsArr);
                 }
             } catch (error) {
                 console.error('Error geocoding address:', error);
@@ -111,7 +112,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     // Routing Function
     const fetchRouteInfo = async (coordRoute: string) => {
         const query = await fetch(
-            `https://api.mapbox.com/directions/v5/mapbox/driving/${coordRoute}`
+            `https://api.mapbox.com/directions/v5/mapbox/driving/${center[1]},${center[0]};${coordRoute}`
             + `?steps=true`
             + `&banner_instructions=true`
             + `&geometries=geojson`
@@ -149,7 +150,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     }
 
     // Store Route Information
-    const storeRouteInfo = (routeInfo: any, routeName: string, storeList: string[], addressList: string[]) => {
+    const storeRouteInfo = (routeInfo: any, routeName: string, storeList: string[], addressList: string[], geoPointsArr: any[]) => {
         const distance = formatDistance1(routeInfo.distance);
         
         const durationInSeconds = routeInfo.duration;
@@ -170,7 +171,8 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                 routeCoordinates: routeInfo.routeCoordinates,
                 routeName: routeName,
                 storeList: storeList,
-                addressList: addressList
+                addressList: addressList,
+                geoPointsArr: geoPointsArr
             }
         ]);
     }
@@ -204,9 +206,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
 
     // displayRoute function
     // add geopoint parameter routInfo.geoPoints
-    const displayRoute = (routeCoordinates: any) => {
-        // add markers here
-        //console.log("executing display route function");
+    const displayRoute = (routeCoordinates: any, geoPointsArr: any[]) => {
         if (map.current) {
             const currentMap = map.current;
             const geojson: GeoJSON.Feature<GeoJSON.LineString> = {
@@ -221,6 +221,13 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             if (currentMap.getSource('route')) {
                 (currentMap.getSource('route') as mapboxgl.GeoJSONSource).setData(geojson);
                 console.log("Route updated");
+                console.log(geoPointsArr)
+                console.log("Previous Markers")
+                console.log(prevMarkers)
+                prevMarkers.forEach(markers => markers.remove())
+                console.log(prevMarkers)
+                removeAllMarkers()
+                displayMarkers(geoPointsArr)
             } else {
                 // otherwise, we'll make a new request
                 console.log("Displaying a new route");
@@ -241,9 +248,32 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                         'line-opacity': 0.75
                     }
                 });
+                displayMarkers(geoPointsArr);
             }
         }
     };
+    // Marker Implementation
+    const addMarker = (marker: mapboxgl.Marker) => {
+        setPrevMarkers(prevMarkers => [...prevMarkers, marker]);
+    };
+
+    const removeAllMarkers = () => {
+        setPrevMarkers([]);
+    };
+
+    const displayMarkers = (geoPointsArr: any[]) => {
+        const currentMap = map.current;
+        if (!currentMap) {
+            console.error("Map is not initialized.");
+            return;
+        }
+        for (let i = 0; i < geoPointsArr.length; i++) {
+            var oneMarker= new mapboxgl.Marker().setLngLat(geoPointsArr[i]).addTo(currentMap)
+            addMarker(oneMarker)
+        }
+        console.log("first previous markers")
+        console.log(prevMarkers)
+    }
 
     // formatPathName
     const formatPathName = (addressNameList: string[]) => {
@@ -260,27 +290,25 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     };
 
     // generateRouteInfo returning routeCoordinates or null if failed
-    const generateRouteInfo = async (coordRoute: string, routeName: string, storeList: string[], addressList: string[]) => {
+    const generateRouteInfo = async (coordRoute: string, routeName: string, storeList: string[], addressList: string[], geoPointsArr: any[]) => {
         const routeInfo = await fetchRouteInfo(coordRoute);
         if (routeInfo) {
-            storeRouteInfo(routeInfo, routeName); //pass in geopoints [lattitude, longitude]
-            //storeRouteInfo is to update the array
-            //change the declaration o f
+            storeRouteInfo(routeInfo, routeName, storeList, addressList, geoPointsArr);
             return routeInfo.routeCoordinates;
         }
         return null;
     };
 
     // generateAndStoreRoutes processes multiple routes storing each route's info and not returning anything
-    const generateAndStoreRoutes = async (routes: { name: string, addresses: string[]} []) => {
-        for (const route of routes) {
-            const coordRoute = await getCoordinateForAddresses(route.addresses);
-            const routeInfo = await fetchRouteInfo(coordRoute.coordinates);
-            if (routeInfo) {
-                storeRouteInfo(routeInfo, route.name, route.addresses, coordRoute.matchingPlaceNames);
-            }
-        }
-    }
+    // const generateAndStoreRoutes = async (routes: { name: string, addresses: string[]} []) => {
+    //     for (const route of routes) {
+    //         const coordRoute = await getCoordinateForAddresses(route.addresses);
+    //         const routeInfo = await fetchRouteInfo(coordRoute.coordinates);
+    //         if (routeInfo) {
+    //             storeRouteInfo(routeInfo, route.name, route.addresses, coordRoute.matchingPlaceNames);
+    //         }
+    //     }
+    // }
 
     // gets coordinate of a passed in name using forward geocoding (turning names passed in from Gemini to actual locations in the form of lng, lat)
     async function getCoordinate(addressName: string) {
@@ -337,7 +365,6 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                 console.log('Feature found:', feature);
                 coordinatesString += `${feature.coordinates[0]},${feature.coordinates[1]};`
                 matchingPlaceNames.push(formatMatchingPlaceName(feature.matchingPlaceName));
-                //new mapboxgl.Marker().setLngLat(feature.coordinates).addTo(currentMap)
                 geoPointsArr.push(feature.coordinates)
             } else {
                 console.error('Feature is null for address:', addressName);
@@ -361,15 +388,16 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                 <Dropdown 
                     routes={routeInfos.map(route => ({ 
                         name: route.routeName, 
-                        coordinates: route.routeCoordinates 
+                        coordinates: route.routeCoordinates,
+                        geoPointsArr: route.geoPointsArr
                     }))} 
-                    onSelectRoute={(routeName, routeCoordinates) => {
+                    onSelectRoute={(routeName, routeCoordinates, geoPointsArr) => {
                         const selected = routeInfos.find(route => route.routeName === routeName);
                         if (selected) {
                             setSelectedRoute(selected);
                         }
                         console.log(`Selected route: ${routeName}`);
-                        displayRoute(routeCoordinates)
+                        displayRoute(routeCoordinates, geoPointsArr)
                     }}
                 />
                 {selectedRoute && (

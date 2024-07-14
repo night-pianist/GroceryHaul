@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import '../styles/Dropdown.css'; // Import the corresponding CSS file for the dropdown
 
 interface DropdownProps {
-    routes: { name: string; coordinates: any }[];
-    onSelectRoute: (routeName: string, routeCoordinates: any) => void;
+    routes: { name: string; coordinates: any, geoPointsArr: any[] }[];
+    onSelectRoute: (routeName: string, routeCoordinates: any, geoPointsArr: any[]) => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ routes, onSelectRoute }) => {
@@ -28,10 +28,10 @@ const Dropdown: React.FC<DropdownProps> = ({ routes, onSelectRoute }) => {
         };
     }, []);
 
-    const handleRouteClick = (route: { name: string; coordinates: any }) => {
+    const handleRouteClick = (route: { name: string; coordinates: any; geoPointsArr: any[]}) => {
         setSelectedRoute(route.name);
         setIsOpen(false);
-        onSelectRoute(route.name, route.coordinates);
+        onSelectRoute(route.name, route.coordinates, route.geoPointsArr);
     };
 
     // console.log("Dropdown props:", routes); // Add this console.log to check props
