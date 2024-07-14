@@ -25,9 +25,9 @@
     ],
     "strictNullChecks": true,
   },
-  "include": [
-    "src",
-    ".env", // include .env files if needed
-    "dotenv" // include dotenv to access .env file
-  ]
+  // "include": [
+  //   "src",
+  //   ".env", // include .env files if needed
+  //   "dotenv" // include dotenv to access .env file
+  // ]
 }

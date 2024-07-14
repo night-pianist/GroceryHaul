@@ -98,7 +98,9 @@ const ChatBot: React.FC = () => {
       const responseText = await result.response.text();
       setBotResponse(responseText);
       setMessages((prevMessages) => [...prevMessages, { user: 'user', text: userMessage }]);
+      console.log(userMessage);
       setMessages((prevMessages) => [...prevMessages, { user: 'bot', text: botResponse }]);
+      console.log(botResponse);
 
     } catch (error) {
       console.error('Error sending message:', error);
