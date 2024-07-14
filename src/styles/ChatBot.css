@@ -1,0 +1,81 @@
+/* Adjusted ChatBot.css */
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 30vw;
+    padding: 20px;
+    background-color: #757575;
+    overflow: hidden; /* Prevent overflow */
+  }
+  
+  .chat-history {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding-bottom: 10px; /* Add padding to bottom to space out messages */
+  }
+  
+  .message {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  
+  .message.user {
+    justify-content: flex-end;
+  }
+  
+  p {
+    margin-bottom: 0; 
+  }
+
+  .message-content {
+    background-color: #f0f0f0;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    border: 1px solid black; /* Moved border after background */
+    line-height: 1.4; /* Adjust line height for better text density */
+    display: inline-block; /* Ensure inline-block for tighter wrapping */
+  }
+
+  
+  .message.user .message-content {
+    background-color: #FFE7E7;
+  }
+  
+  .input-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: white;
+    color: black;
+    box-sizing: border-box;
+  }
+
+  .send-button {
+    padding: 10px 20px;
+    background-color: #FFE7E7;
+    border: 1px solid black; /* Ensure only one border property */
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  
+  .send-button:hover {
+    background-color: #FFE7E7;
+  }
+  
