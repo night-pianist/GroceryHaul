@@ -1,26 +1,8 @@
-.display-container {
+.routing-container {
     display: flex;
-    height: 100vh;
-}
-
-.graybox {
-    background-color: gray;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
     flex-direction: column;
-    padding-top: 2em;
-}
-
-.map-container { /* size map to webpage size */
-    flex-grow: 1;
-    height: 100vh; 
-}
-
-.dropdown-btn {
-    background-color: white;
 }
 
 .route-info {
@@ -68,18 +50,3 @@
 .text-styling {
     margin-left: 10px;
 }
-
-/* formats info bar (lat, lng, zoom) at top */
-/* .sidebar { 
-    background-color: rgb(35 55 75 / 90%);
-    color: #fff;
-    padding: 6px 12px;
-    font-family: monospace;
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 12px;
-    border-radius: 4px;
-}  */
-

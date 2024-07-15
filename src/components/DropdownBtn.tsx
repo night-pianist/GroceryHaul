@@ -34,7 +34,6 @@ const Dropdown: React.FC<DropdownProps> = ({ routes, onSelectRoute }) => {
         onSelectRoute(route.name, route.coordinates, route.geoPointsArr);
     };
 
-    // console.log("Dropdown props:", routes); // Add this console.log to check props
     return (
         <div className="dropdown-center" ref={dropdownRef}>
             <button className="dropdown-button" onClick={toggleDropdown}>

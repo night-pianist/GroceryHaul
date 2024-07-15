@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import Home from './components/Home'
-import DestinationScreen from './components/DestinationScreen'
+import Home from './components/Home';
+import ChatBot from './components/Chatbot';
+import DestinationScreen from './components/DestinationScreen';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
@@ -39,11 +40,11 @@ function App() {
   return (
       <>
         <Routes>
-          { <Route path="/" element={<Home />} /> } 
-          { <Route path="/map" element={<DestinationScreen center={center} />} /> }
+          { <Route path="/" element={<DestinationScreen center={center} />} /> } 
+          {/* { <Route path="/map" element={<DestinationScreen center={center} />} /> }
           { <Route path="/login" element={<Login />} /> }
           { <Route path="/signup" element={<Signup />} />}
-          { <Route path="/dashboard" element={<Dashboard />} /> }
+          { <Route path="/dashboard" element={<Dashboard />} /> } */}
         </Routes>
       </>
   )

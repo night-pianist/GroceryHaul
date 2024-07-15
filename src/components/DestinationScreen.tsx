@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map, Control, GeoJSONSourceRaw } from 'mapbox-gl'; 
 import 'mapbox-gl/dist/mapbox-gl.css'; // for mapbox styling
-import '../styles/Map.css';
-import Dropdown from './DropdownBtn';
+import '../styles/DestinationScreen.css';
+import Routing from './Routing';
 
 // mapboxgl.accessToken = String(process.env.REACT_APP_MAPBOX_TOKEN);
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
@@ -23,7 +23,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     // Input data from the chatbot will be stored in this array
     const [inputData, addInputData] = useState<Array<{ routeName: string; storeList: string[]}>>([]);
     // Keeps track of selected route
-    const [selectedRoute, setSelectedRoute] = useState<{ distFormatted: string; duration: string; stepsInstr: string[]; stepsDist: string[]; routeCoordinates: any; routeName: string; storeList: string[]; addressList: string[] } | null>(null);
+    const [selectedRoute, setSelectedRoute] = useState<{ distFormatted: string; duration: string; stepsInstr: string[]; stepsDist: string[]; routeCoordinates: any; routeName: string; storeList: string[]; addressList: string[]; geoPointsArr: any[] } | null>(null);
     const [prevMarkers, setPrevMarkers] = useState<mapboxgl.Marker[]>([]);
     
     useEffect(() => {
@@ -385,7 +385,23 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     return (
         <div className="display-container">
             <div className="graybox">
-                <Dropdown 
+                <div className="routing-display">
+                    <Routing
+                        routeInfos={routeInfos}
+                        selectedRoute={selectedRoute}
+                        setSelectedRoute={setSelectedRoute}
+                        displayRoute={displayRoute}
+                    />
+                </div>
+            </div>
+            <div ref={mapContainer} className = "map-container" />
+        </div>
+    )
+}
+
+export default DestinationScreen;
+
+{/* <Dropdown 
                     routes={routeInfos.map(route => ({ 
                         name: route.routeName, 
                         coordinates: route.routeCoordinates,
@@ -459,12 +475,4 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                             </ul>
                         </div>
                     </div>
-                )}
-            </div>
-            <div ref={mapContainer} className = "map-container" />
-        </div>
-    )
-}
-
-export default DestinationScreen;
-
+                )} */}
