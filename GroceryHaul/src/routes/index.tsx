@@ -12,7 +12,7 @@ function Index(): JSX.Element {
 
   const handleError = () => {
     setSrc(staticMapPath);
-    setBackgroundVisible(false); // Hide the background if it fails to load
+    setBackgroundVisible(false); 
   };
 
   return (
