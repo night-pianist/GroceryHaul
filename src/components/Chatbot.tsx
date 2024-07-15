@@ -17,6 +17,8 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
     const savedMessages = localStorage.getItem('messages');
     return savedMessages ? JSON.parse(savedMessages) : [];
   });
+  const [stores, setStores] = useState<string[]>([]);
+  const ogStores: string[] = [];
 
   const genAI = new GoogleGenerativeAI(apiKey!);
   const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
@@ -36,6 +38,34 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
       { user: 'bot', text: botMessage },
     ]);
   };
+
+  useEffect(() => {
+    if (botResponse.includes('finalized')) {
+      const responseText = botResponse;
+      // setDebugResult('if statement for botresponse works')
+
+      const ogStores: string[] = [];
+      let startIndex = responseText.indexOf(':') + 1;
+      let endIndex = responseText.indexOf('.', startIndex);
+
+      while (startIndex < endIndex) {
+        const commaIndex = responseText.indexOf(',', startIndex);
+        const store = commaIndex !== -1 && commaIndex < endIndex 
+          ? responseText.slice(startIndex, commaIndex).trim()
+          : responseText.slice(startIndex, endIndex).trim();
+
+        if (store) {
+          ogStores.push(store);
+        }
+
+        startIndex = commaIndex !== -1 && commaIndex < endIndex 
+          ? commaIndex + 1
+          : endIndex + 1;
+      }
+
+      setStores((prevStores) => [...prevStores, ...ogStores]);
+    }
+  }, [botResponse]);
 
   const sendMessage = async () => {
     try {
