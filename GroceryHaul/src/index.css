@@ -17,10 +17,13 @@ html, body {
 
 .background {
   position: absolute;
-  background-size: cover;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover; 
   background-position: center;
-  width: 100vw;
-  height: 100vh;
+  background-repeat: no-repeat;
   z-index: -1;
 }
 
@@ -31,12 +34,12 @@ html, body {
   justify-content: center;
   background-color: white;
   border-radius: 10px;
-  padding: 50px;  
-  width: 80%;  
-  max-width: 600px;  
+  padding: 50px;
+  width: 80%;
+  max-width: 600px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  margin-top: 20px; 
+  margin-top: 20px;
 }
 
 .logo-container {
@@ -44,15 +47,15 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px; 
-  margin-top: -40px;  
+  margin-bottom: 10px;
+  margin-top: -40px;
 }
 
 .logo-container img {
   width: 100%;
   height: auto;
-  max-width: 1000px;  
-  max-height: 200px;  
+  max-width: 1000px;
+  max-height: 200px;
 }
 
 .buttons-container {
@@ -60,15 +63,15 @@ html, body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  gap: 50px; 
+  gap: 50px;
 }
 
 .btn {
-  min-width: 10vw; 
-  min-height: 10vh; 
-  font-size: 1.5em; 
+  min-width: 10vw;
+  min-height: 10vh;
+  font-size: 1.5em;
   border-color: black;
-  color: black; 
+  color: black;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: bold;
   background-color: #E22400;
@@ -84,7 +87,7 @@ html, body {
   color: inherit !important;
   border-color: inherit !important;
   text-decoration: none !important;
-  box-shadow: none !important;      
+  box-shadow: none !important;
 }
 
 .btn-nav {
@@ -93,7 +96,7 @@ html, body {
 
 .home-btn, .login-btn, .signup-btn {
   background-color: #ff002b;
-  padding: 10px; 
+  padding: 10px;
   margin: 10px;
   border-radius: 10px;
   border: none;
@@ -106,4 +109,3 @@ a {
   font-size: 1.5em;
   color: black;
 }
-

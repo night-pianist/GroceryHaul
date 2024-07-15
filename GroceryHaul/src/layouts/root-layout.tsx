@@ -21,9 +21,6 @@ export default function RootLayout() {
           <SignedIn>
             <UserButton />
           </SignedIn>
-          <SignedOut>
-            <Link to="/sign-in">Sign In</Link>
-          </SignedOut>
         </div>
       </header>
       <main>
