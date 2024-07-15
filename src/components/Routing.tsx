@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Dropdown from './DropdownBtn'; // Adjust the path as per your project structure
 import '../styles/Routing.css';
 
+
 interface RouteInfo {
     distFormatted: string;
     duration: string;
@@ -19,9 +20,10 @@ interface Props {
     selectedRoute: RouteInfo | null;
     setSelectedRoute: React.Dispatch<React.SetStateAction<RouteInfo | null>>;
     displayRoute: (routeCoordinates: any, geoPointsArr: any[]) => void; // Adjust type as per your actual implementation
+    onChatButtonClick: () => void;
 }
 
-const Routing: React.FC<Props> = ({ routeInfos, selectedRoute, setSelectedRoute, displayRoute }) => {
+const Routing: React.FC<Props> = ({ routeInfos, selectedRoute, setSelectedRoute, displayRoute, onChatButtonClick }) => {
 
     const formatPathName = (storeList: string[]) => {
         return storeList.join(' → ');
@@ -30,21 +32,26 @@ const Routing: React.FC<Props> = ({ routeInfos, selectedRoute, setSelectedRoute,
     // routing return statement
     return (
         <div className="routing-container">
-            <Dropdown
-                routes={routeInfos.map(route => ({
-                    name: route.routeName,
-                    coordinates: route.routeCoordinates,
-                    geoPointsArr: route.geoPointsArr
-                }))}
-                onSelectRoute={(routeName, routeCoordinates, geoPointsArr) => {
-                    const selected = routeInfos.find(route => route.routeName === routeName);
-                    if (selected) {
-                        setSelectedRoute(selected);
-                    }
-                    console.log(`Selected route: ${routeName}`);
-                    displayRoute(routeCoordinates, geoPointsArr);
-                }}
-            />
+            <div className="top-container">
+                <button className="return-chat-btn" onClick={onChatButtonClick}>←</button>
+                <div className="dropdown-wrapper">
+                    <Dropdown
+                        routes={routeInfos.map(route => ({
+                            name: route.routeName,
+                            coordinates: route.routeCoordinates,
+                            geoPointsArr: route.geoPointsArr
+                        }))}
+                        onSelectRoute={(routeName, routeCoordinates, geoPointsArr) => {
+                            const selected = routeInfos.find(route => route.routeName === routeName);
+                            if (selected) {
+                                setSelectedRoute(selected);
+                            }
+                            console.log(`Selected route: ${routeName}`);
+                            displayRoute(routeCoordinates, geoPointsArr);
+                        }}
+                    />
+                </div>
+            </div>
             {selectedRoute && (
                 <div className="route-info">
                     <div className="first-white-background">

@@ -3,11 +3,9 @@
 .chat-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     width: 30vw;
     padding: 20px;
-    background-color: #757575;
-    overflow: hidden; /* Prevent overflow */
   }
   
   .chat-history {
@@ -20,7 +18,6 @@
   .message {
     display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
     margin-bottom: 10px;
   }
   
@@ -49,8 +46,14 @@
     background-color: #FFE7E7;
   }
   
+  .bottom-container {
+    display: flex;
+    flex-direction: row;
+  }
+
   .input-bar {
     display: flex;
+    flex-direction: row-reverse;
     align-items: center;
   }
   
@@ -63,19 +66,31 @@
     background-color: white;
     color: black;
     box-sizing: border-box;
+    padding-right: 90px;
   }
 
   .send-button {
+    margin-right: 20px;
     padding: 10px 20px;
     background-color: #FFE7E7;
     border: 1px solid black; /* Ensure only one border property */
     color: black;
     border-radius: 5px;
     cursor: pointer;
+    position: absolute;
   }
-  
   
   .send-button:hover {
     background-color: #FFE7E7;
   }
   
+  .route-button {
+    padding: 10px 15px;
+    background-color: #FFE7E7;
+    border: 1px solid black; /* Ensure only one border property */
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 100%;
+    align-self: center;
+  }

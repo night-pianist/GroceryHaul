@@ -3,6 +3,7 @@ import mapboxgl, { Map, Control, GeoJSONSourceRaw } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css'; // for mapbox styling
 import '../styles/DestinationScreen.css';
 import Routing from './Routing';
+import ChatBot from './Chatbot';
 
 // mapboxgl.accessToken = String(process.env.REACT_APP_MAPBOX_TOKEN);
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
@@ -25,6 +26,16 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     // Keeps track of selected route
     const [selectedRoute, setSelectedRoute] = useState<{ distFormatted: string; duration: string; stepsInstr: string[]; stepsDist: string[]; routeCoordinates: any; routeName: string; storeList: string[]; addressList: string[]; geoPointsArr: any[] } | null>(null);
     const [prevMarkers, setPrevMarkers] = useState<mapboxgl.Marker[]>([]);
+    const [showChatBot, setShowChatBot] = useState(true);
+    const [showRoutePage, setShowRoutePage] = useState(false);
+
+    const routeDisplay = () => {
+        setShowChatBot(!showChatBot);
+      };
+
+    const mapDisplay = () => {
+        setShowRoutePage(!showRoutePage);
+    }
     
     useEffect(() => {
         if (map.current) return; // initialize map only once
@@ -385,14 +396,18 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     return (
         <div className="display-container">
             <div className="graybox">
-                <div className="routing-display">
+                {showChatBot ? (
+                    <ChatBot onRouteButtonClick={routeDisplay}/> 
+                ) : (
                     <Routing
                         routeInfos={routeInfos}
                         selectedRoute={selectedRoute}
                         setSelectedRoute={setSelectedRoute}
                         displayRoute={displayRoute}
+                        onChatButtonClick={routeDisplay}
                     />
-                </div>
+                )
+                }
             </div>
             <div ref={mapContainer} className = "map-container" />
         </div>
