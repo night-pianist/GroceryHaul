@@ -1,5 +1,10 @@
-import { SignIn } from "@clerk/clerk-react"
+import { SignIn } from "@clerk/clerk-react";
+import BackgroundWrapper from '../BackgroundWrapper'; 
 
 export default function SignInPage() {
-  return <SignIn path="/sign-in" />;
+  return (
+    <BackgroundWrapper>
+        <SignIn path="/sign-in" />
+    </BackgroundWrapper>
+  );
 }
