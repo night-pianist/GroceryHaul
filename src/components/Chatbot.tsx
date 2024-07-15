@@ -246,15 +246,18 @@ const ChatBot: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="input-bar">
-        <textarea
-          className="user-input"
-          value={userMessage}
-          onChange={(e) => setUserMessage(e.target.value)}
-          placeholder="Type your message..."
-          style={{ resize: 'none', wordWrap: 'break-word'}}
-        ></textarea>
-        <button className="send-button" onClick={sendMessage}>Send</button>
+      <div className="bottom-container">
+        <div className="input-bar">
+            <textarea
+            className="user-input"
+            value={userMessage}
+            onChange={(e) => setUserMessage(e.target.value)}
+            placeholder="Type your message..."
+            style={{ resize: 'none', wordWrap: 'break-word'}}
+            ></textarea>
+            <button className="send-button" onClick={sendMessage}>Send</button>
+        </div>
+        <button className="route-button"> Routes→ </button>
       </div>
     </div>
   );
