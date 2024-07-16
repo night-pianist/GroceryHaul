@@ -22,3 +22,12 @@ export default function RootLayout() {
     </ClerkProvider>
   );
 }
+
+function NavigateOnSignIn({ navigate }: { navigate: ReturnType<typeof useNavigate> }) {
+  useEffect(() => {
+    console.log("NavigateOnSignIn useEffect called");
+    navigate('/dashboard');
+  }, [navigate]);
+
+  return null;
+}
