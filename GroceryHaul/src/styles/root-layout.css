@@ -1,0 +1,19 @@
+.header {
+    position: fixed; /* Fixed positioning to stay at the top */
+    top: 0;
+    right: 0;
+    left: 0; /* Stretch the header across the top */
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow */
+    z-index: 1000; /* Ensure it is on top */
+  }
+  
+  /* Style for the user button container */
+  .user-button-container {
+    display: flex;
+    align-items: center;
+  }

@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { ClerkProvider, SignedIn} from '@clerk/clerk-react';
+import {useEffect} from 'react';
+import '../styles/root-layout.css';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -8,7 +9,7 @@ if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
 }
 
-export default function RootLayout() {
+export default function RootLayout({ center }: { center: [number, number] | null }) {
   const navigate = useNavigate();
 
   return (
@@ -21,7 +22,7 @@ export default function RootLayout() {
             <NavigateOnSignIn navigate={navigate} /> 
           </SignedIn>
       <main>
-        <Outlet />
+        <Outlet  context={{center} } />
       </main>
     </ClerkProvider>
   );
@@ -30,7 +31,7 @@ export default function RootLayout() {
 function NavigateOnSignIn({ navigate }: { navigate: ReturnType<typeof useNavigate> }) {
   useEffect(() => {
     console.log("NavigateOnSignIn useEffect called");
-    navigate('/dashboard');
+    navigate('/destinationScreen');
   }, [navigate]);
 
   return null;
