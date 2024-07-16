@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SignedIn, UserButton } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
 import '../index.css';
