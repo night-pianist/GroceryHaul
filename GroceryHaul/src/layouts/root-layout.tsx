@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 
@@ -20,6 +21,7 @@ export default function RootLayout() {
         <div>
           <SignedIn>
             <UserButton />
+            <NavigateOnSignIn navigate={navigate} />
           </SignedIn>
         </div>
       </header>
@@ -28,4 +30,13 @@ export default function RootLayout() {
       </main>
     </ClerkProvider>
   );
+}
+
+function NavigateOnSignIn({ navigate }: { navigate: ReturnType<typeof useNavigate> }) {
+  useEffect(() => {
+    console.log("NavigateOnSignIn useEffect called");
+    navigate('/dashboard');
+  }, [navigate]);
+
+  return null;
 }
