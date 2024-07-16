@@ -18,14 +18,9 @@ export default function RootLayout({ center }: { center: [number, number] | null
       routerReplace={(to: string) => navigate(to, { replace: true })}
       publishableKey={PUBLISHABLE_KEY}
     >
-      <header className="header">
-        <div>
-          <SignedIn>
-            <UserButton />
+      <SignedIn>
             <NavigateOnSignIn navigate={navigate} /> 
           </SignedIn>
-        </div>
-      </header>
       <main>
         <Outlet  context={{center} } />
       </main>
