@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 
@@ -16,6 +17,9 @@ export default function RootLayout() {
       routerReplace={(to: string) => navigate(to, { replace: true })}
       publishableKey={PUBLISHABLE_KEY}
     >
+      <SignedIn>
+            <NavigateOnSignIn navigate={navigate} /> 
+          </SignedIn>
       <main>
         <Outlet />
       </main>
