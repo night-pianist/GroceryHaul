@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl, { Map, Control, GeoJSONSourceRaw } from 'mapbox-gl'; 
+import mapboxgl, { Map, IControl, GeoJSONSource } from 'mapbox-gl'; 
+import * as GeoJSON from 'geojson';
+
 import 'mapbox-gl/dist/mapbox-gl.css'; // for mapbox styling
 import '../styles/DestinationScreen.css';
 import Routing from './Routing';
@@ -240,15 +242,16 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                 removeAllMarkers()
                 displayMarkers(geoPointsArr)
             } else {
+                currentMap.addSource('route', {
+                    type: 'geojson',
+                    data: geojson
+                });
                 // otherwise, we'll make a new request
                 console.log("Displaying a new route");
                 currentMap.addLayer({
                     id: 'route',
                     type: 'line',
-                    source: {
-                        type: 'geojson',
-                        data: geojson
-                    },
+                    source: 'route',
                     layout: {
                         'line-join': 'round',
                         'line-cap': 'round'
