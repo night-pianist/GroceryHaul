@@ -9,7 +9,7 @@ if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
 }
 
-export default function RootLayout() {
+export default function RootLayout({ center }: { center: [number, number] | null }) {
   const navigate = useNavigate();
 
   return (
@@ -27,7 +27,7 @@ export default function RootLayout() {
         </div>
       </header>
       <main>
-        <Outlet />
+        <Outlet  context={{center} } />
       </main>
     </ClerkProvider>
   );
@@ -36,7 +36,7 @@ export default function RootLayout() {
 function NavigateOnSignIn({ navigate }: { navigate: ReturnType<typeof useNavigate> }) {
   useEffect(() => {
     console.log("NavigateOnSignIn useEffect called");
-    navigate('/dashboard');
+    navigate('/destinationScreen');
   }, [navigate]);
 
   return null;
