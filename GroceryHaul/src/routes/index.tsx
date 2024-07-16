@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../index.css';
+import '../styles/index.css';
 import { Link } from 'react-router-dom';
 
 function Index(): JSX.Element {
