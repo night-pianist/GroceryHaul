@@ -21,7 +21,7 @@ export default function RootLayout() {
         <div>
           <SignedIn>
             <UserButton />
-            <NavigateOnSignIn navigate={navigate} />
+            <NavigateOnSignIn navigate={navigate} /> 
           </SignedIn>
         </div>
       </header>
