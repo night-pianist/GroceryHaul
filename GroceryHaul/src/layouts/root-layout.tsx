@@ -19,8 +19,8 @@ export default function RootLayout({ center }: { center: [number, number] | null
       publishableKey={PUBLISHABLE_KEY}
     >
       <SignedIn>
-            <NavigateOnSignIn navigate={navigate} /> 
-          </SignedIn>
+        <NavigateOnSignIn navigate={navigate} /> 
+      </SignedIn>
       <main>
         <Outlet  context={{center} } />
       </main>
