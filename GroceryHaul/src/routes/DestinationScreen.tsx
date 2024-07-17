@@ -6,6 +6,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'; // for mapbox styling
 import '../styles/DestinationScreen.css';
 import Routing from './Routing';
 import ChatBot from './Chatbot';
+import { SignedIn, UserButton } from '@clerk/clerk-react';
 
 // mapboxgl.accessToken = String(process.env.REACT_APP_MAPBOX_TOKEN);
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
@@ -16,6 +17,11 @@ interface DestinationScreenProps {
 }
 
 const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
+    <div className="user-button-container">
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </div>
     const map = useRef<mapboxgl.Map | null>(null); 
     const mapContainer = useRef(null);
     const [lng, setLng] = useState(center[1]); // Access longitude from the tuple
