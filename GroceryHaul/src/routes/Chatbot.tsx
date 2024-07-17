@@ -127,9 +127,11 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
             placeholder="Type your message..."
             style={{ resize: 'none', wordWrap: 'break-word'}}
             ></textarea>
-            <button className="send-button" onClick={sendMessage}>Send</button>
+            <button className="send-button" onClick={sendMessage}>
+              <img src="/refrigerator.png" alt="Refrigerator" className="send-image" />
+           </button>
         </div>
-        <button className="route-button" onClick={onRouteButtonClick}> Routes→ </button>
+        <button className="route-button" onClick={onRouteButtonClick}> R→ </button>
       </div>
     </div>
   );
