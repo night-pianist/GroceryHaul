@@ -1,12 +1,12 @@
 .display-container {
     display: flex;
     height: 100vh;
+    overflow: hidden;
 }
 
 .graybox {
     background-color: gray;
     width: 30%;
-    height: 100%;
     padding-top: 2em;
 }
 
