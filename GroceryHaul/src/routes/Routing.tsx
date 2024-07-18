@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Dropdown from './DropdownBtn';
 import '../styles/Routing.css';
+import { SignedIn, UserButton } from '@clerk/clerk-react';
 
 
 interface RouteInfo {
@@ -33,6 +34,11 @@ const Routing: React.FC<Props> = ({ routeInfos, selectedRoute, setSelectedRoute,
     return (
         <div className="routing-container">
             <div className="top-container">
+            <div className="user-button-container">
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </div>
                 <button className="return-chat-btn" onClick={onChatButtonClick}>←</button>
                 <div className="dropdown-wrapper">
                     <Dropdown

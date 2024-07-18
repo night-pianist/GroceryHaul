@@ -17,11 +17,6 @@ interface DestinationScreenProps {
 }
 
 const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
-    <div className="user-button-container">
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </div>
     const map = useRef<mapboxgl.Map | null>(null); 
     const mapContainer = useRef(null);
     const [lng, setLng] = useState(center[1]); // Access longitude from the tuple
@@ -405,6 +400,11 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     return (
         <div className="display-container">
             <div className="graybox">
+            <div className="user-button-container">
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </div>
                 {showChatBot ? (
                     <ChatBot onRouteButtonClick={routeDisplay}/> 
                 ) : (
