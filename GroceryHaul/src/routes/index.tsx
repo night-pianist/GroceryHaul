@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 function Index(): JSX.Element {
   const mapAnimationPath = `/MapArrowAnimation.gif`;
   const staticMapPath = `/StaticBackgroundMap.svg`;
-  const groceryLogo = `/GroceryLogo.png`;
+  const groceryLogo = `/fridgeLogo.PNG`;
 
   const [src, setSrc] = useState(mapAnimationPath);
   const [backgroundVisible, setBackgroundVisible] = useState(true);
@@ -33,22 +33,24 @@ function Index(): JSX.Element {
         ></div>
         <div className="home-card">
           <div className="logo-container">
+            <h1>MY</h1>
             <img src={groceryLogo} alt="grocery logo" />
+            <h2>GROCERY</h2>
           </div>
-          <div className="buttons-container">
-            <Link to="/sign-in" className="btn btn-primary btn-lg" role="button">
-              LOGIN
-            </Link>
-            <Link to="/sign-up" className="btn btn-primary btn-lg" role="button">
-              SIGNUP
-            </Link>
-          </div>
+        </div>
+        <div className="buttons-container">
+          <Link to="/sign-in" className="btn btn-primary btn-lg" role="button">
+            LOGIN
+          </Link>
+          <Link to="/sign-up" className="btn btn-primary btn-lg" role="button">
+            SIGNUP
+          </Link>
+        </div>
           <div className="user-button-container">
             <SignedIn>
               <UserButton />
             </SignedIn>
           </div>
-        </div>
       </div>
   );
 }

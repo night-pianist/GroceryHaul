@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Waiting+for+the+Sunrise&display=swap');
+
 html, body {
   height: 100%;
   margin: 0;
@@ -13,6 +15,8 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 50px;
 }
 
 .background {
@@ -30,33 +34,36 @@ html, body {
 
 .home-card {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  border-radius: 10px;
-  padding: 50px;
-  width: 80%;
-  max-width: 600px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex-direction: row;
+  background-color: rgb(238, 238, 238);
+  border-radius: 60px;
+  max-width: 800px;
+  max-height: 300px;
+  min-width: 800px;
+  min-height: 200px;
+  border: 1.5px solid #595959;
   box-sizing: border-box;
-  margin-top: 20px;
+  text-align: center;
 }
 
 .logo-container {
+  display: flex;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
-  margin-top: -40px;
 }
 
 .logo-container img {
-  width: 100%;
-  height: auto;
+  width: 550px;
+  height: 550px;
+  justify-content: center;
+  align-items: center;
   max-width: 1000px;
-  max-height: 200px;
+  max-height: 1000px;
+  margin-bottom: 200px;
+  margin-left: -100px;
+  margin-right: -150px;
 }
 
 .buttons-container {
@@ -68,15 +75,14 @@ html, body {
 }
 
 .btn {
-  min-width: 10vw;
-  min-height: 10vh;
+  min-width: 320px;
+  min-height: 75px;
   font-size: 1.5em;
-  border-color: black;
-  color: black;
+  border-radius: 60px;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: bold;
-  background-color: #E22400;
-  border-width: 3px;
+  background-color: #ffe6e6ff;
+  border: 1.5px solid #d19797;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,7 +90,7 @@ html, body {
 
 /* disable hover effect */
 .btn:hover {
-  background-color: #E22400 !important;
+  background-color: rgb(230, 195, 195) !important;
   color: inherit !important;
   border-color: inherit !important;
   text-decoration: none !important;
@@ -96,10 +102,10 @@ html, body {
 }
 
 .home-btn, .login-btn, .signup-btn {
-  background-color: #ff002b;
+  background-color: #ffe6e6ff;
+  border-radius: 60px;
   padding: 10px;
   margin: 10px;
-  border-radius: 10px;
   border: none;
   cursor: pointer;
   text-decoration: none;
@@ -107,12 +113,28 @@ html, body {
 
 a {
   text-decoration: none;
-  font-size: 1.5em;
-  color: black;
+  font-size: 1em;
+  color: #595959;
 }
 
 .user-button-container {
   position: absolute;
   top: 10px;
   left: 10px;
+}
+
+h1 {
+  display: flex;
+  font-size: 4em;
+  color: #595959;
+  font-family: 'Waiting for the Sunrise', sans-serif; /* Example: Use Roboto font for headings */
+  margin-top: 200px;
+}
+
+h2 {
+  display: flex;
+  font-size: 4em;
+  color: #595959;
+  font-family: 'Waiting for the Sunrise', sans-serif; /* Example: Use Open Sans font for paragraphs */
+  margin-top: 200px;
 }
