@@ -4,7 +4,7 @@ import { SignedIn, UserButton } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
 
 function Index(): JSX.Element {
-  const mapAnimationPath = `/MapArrowAnimation.gif`;
+  const mapAnimationPath = `/mapAnimationGrey.gif`;
   const staticMapPath = `/StaticBackgroundMap.svg`;
   const groceryLogo = `/GroceryLogo.png`;
 
