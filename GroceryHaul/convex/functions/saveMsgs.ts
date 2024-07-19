@@ -1,6 +1,6 @@
-import { internalMutation } from '../_generated/server';
+import { mutation } from '../_generated/server';
 
-export const saveMessage = internalMutation(async ({ db }, { msg, userId, type }) => {
+export const saveMessage = mutation(async ({ db }, { msg, userId, type }) => {
   await db.insert('message', { msg, userId, type });
 });
 
