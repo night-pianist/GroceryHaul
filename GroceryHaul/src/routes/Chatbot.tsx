@@ -15,14 +15,13 @@ interface ChatBotProps { onRouteButtonClick: () => void; }
 
 const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
   const savMsgToConvex = useMutation(api.functions.saveMsgs.saveMessage);
+  const convexMsgs = useQuery(api.functions.fetchMsgs.fetchAll);
   // const savMsgToConvex = useMutation(api.functions.);
 
   const [response, setResponse] = useState('');
   const [userInput, setUserInput] = useState('');
   const [prompt, setPrompt] = useState('');
-
   const [history, setHistory] = useState('');
-  const convexMsgs = useQuery(api.functions.fetchMsgs.fetchAll);
 
   fetch(rawPrompt)
     .then(r => r.text())
@@ -49,8 +48,9 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
 
   const outputChatbotResponse = async (input: string) => {
     // const result = await getChatbotResponse(`generate a list of ingredients to make ${input}`);
-    console.log("INPUT: " + input + " CONVEX: " + JSON.stringify(convexMsgs));
+    // console.log("INPUT: " + input + " CONVEX: " + JSON.stringify(convexMsgs));
     setHistory(JSON.stringify(convexMsgs));
+    console.log("HISTORY: " + history);
     const result = await getChatbotResponse(`generate a response based on the prompt here ${prompt} and the user's must recent here ${input} and previous parts of the conversation here ${convexMsgs}`);
     setResponse(result);
     console.log("CHATBOT: " + result);

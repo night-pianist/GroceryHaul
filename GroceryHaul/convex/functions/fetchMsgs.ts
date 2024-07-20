@@ -16,16 +16,13 @@ export const fetchAll = query({
       type: msg.type,
     }));
 
-    const parseTransformedMsgs = allMsgs.map(msg => ({ // transform the documents to include only the desired fields
-      msg: msg.msg,
-      type: msg.type,
-    }));
+    const parseTransformedMsgs = (message: { type: string; msg: string; }) => {
+      return `${message.type}: ${message.msg}`;
+    };
+    
+    const parsedMsgs = transformedMsgs.map(parseTransformedMsgs);
 
-    // const parseTransformedMsgs = (transformedMsgs) => {
-    //   return transformedMsgs.map(msg => `${msg.type}: ${msg.msg}`);
-    // };
-
-    return transformedMsgs; 
+    return parsedMsgs; 
   },
 });
 
