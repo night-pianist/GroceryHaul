@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import '../styles/ChatBot.css'; // Import your CSS file for styling
+import { useMutation } from 'convex/react';
+import { api } from "../../convex/_generated/api"
+const savMsgToConvex = useMutation(api.functions.saveMsgs.saveMessage);
 
 const apiKey = 'AIzaSyBIrj-dFryj2Jbsb90WgMwrhl1L-2xHuLc';
 
@@ -10,6 +13,8 @@ interface ChatBotProps {
 }
 
 const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
+  // const saveMessageMutation = useMutation(api.message.saveMessage);
+
   const [userMessage, setUserMessage] = useState('');
   const [botResponse, setBotResponse] = useState('');
   const [messages, setMessages] = useState<{ user: string; text: string }[]>(() => {
@@ -107,6 +112,14 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
     }
   }, []); // Empty dependency array means this effect runs only once on mount
 
+  const updateChatbox = async (text: string) => {
+      await savMsgToConvex({
+        msg: text,
+        type: "test", 
+      });
+  }
+
+
   return (
     <div className="chat-container">
       <div className="chat-history">
@@ -121,11 +134,11 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
       <div className="bottom-container">
         <div className="input-bar">
             <textarea
-            className="user-input"
-            value={userMessage}
-            onChange={(e) => setUserMessage(e.target.value)}
-            placeholder="Type your message..."
-            style={{ resize: 'none', wordWrap: 'break-word'}}
+              className="user-input"
+              value={userMessage}
+              onChange={(e) => setUserMessage(e.target.value)}
+              placeholder="Type your message..."
+              style={{ resize: 'none', wordWrap: 'break-word'}}
             ></textarea>
             <button className="send-button" onClick={sendMessage}>
               <img src="/refrigerator.png" alt="Refrigerator" className="send-image" />
