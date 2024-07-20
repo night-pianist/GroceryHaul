@@ -15,6 +15,14 @@ import DashboardPage from './routes/dashboard'
 import InvoicesPage from './routes/invoices'
 import DestinationScreenPage from './routes/DestinationScreen'
 
+import { ConvexProvider, ConvexReactClient } from "convex/react";
+// const convexUrl: string = process.env.REACT_VITE_CONVEX_URL as string;
+
+// if (!convexUrl) { throw new Error("REACT_APP_CONVEX_URL is not defined"); }
+// const convex = new ConvexReactClient(convexUrl);
+const convex = new ConvexReactClient("https://fleet-guanaco-936.convex.cloud");
+
+
 // const router = createBrowserRouter([
 //   {
 //     element: <RootLayout />,
@@ -93,5 +101,10 @@ function App() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <App />
+    // <App />
+  <React.StrictMode>
+    <ConvexProvider client={convex}>
+      <App />
+    </ConvexProvider>
+  </React.StrictMode>
 );
