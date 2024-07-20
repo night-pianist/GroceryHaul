@@ -48,7 +48,8 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
 
   const outputChatbotResponse = async (input: string) => {
     // const result = await getChatbotResponse(`generate a list of ingredients to make ${input}`);
-    const result = await getChatbotResponse(`generate a response based on ${prompt} and ${input}`);
+    console.log("PROMPT: " + prompt + " INPUT: " + input + " CONVEX: " + convexMsgs);
+    const result = await getChatbotResponse(`generate a response based on ${prompt} and ${input} and previous answers ${convexMsgs}`);
     setResponse(result);
     console.log("CHATBOT: " + response);
     saveChatToConvex(response);
@@ -61,10 +62,6 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
     });
   }
 
-  const fetchConvexToChat = async () => {
-    console.log("CONVEX DATA R: " + JSON.stringify(convexMsgs));
-  }
-
   const onSubmit = async () => { 
     try {
       saveChatToConvex(userInput); 
@@ -75,13 +72,13 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
   };
 
 
-  const onSubmitToTestFetch = async () => {
-    try {
-      fetchConvexToChat();
-    } catch (error) {
-      console.error('Error fetching message:', error);
-    }
-  };
+  // const onSubmitToTestFetch = async () => {
+  //   try {
+  //     console.log("CONVEX DATA R: " + JSON.stringify(convexMsgs));
+  //   } catch (error) {
+  //     console.error('Error fetching message:', error);
+  //   }
+  // };
 
 
   return (
@@ -104,7 +101,7 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
               placeholder="Type your message..."
               style={{ resize: 'none', wordWrap: 'break-word'}}
             ></textarea>
-            <button className="send-button" onClick={onSubmitToTestFetch}>
+            <button className="send-button" onClick={onSubmit}>
               <img src="/refrigerator.png" alt="Refrigerator" className="send-image" />
            </button>
         </div>
