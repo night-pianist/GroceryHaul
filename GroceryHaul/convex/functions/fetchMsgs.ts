@@ -13,7 +13,17 @@ export const fetchAll = query({
     const allMsgs = await ctx.db.query("message").collect();
     const transformedMsgs = allMsgs.map(msg => ({ // transform the documents to include only the desired fields
       msg: msg.msg,
+      type: msg.type,
     }));
+
+    const parseTransformedMsgs = allMsgs.map(msg => ({ // transform the documents to include only the desired fields
+      msg: msg.msg,
+      type: msg.type,
+    }));
+
+    // const parseTransformedMsgs = (transformedMsgs) => {
+    //   return transformedMsgs.map(msg => `${msg.type}: ${msg.msg}`);
+    // };
 
     return transformedMsgs; 
   },

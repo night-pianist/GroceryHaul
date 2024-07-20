@@ -15,13 +15,14 @@ interface ChatBotProps { onRouteButtonClick: () => void; }
 
 const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
   const savMsgToConvex = useMutation(api.functions.saveMsgs.saveMessage);
-  const convexMsgs = useQuery(api.functions.fetchMsgs.fetchAll);
   // const savMsgToConvex = useMutation(api.functions.);
 
   const [response, setResponse] = useState('');
   const [userInput, setUserInput] = useState('');
   const [prompt, setPrompt] = useState('');
+
   const [history, setHistory] = useState('');
+  const convexMsgs = useQuery(api.functions.fetchMsgs.fetchAll);
 
   fetch(rawPrompt)
     .then(r => r.text())
@@ -48,38 +49,36 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
 
   const outputChatbotResponse = async (input: string) => {
     // const result = await getChatbotResponse(`generate a list of ingredients to make ${input}`);
-    console.log("PROMPT: " + prompt + " INPUT: " + input + " CONVEX: " + convexMsgs);
-    const result = await getChatbotResponse(`generate a response based on ${prompt} and ${input} and previous answers ${convexMsgs}`);
+    console.log("INPUT: " + input + " CONVEX: " + JSON.stringify(convexMsgs));
+    setHistory(JSON.stringify(convexMsgs));
+    const result = await getChatbotResponse(`generate a response based on the prompt here ${prompt} and the user's must recent here ${input} and previous parts of the conversation here ${convexMsgs}`);
     setResponse(result);
-    console.log("CHATBOT: " + response);
-    saveChatToConvex(response);
+    console.log("CHATBOT: " + result);
+    saveChatMsgToConvex(result);
   };
 
-  const saveChatToConvex = async (text: string) => {
+  const saveUserMsgToConvex = async (text: string) => {
     await savMsgToConvex({
       msg: text,
-      type: "test", 
+      type: "user", 
+    });
+  }
+
+  const saveChatMsgToConvex = async (text: string) => {
+    await savMsgToConvex({
+      msg: text,
+      type: "chat", 
     });
   }
 
   const onSubmit = async () => { 
     try {
-      saveChatToConvex(userInput); 
+      saveUserMsgToConvex(userInput); 
       outputChatbotResponse(userInput); 
     } catch (error) {
       console.error('Error sending message:', error);
     }
   };
-
-
-  // const onSubmitToTestFetch = async () => {
-  //   try {
-  //     console.log("CONVEX DATA R: " + JSON.stringify(convexMsgs));
-  //   } catch (error) {
-  //     console.error('Error fetching message:', error);
-  //   }
-  // };
-
 
   return (
     <div className="chat-container">
