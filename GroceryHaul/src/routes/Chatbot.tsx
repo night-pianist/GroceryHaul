@@ -5,6 +5,7 @@ import '../styles/ChatBot.css'; // Import your CSS file for styling
 import { useMutation } from 'convex/react';
 import { api } from "../../convex/_generated/api"
 import { AxiosError } from 'axios';
+import rawPrompt from '../prompt/prompt.txt';
 
 const apiKey = 'AIzaSyBIrj-dFryj2Jbsb90WgMwrhl1L-2xHuLc';
 const genAI = new GoogleGenerativeAI(apiKey!);
@@ -14,11 +15,21 @@ interface ChatBotProps { onRouteButtonClick: () => void; }
 
 const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
   const savMsgToConvex = useMutation(api.functions.saveMsgs.saveMessage);
+  // const savMsgToConvex = useMutation(api.functions.);
 
   const [response, setResponse] = useState('');
   const [userInput, setUserInput] = useState('');
+  const [prompt, setPrompt] = useState('');
 
-  const getIngredients = async (prompt: string): Promise<string> => {
+  fetch(rawPrompt)
+    .then(r => r.text())
+    .then(text => {
+      // console.log("PROMPT: " + text);
+      setPrompt(text);
+  });
+
+
+  const getChatbotResponse = async (prompt: string): Promise<string> => {
     try {
       const result = await model.generateContent(prompt);
       const response = await result.response;
@@ -33,8 +44,9 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
     }
   };
 
-  const fetchData = async (input: string) => {
-    const result = await getIngredients(`generate a list of ingredients to make ${input}`);
+  const outputChatbotResponse = async (input: string) => {
+    // const result = await getChatbotResponse(`generate a list of ingredients to make ${input}`);
+    const result = await getChatbotResponse(`generate a response based on ${prompt} and ${input}`);
     setResponse(result);
     console.log("CHATBOT: " + response);
     updateChatbox(response);
@@ -46,14 +58,20 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
       type: "test", 
     });
   }
-  const onSubmit = async () => {
+  const onSubmit = async () => { 
     try {
-      console.log("USERMSG: " + userInput); // save user's msg
-      updateChatbox(userInput);
-
-      fetchData(userInput); // save the chatbot's msg
+      updateChatbox(userInput); 
+      outputChatbotResponse(userInput); 
     } catch (error) {
       console.error('Error sending message:', error);
+    }
+  };
+
+  const onSubmitToTestFetch = async () => {
+    try {
+      
+    } catch (error) {
+      console.error('Error fetching message:', error);
     }
   };
 
@@ -78,7 +96,7 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
               placeholder="Type your message..."
               style={{ resize: 'none', wordWrap: 'break-word'}}
             ></textarea>
-            <button className="send-button" onClick={onSubmit}>
+            <button className="send-button" onClick={onSubmitToTestFetch}>
               <img src="/refrigerator.png" alt="Refrigerator" className="send-image" />
            </button>
         </div>

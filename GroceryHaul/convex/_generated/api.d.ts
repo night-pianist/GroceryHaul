@@ -14,6 +14,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as functions_fetchMsgs from "../functions/fetchMsgs.js";
 import type * as functions_saveMsgs from "../functions/saveMsgs.js";
 import type * as functions_types from "../functions/types.js";
 
@@ -26,6 +27,7 @@ import type * as functions_types from "../functions/types.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  "functions/fetchMsgs": typeof functions_fetchMsgs;
   "functions/saveMsgs": typeof functions_saveMsgs;
   "functions/types": typeof functions_types;
 }>;
