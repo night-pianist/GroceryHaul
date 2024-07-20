@@ -4,17 +4,22 @@
 //   return await db.query('message').order('desc').take(100);
 // });
 
-import { mutation, query } from '../_generated/server';
+import { query } from '../_generated/server';
 import { v } from "convex/values";
 
 export const fetchAll = query({
   args: {}, 
-  handler: async (ctx, args) => {
-    // Fetch all messages from the 'message' table
-    const messages = await ctx.db.table('message').find().toArray();
-    return messages;
-  }
+  handler: async (ctx) => { // fetch all messages documents
+    const allMsgs = await ctx.db.query("message").collect();
+    const transformedMsgs = allMsgs.map(msg => ({ // transform the documents to include only the desired fields
+      msg: msg.msg,
+    }));
+
+    return transformedMsgs; 
+  },
 });
+
+
 
 
 

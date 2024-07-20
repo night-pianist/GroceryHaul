@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import '../styles/ChatBot.css'; // Import your CSS file for styling
-import { useMutation } from 'convex/react';
+import { useMutation, useQuery } from 'convex/react';
 import { api } from "../../convex/_generated/api"
 import { AxiosError } from 'axios';
 import rawPrompt from '../prompt/prompt.txt';
@@ -15,11 +15,13 @@ interface ChatBotProps { onRouteButtonClick: () => void; }
 
 const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
   const savMsgToConvex = useMutation(api.functions.saveMsgs.saveMessage);
+  const convexMsgs = useQuery(api.functions.fetchMsgs.fetchAll);
   // const savMsgToConvex = useMutation(api.functions.);
 
   const [response, setResponse] = useState('');
   const [userInput, setUserInput] = useState('');
   const [prompt, setPrompt] = useState('');
+  const [history, setHistory] = useState('');
 
   fetch(rawPrompt)
     .then(r => r.text())
@@ -49,27 +51,33 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
     const result = await getChatbotResponse(`generate a response based on ${prompt} and ${input}`);
     setResponse(result);
     console.log("CHATBOT: " + response);
-    updateChatbox(response);
+    saveChatToConvex(response);
   };
 
-  const updateChatbox = async (text: string) => {
+  const saveChatToConvex = async (text: string) => {
     await savMsgToConvex({
       msg: text,
       type: "test", 
     });
   }
+
+  const fetchConvexToChat = async () => {
+    console.log("CONVEX DATA R: " + JSON.stringify(convexMsgs));
+  }
+
   const onSubmit = async () => { 
     try {
-      updateChatbox(userInput); 
+      saveChatToConvex(userInput); 
       outputChatbotResponse(userInput); 
     } catch (error) {
       console.error('Error sending message:', error);
     }
   };
 
+
   const onSubmitToTestFetch = async () => {
     try {
-      
+      fetchConvexToChat();
     } catch (error) {
       console.error('Error fetching message:', error);
     }
