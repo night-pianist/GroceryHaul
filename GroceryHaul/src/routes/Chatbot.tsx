@@ -15,6 +15,7 @@ interface ChatBotProps { onRouteButtonClick: () => void; }
 
 const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
   const savMsgToConvex = useMutation(api.functions.saveMsgs.saveMessage);
+  const parsedConvexMsgs = useQuery(api.functions.fetchMsgs.fetchAllParsed);
   const convexMsgs = useQuery(api.functions.fetchMsgs.fetchAll);
   // const savMsgToConvex = useMutation(api.functions.);
 
@@ -49,9 +50,9 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
   const outputChatbotResponse = async (input: string) => {
     // const result = await getChatbotResponse(`generate a list of ingredients to make ${input}`);
     // console.log("INPUT: " + input + " CONVEX: " + JSON.stringify(convexMsgs));
-    setHistory(JSON.stringify(convexMsgs));
+    setHistory(JSON.stringify(parsedConvexMsgs));
     console.log("HISTORY: " + history);
-    const result = await getChatbotResponse(`generate a response based on the prompt here ${prompt} and the user's must recent here ${input} and previous parts of the conversation here ${convexMsgs}`);
+    const result = await getChatbotResponse(`generate a response based on the prompt here ${prompt} and the user's must recent response here ${input} and previous parts of the conversation here ${parsedConvexMsgs}`);
     setResponse(result);
     console.log("CHATBOT: " + result);
     saveChatMsgToConvex(result);
@@ -83,13 +84,13 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
   return (
     <div className="chat-container">
       <div className="chat-history">
-        {/* {messages.map((message, index) => (
-          <div key={index} className={`message ${message.user}`}>
+        {convexMsgs?.map((message, index) => (
+          <div key={index} className={`message ${message.type}`}>
             <div className="message-content">
-              <ReactMarkdown>{message.text}</ReactMarkdown>
+              <ReactMarkdown>{message.msg}</ReactMarkdown>
             </div>
           </div>
-        ))} */}
+        ))}
       </div>
       <div className="bottom-container">
         <div className="input-bar">
@@ -111,3 +112,11 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
 };
 
 export default ChatBot;
+
+// {messages.map((message, index) => (
+//   <div key={index} className={`message ${message.user}`}>
+//     <div className="message-content">
+//       <ReactMarkdown>{message.text}</ReactMarkdown>
+//     </div>
+//   </div>
+// ))}
