@@ -405,6 +405,11 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     return (
         <div className="display-container">
             <div className="graybox">
+                <div className = "user-button-container">
+                    <SignedIn>
+                        <UserButton />
+                    </SignedIn>
+                </div>
                 {showChatBot ? (
                     <ChatBot onRouteButtonClick={routeDisplay}/> 
                 ) : (
