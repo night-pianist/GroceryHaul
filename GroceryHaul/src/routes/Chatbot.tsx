@@ -19,21 +19,35 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
   const convexMsgs = useQuery(api.functions.fetchMsgs.fetchAll);
   // const savMsgToConvex = useMutation(api.functions.);
 
-  const [response, setResponse] = useState('');
+  const [botResponse, setBotResponse] = useState('');
   const [userInput, setUserInput] = useState('');
   const [prompt, setPrompt] = useState('');
-  const [history, setHistory] = useState('');
+  // const [history, setHistory] = useState('');
+  const [stores, setStores] = useState<string[]>([]);
 
-  fetch(rawPrompt)
+
+  fetch(rawPrompt) // read in the chatbot overarching prompt from prompt.txt
     .then(r => r.text())
     .then(text => {
-      // console.log("PROMPT: " + text);
       setPrompt(text);
   });
 
+  useEffect(() => { // get the calculated route
+    const getStores = async () => {
+      if (botResponse.includes('finalized')) {
+        const responseText = botResponse;
+        const result = await getChatbotResponse(`You will be given a response that has a list of stores. Your job is to parse that list and output the names of the stores in the list in a string format. Here is the response:\n${responseText}`);
+        // console.log("chat bot res: " + result);
+        const storeList = result.split(',').map(store => store.trim()); // parses result
+        console.log("FINALIZED STORES: " + storeList);
+        setStores(storeList);
+      }
+    };
+    getStores();
+  }, [botResponse]);
 
   const getChatbotResponse = async (prompt: string): Promise<string> => {
-    try {
+    try { // generate the chatbot's response
       const result = await model.generateContent(prompt);
       const response = await result.response;
       const text = await response.text();
@@ -48,29 +62,18 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
   };
 
   const outputChatbotResponse = async (input: string) => {
-    // const result = await getChatbotResponse(`generate a list of ingredients to make ${input}`);
-    // console.log("INPUT: " + input + " CONVEX: " + JSON.stringify(convexMsgs));
-    setHistory(JSON.stringify(parsedConvexMsgs));
-    // console.log("HISTORY: " + history);
-    // const result = await getChatbotResponse(`generate a response based on the prompt here ${prompt} and the user's must recent response here ${input} and previous parts of the conversation here ${parsedConvexMsgs}`);
+    // setHistory(JSON.stringify(parsedConvexMsgs));
     const result = await getChatbotResponse(`Here is the conversation history:\n${parsedConvexMsgs}\nThe user's most recent response: ${input}\nAnd the overarching prompt:\n${prompt}\nPlease generate a response based on all this information.`);
-    setResponse(result);
-    // console.log("CHATBOT: " + result);
+    setBotResponse(result);
     saveChatMsgToConvex(result);
   };
 
   const saveUserMsgToConvex = async (text: string) => {
-    await savMsgToConvex({
-      msg: text,
-      type: "user", 
-    });
+    await savMsgToConvex({ msg: text, type: "user" });
   }
 
   const saveChatMsgToConvex = async (text: string) => {
-    await savMsgToConvex({
-      msg: text,
-      type: "chat", 
-    });
+    await savMsgToConvex({ msg: text, type: "chat" });
   }
 
   const onSubmit = async () => { 
@@ -80,6 +83,13 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
       setUserInput(''); // clear the textarea
     } catch (error) {
       console.error('Error sending message:', error);
+    }
+  };
+  
+  const handleKeyDown = (e: { key: string; shiftKey: any; preventDefault: () => void; }) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      onSubmit();
     }
   };
 
@@ -102,6 +112,7 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
               onChange={(e) => setUserInput(e.target.value)}
               placeholder="Type your message..."
               style={{ resize: 'none', wordWrap: 'break-word'}}
+              onKeyDown={handleKeyDown}
             ></textarea>
             <button className="send-button" onClick={onSubmit}>
               <img src="/refrigerator.png" alt="Refrigerator" className="send-image" />
