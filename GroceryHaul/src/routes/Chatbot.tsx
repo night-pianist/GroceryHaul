@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -101,11 +102,10 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
               placeholder="Type your message..."
               style={{ resize: 'none', wordWrap: 'break-word'}}
             ></textarea>
-            <button className="send-button" onClick={onSubmit}>
-              <img src="/refrigerator.png" alt="Refrigerator" className="send-image" />
-           </button>
+            <button className="send-button" onClick={sendMessage}>Send</button>
         </div>
-        {/* <button className="route-button" onClick={onRouteButtonClick}> R→ </button> */}
+        <button className="route-button" onClick={onRouteButtonClick}> Routes→ </button>
+
       </div>
     </div>
   );
