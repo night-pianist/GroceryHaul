@@ -23,6 +23,6 @@ function NavigateOnSignIn({ navigate }: { navigate: ReturnType<typeof useNavigat
     console.log("NavigateOnSignIn useEffect called");
     navigate('/destinationScreen');
   }, [navigate]);
-
+  
   return null;
 }
