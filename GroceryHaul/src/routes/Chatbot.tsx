@@ -76,6 +76,7 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
     try {
       saveUserMsgToConvex(userInput); 
       outputChatbotResponse(userInput); 
+      setUserInput(''); // clear the textarea
     } catch (error) {
       console.error('Error sending message:', error);
     }

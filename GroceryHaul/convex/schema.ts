@@ -10,11 +10,14 @@ export default defineSchema({
     })
     .index("byUserId",["userId"]),
 
-    // user: defineTable({ 
+    // userHistory: defineTable({ 
     //     userId: v.string(),
     //     userName: v.string(),
+    //     msg: v.string(),
+    //     chatHistory: v.optional(v.any()) // stores all messages
     // })
-    // .index("byUserId", ["userId"]),
+    // .index("byUserId", ["userId"])
+    // .index("byUserName", ["userName"]),
 
     // chat: defineTable({
     //     userId: v.string(),
