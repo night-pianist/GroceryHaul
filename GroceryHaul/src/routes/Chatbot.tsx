@@ -51,10 +51,11 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
     // const result = await getChatbotResponse(`generate a list of ingredients to make ${input}`);
     // console.log("INPUT: " + input + " CONVEX: " + JSON.stringify(convexMsgs));
     setHistory(JSON.stringify(parsedConvexMsgs));
-    console.log("HISTORY: " + history);
-    const result = await getChatbotResponse(`generate a response based on the prompt here ${prompt} and the user's must recent response here ${input} and previous parts of the conversation here ${parsedConvexMsgs}`);
+    // console.log("HISTORY: " + history);
+    // const result = await getChatbotResponse(`generate a response based on the prompt here ${prompt} and the user's must recent response here ${input} and previous parts of the conversation here ${parsedConvexMsgs}`);
+    const result = await getChatbotResponse(`Here is the conversation history:\n${parsedConvexMsgs}\nThe user's most recent response: ${input}\nAnd the overarching prompt:\n${prompt}\nPlease generate a response based on all this information.`);
     setResponse(result);
-    console.log("CHATBOT: " + result);
+    // console.log("CHATBOT: " + result);
     saveChatMsgToConvex(result);
   };
 
