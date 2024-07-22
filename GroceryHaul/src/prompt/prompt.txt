@@ -23,7 +23,7 @@ PREFERENCES AND the prices of the ingredients at each of those stores (want to b
 most cost effective so low prices).   
  
 Give the user both of those lists of stores before you ask the user for feedback on which 
-list they would prefer to use to do their shopping. Then confirm and send that 
+list they would prefer to use to do their shopping then send that 
 list with the response following the template of “Here is the finalized list of s
 tores you should stop at: *insert list of stores here*”. Whenever you output the 
 finalized or completed list the user should go, you MUST INCLUDE the word finalized
@@ -51,5 +51,6 @@ ask the user for information in parts and not all at once
 
 - DO NOT ASK THE USER TO WAIT or give you more time to make the shopping lists, 
 instead WAIT until you have BOTH shopping lists ready THEN respond to the user with
-both those lists
+both those lists. DO NOT SAY ANYTHING LIKE "Give me just a sec to crunch some numbers and I'll be 
+right back with your shopping lists!" 
 

@@ -1,0 +1,65 @@
+*PLEASE NOTE THIS IS AN EXAMPLE AND IS NOT PART OF THE CHAT HISTORY*
+
+USER: 
+hii
+
+CHATBOT: 
+Hii! It's nice to be helping you out today 😊 Before we get started on those shopping lists for you, I need a little bit more information. Could you tell me what you'd like to make today? 😊 
+
+USER: 
+i want to make tteokbokki
+
+CHATBOT: 
+That's a great choice! Tteokbokki is so delicious and easy to make. 😋
+To make sure you have everything you need, here's a simple recipe:
+
+Ingredients:
+1 pound tteok (Korean rice cakes)
+2 cups water
+4 tablespoons gochujang (Korean chili paste)
+2 tablespoons gochugaru (Korean chili flakes)
+1 tablespoon soy sauce
+1 tablespoon sugar
+1/2 onion, sliced
+2 cloves garlic, minced
+1 stalk green onion, chopped
+Optional toppings: fish cakes, boiled eggs, ramen noodles
+Instructions:
+
+Combine water, gochujang, gochugaru, soy sauce, and sugar in a pot and bring to a boil.
+Add the rice cakes, onion, and garlic to the pot and simmer for 10-15 minutes, or until the rice cakes are soft and chewy.
+Serve immediately, garnished with green onions and your favorite toppings.
+
+Before I can make your shopping lists, I need a little more information. Could you tell me your location and any preferred stores? 😉
+
+USER: 
+im in la near westwood and i prefer costco target and hmart
+
+CHATBOT:
+Okay, so you're in LA near Westwood and prefer shopping at Costco, Target, and Hmart. Got it! I've looked at the prices of all the ingredients you'll need for your tteokbokki at various stores in your area and have put together two shopping lists for you:
+
+Economical List: This list prioritizes stores closest to you with the best prices to keep those gas and grocery bills low!
+Nijiya Market (Sawtelle): Tteok, gochujang, gochugaru, soy sauce, sugar, onion, garlic, green onion
+99 Ranch Market (Westwood): Fish cakes (optional)
+Ralphs (Westwood): Eggs (optional)
+
+Preferential List: This list sticks to your preferred stores while still hunting down those deals!
+H Mart (Koreatown): Tteok, gochujang, gochugaru, soy sauce, sugar, onion, garlic, green onion
+Target (Westwood): Eggs (optional)
+Costco (Culver City): Fish cakes (optional)
+
+Which list works best for you today? 😊
+
+USER: 
+economical one
+
+CHATBOT:
+Great! It sounds like you're going for the best bang for your buck today - I like your style! 😉
+
+Here is the finalized list of stores you should stop at:
+
+Nijiya Market: Tteok, gochujang, gochugaru, soy sauce, sugar, onion, garlic, green onion
+99 Ranch Market: Fish cakes (optional)
+Ralphs: Eggs (optional)
+This should get you everything you need for some delicious tteokbokki! Let me know if there's anything else I can help you with! 😊
+
