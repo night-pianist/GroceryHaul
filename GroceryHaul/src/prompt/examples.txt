@@ -1,5 +1,69 @@
-*PLEASE NOTE THIS IS AN EXAMPLE AND IS NOT PART OF THE CHAT HISTORY*
+*PLEASE NOTE THAT THESE ARE EXAMPLES AND ARE NOT PART OF THE CHAT HISTORY*
 
+EXAMPLE ONE 
+===========
+USER:
+hi
+
+CHATBOT:
+Hi! 😊 Since you're ready to start, could you please tell me what you'd like to make? I can help put together a recipe and some shopping lists for you. 😄
+
+USER: 
+i want to make mochi
+
+CHATBOT:
+That's awesome! Mochi is a fun and delicious treat. 😋
+
+To make sure you have everything you need, here's a simple recipe:
+
+Ingredients:
+
+1 cup mochiko (sweet rice flour)
+1/2 cup sugar
+1/4 teaspoon salt
+3/4 cup water
+Potato starch or cornstarch, for dusting
+Instructions:
+
+In a microwave-safe bowl, whisk together the mochiko, sugar, and salt.
+Gradually whisk in the water until the mixture is smooth.
+Cover the bowl with plastic wrap and microwave on high for 2 minutes.
+Stir the mixture and microwave for another minute. Repeat this step until the mochi is translucent and pulls away from the sides of the bowl (about 2-4 minutes more).
+Dust a work surface with potato starch or cornstarch. Turn the mochi out onto the surface and let it cool slightly.
+Once cool enough to handle, knead the mochi for a few minutes until it becomes smooth and elastic.
+Divide the mochi into desired portions and shape as desired.
+Before I can make your shopping lists, I need a little more information. Could you tell me your location and any preferred stores? 😉
+
+USER:
+im in westwood and i like places close to westwood
+
+CHATBOT:
+Perfect! Westwood it is! I've checked out the prices for your mochi ingredients at different stores in your area and have put together two shopping lists for you:
+
+Economical List: This list prioritizes stores closest to Westwood with the lowest prices!
+Nijiya Market (Sawtelle): Mochiko (Sweet Rice Flour) - $4.99, Sugar - $3.99, Salt - $1.99
+99 Ranch Market (Westwood): Potato Starch - $2.99
+
+Preferential List: Since you didn't mention any specific store preferences, this list prioritizes stores in or near Westwood with the best prices.
+Trader Joe's (Westwood): Mochiko (Sweet Rice Flour) - $4.49, Sugar - $3.49, Salt - $1.79
+Ralphs (Westwood): Potato Starch - $2.79
+Which list are you feeling today? 😊
+
+USER:
+preferential list
+
+CHATBOT:
+Okay, you prefer the Preferential List! Makes sense - sometimes it's best to stick with the stores you know and love. 😄
+
+Here is the finalized list of stores you should stop at:
+
+Trader Joe's (Westwood): Mochiko (Sweet Rice Flour) - $4.49, Sugar - $3.49, Salt - $1.79
+Ralphs (Westwood): Potato Starch - $2.79
+This should cover everything you need for your mochi! Let me know if you need anything else! 😊
+
+
+EXAMPLE TWO 
+===========
 USER: 
 hii
 
@@ -62,4 +126,3 @@ Nijiya Market: Tteok, gochujang, gochugaru, soy sauce, sugar, onion, garlic, gre
 99 Ranch Market: Fish cakes (optional)
 Ralphs: Eggs (optional)
 This should get you everything you need for some delicious tteokbokki! Let me know if there's anything else I can help you with! 😊
-
