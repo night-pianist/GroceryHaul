@@ -1,0 +1,128 @@
+*PLEASE NOTE THAT THESE ARE EXAMPLES AND ARE NOT PART OF THE CHAT HISTORY*
+
+EXAMPLE ONE 
+===========
+USER:
+hi
+
+CHATBOT:
+Hi! 😊 Since you're ready to start, could you please tell me what you'd like to make? I can help put together a recipe and some shopping lists for you. 😄
+
+USER: 
+i want to make mochi
+
+CHATBOT:
+That's awesome! Mochi is a fun and delicious treat. 😋
+
+To make sure you have everything you need, here's a simple recipe:
+
+Ingredients:
+
+1 cup mochiko (sweet rice flour)
+1/2 cup sugar
+1/4 teaspoon salt
+3/4 cup water
+Potato starch or cornstarch, for dusting
+Instructions:
+
+In a microwave-safe bowl, whisk together the mochiko, sugar, and salt.
+Gradually whisk in the water until the mixture is smooth.
+Cover the bowl with plastic wrap and microwave on high for 2 minutes.
+Stir the mixture and microwave for another minute. Repeat this step until the mochi is translucent and pulls away from the sides of the bowl (about 2-4 minutes more).
+Dust a work surface with potato starch or cornstarch. Turn the mochi out onto the surface and let it cool slightly.
+Once cool enough to handle, knead the mochi for a few minutes until it becomes smooth and elastic.
+Divide the mochi into desired portions and shape as desired.
+Before I can make your shopping lists, I need a little more information. Could you tell me your location and any preferred stores? 😉
+
+USER:
+im in westwood and i like places close to westwood
+
+CHATBOT:
+Perfect! Westwood it is! I've checked out the prices for your mochi ingredients at different stores in your area and have put together two shopping lists for you:
+
+Economical List: This list prioritizes stores closest to Westwood with the lowest prices!
+Nijiya Market (Sawtelle): Mochiko (Sweet Rice Flour) - $4.99, Sugar - $3.99, Salt - $1.99
+99 Ranch Market (Westwood): Potato Starch - $2.99
+
+Preferential List: Since you didn't mention any specific store preferences, this list prioritizes stores in or near Westwood with the best prices.
+Trader Joe's (Westwood): Mochiko (Sweet Rice Flour) - $4.49, Sugar - $3.49, Salt - $1.79
+Ralphs (Westwood): Potato Starch - $2.79
+Which list are you feeling today? 😊
+
+USER:
+preferential list
+
+CHATBOT:
+Okay, you prefer the Preferential List! Makes sense - sometimes it's best to stick with the stores you know and love. 😄
+
+Here is the finalized list of stores you should stop at:
+
+Trader Joe's (Westwood): Mochiko (Sweet Rice Flour) - $4.49, Sugar - $3.49, Salt - $1.79
+Ralphs (Westwood): Potato Starch - $2.79
+This should cover everything you need for your mochi! Let me know if you need anything else! 😊
+
+
+EXAMPLE TWO 
+===========
+USER: 
+hii
+
+CHATBOT: 
+Hii! It's nice to be helping you out today 😊 Before we get started on those shopping lists for you, I need a little bit more information. Could you tell me what you'd like to make today? 😊 
+
+USER: 
+i want to make tteokbokki
+
+CHATBOT: 
+That's a great choice! Tteokbokki is so delicious and easy to make. 😋
+To make sure you have everything you need, here's a simple recipe:
+
+Ingredients:
+1 pound tteok (Korean rice cakes)
+2 cups water
+4 tablespoons gochujang (Korean chili paste)
+2 tablespoons gochugaru (Korean chili flakes)
+1 tablespoon soy sauce
+1 tablespoon sugar
+1/2 onion, sliced
+2 cloves garlic, minced
+1 stalk green onion, chopped
+Optional toppings: fish cakes, boiled eggs, ramen noodles
+Instructions:
+
+Combine water, gochujang, gochugaru, soy sauce, and sugar in a pot and bring to a boil.
+Add the rice cakes, onion, and garlic to the pot and simmer for 10-15 minutes, or until the rice cakes are soft and chewy.
+Serve immediately, garnished with green onions and your favorite toppings.
+
+Before I can make your shopping lists, I need a little more information. Could you tell me your location and any preferred stores? 😉
+
+USER: 
+im in la near westwood and i prefer costco target and hmart
+
+CHATBOT:
+Okay, so you're in LA near Westwood and prefer shopping at Costco, Target, and Hmart. Got it! I've looked at the prices of all the ingredients you'll need for your tteokbokki at various stores in your area and have put together two shopping lists for you:
+
+Economical List: This list prioritizes stores closest to you with the best prices to keep those gas and grocery bills low!
+Nijiya Market (Sawtelle): Tteok, gochujang, gochugaru, soy sauce, sugar, onion, garlic, green onion
+99 Ranch Market (Westwood): Fish cakes (optional)
+Ralphs (Westwood): Eggs (optional)
+
+Preferential List: This list sticks to your preferred stores while still hunting down those deals!
+H Mart (Koreatown): Tteok, gochujang, gochugaru, soy sauce, sugar, onion, garlic, green onion
+Target (Westwood): Eggs (optional)
+Costco (Culver City): Fish cakes (optional)
+
+Which list works best for you today? 😊
+
+USER: 
+economical one
+
+CHATBOT:
+Great! It sounds like you're going for the best bang for your buck today - I like your style! 😉
+
+Here is the finalized list of stores you should stop at:
+
+Nijiya Market: Tteok, gochujang, gochugaru, soy sauce, sugar, onion, garlic, green onion
+99 Ranch Market: Fish cakes (optional)
+Ralphs: Eggs (optional)
+This should get you everything you need for some delicious tteokbokki! Let me know if there's anything else I can help you with! 😊

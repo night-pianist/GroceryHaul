@@ -10,6 +10,7 @@ export default defineSchema({
     })
     .index("byUserId",["userId"]),
 
+    // userHistory: defineTable({ 
     users: defineTable({
         name: v.string(),
         // this the Clerk ID, stored in the subject JWT field
@@ -18,8 +19,11 @@ export default defineSchema({
     // user: defineTable({ 
     //     userId: v.string(),
     //     userName: v.string(),
+    //     msg: v.string(),
+    //     chatHistory: v.optional(v.any()) // stores all messages
     // })
-    // .index("byUserId", ["userId"]),
+    // .index("byUserId", ["userId"])
+    // .index("byUserName", ["userName"]),
 
     // chat: defineTable({
     //     userId: v.string(),
