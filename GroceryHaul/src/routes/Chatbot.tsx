@@ -28,7 +28,7 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
   const [prompt, setPrompt] = useState('');
   const [promptExamples, setPromptExamples] = useState('');
   // const [history, setHistory] = useState('');
-  const [stores, setStores] = useState<string[]>([]);
+  const [stores, setStores] = useState<string[]>([]); // used to get the finalized list of stores
 
 
   fetch(rawPrompt) // read in the chatbot overarching prompt from prompt.txt
@@ -59,7 +59,7 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
 
   const getChatbotResponse2 = async (prompt: string): Promise<string> => {
     try { // generate the chatbot's response to parse the stores
-      const result = await model.generateContent(prompt);
+      const result = await model2.generateContent(prompt);
       const response = await result.response;
       const text = await response.text();
       return text;
