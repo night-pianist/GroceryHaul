@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -140,7 +141,7 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
               style={{ resize: 'none', wordWrap: 'break-word'}}
               onKeyDown={handleKeyDown}
             ></textarea>
-            <button className="send-button" onClick={onSubmit}>
+             <button className="send-button" onClick={onSubmit}>
               <img src="/refrigerator.png" alt="Refrigerator" className="send-image" />
            </button>
         </div>
