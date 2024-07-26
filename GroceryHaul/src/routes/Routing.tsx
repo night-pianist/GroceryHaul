@@ -40,7 +40,7 @@ const Routing: React.FC<Props> = ({ routeInfos, selectedRoute, setSelectedRoute,
                     </SignedIn>
                 </div>
                 <button className="return-chat-btn" onClick={onChatButtonClick}>
-                    <img src="/chatIconNb.png" alt="goto chat btn" />
+                    <img src="/chatIconCircle.png" alt="goto chat btn" />
                 </button>
                 <div className="dropdown-wrapper">
                     <Dropdown
