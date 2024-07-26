@@ -1,12 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map, IControl, GeoJSONSource } from 'mapbox-gl'; 
 import * as GeoJSON from 'geojson';
+import { useMutation, useQuery } from "convex/react";
+import {api} from "../../convex/_generated/api"
 
 import 'mapbox-gl/dist/mapbox-gl.css'; // for mapbox styling
 import '../styles/DestinationScreen.css';
 import Routing from './Routing';
 import ChatBot from './Chatbot';
-import { SignedIn, UserButton } from '@clerk/clerk-react';
+import { SignedIn, UserButton, useUser } from '@clerk/clerk-react';
 
 // mapboxgl.accessToken = String(process.env.REACT_APP_MAPBOX_TOKEN);
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';

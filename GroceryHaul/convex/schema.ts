@@ -11,11 +11,17 @@ export default defineSchema({
     .index("byUserId",["userId"]),
 
     // userHistory: defineTable({ 
-    users: defineTable({
-        name: v.string(),
-        // this the Clerk ID, stored in the subject JWT field
-        externalId: v.string(),
-      }).index("byExternalId", ["externalId"]),
+
+    user: defineTable({ 
+        userId: v.string(),
+        email: v.string(),
+        fullName: v.string(), 
+        pfpUrl: v.string(), 
+    })
+    .index("byEmail", ["email"])
+    .index("byUserId", ["userId"])
+    .index("byName", ["fullName"])
+});
     // user: defineTable({ 
     //     userId: v.string(),
     //     userName: v.string(),
@@ -29,4 +35,4 @@ export default defineSchema({
     //     userId: v.string(),
     //     timestamp: v.number(),
     // })
-});
+
