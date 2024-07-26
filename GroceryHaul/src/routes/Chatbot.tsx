@@ -145,7 +145,9 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
               <img src="/refrigerator.png" alt="Refrigerator" className="send-image" />
            </button>
         </div>
-        {/* <button className="route-button" onClick={onRouteButtonClick}> R→ </button> */}
+        <button className="route-button" onClick={onRouteButtonClick}>
+            <img src="/routeIconCircle.png" alt="Routing" />
+        </button>
       </div>
     </div>
   );

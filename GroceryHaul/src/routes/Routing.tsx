@@ -39,7 +39,9 @@ const Routing: React.FC<Props> = ({ routeInfos, selectedRoute, setSelectedRoute,
                         <UserButton />
                     </SignedIn>
                 </div>
-                <button className="return-chat-btn" onClick={onChatButtonClick}>←</button>
+                <button className="return-chat-btn" onClick={onChatButtonClick}>
+                    <img src="/chatIconNb.png" alt="goto chat btn" />
+                </button>
                 <div className="dropdown-wrapper">
                     <Dropdown
                         routes={routeInfos.map(route => ({
