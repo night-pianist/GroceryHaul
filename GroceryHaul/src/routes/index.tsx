@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import '../styles/index.css';
 import { SignedIn, UserButton } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
+import { useMutation, useQuery } from 'convex/react';
+import { api } from "../../convex/_generated/api"
+import { Authenticated, Unauthenticated, AuthLoading } from "convex/react";
 
 function Index(): JSX.Element {
   const mapAnimationPath = `/darkPinkMap.gif`;
@@ -16,8 +19,45 @@ function Index(): JSX.Element {
     setBackgroundVisible(false); 
   };
 
+  const saveUserToConvex = useMutation(api.users.createUser);
+  const [text, setText] = useState(''); // State to hold the text value
+  
+  const saveUser = async (text: string) => {
+    try {
+      await saveUserToConvex({ userName: text });
+      console.log("user saved");
+    } catch (error) {
+      console.error('Failed to save user:', error);
+    }
+  }
+
+  // const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   console.log("HERE");
+    // setText("TESTTT");
+  //   event.preventDefault(); // Prevent default button behavior if needed
+  //   // await saveUser(text);
+  // };
+
+  const handleClick = async () => { 
+    try {
+      console.log("HERE");
+      setText("TESTTT");
+      await saveUser(text);
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+  };
+
+
   return (
       <div className="home-container">
+        <Authenticated>Logged in</Authenticated>
+        <Unauthenticated>
+          <button className="send-button" onClick={handleClick}>
+            click here
+          </button>
+        </Unauthenticated>
+        <AuthLoading>Still loading</AuthLoading>
         {backgroundVisible && (
           <img
             src={src}

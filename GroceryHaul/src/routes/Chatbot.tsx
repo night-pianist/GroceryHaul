@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -48,7 +47,7 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
     const getStores = async () => {
       if (botResponse.includes('finalized')) {
         const responseText = botResponse;
-        const result = await getChatbotResponse2(`You will be given a response that has a list of stores. Your job is to parse that list and output the names of the stores in the list in a string format. Here is the response:\n${responseText}`);
+        const result = await getChatbotResponse2(`You will be given a response that has a list of stores. Your job is to parse that list and output ONLY the names of the stores in the list in a string format. Here is the response:\n${responseText}`);
         // console.log("chat bot res: " + result);
         const storeList = result.split(',').map(store => store.trim()); // parses result
         console.log("FINALIZED STORES: " + storeList);

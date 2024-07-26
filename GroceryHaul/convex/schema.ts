@@ -13,14 +13,11 @@ export default defineSchema({
     // userHistory: defineTable({ 
 
     user: defineTable({ 
-        userId: v.string(),
-        email: v.string(),
-        fullName: v.string(), 
-        pfpUrl: v.string(), 
+        // userId: v.string(),
+        userName: v.string(), 
     })
-    .index("byEmail", ["email"])
-    .index("byUserId", ["userId"])
-    .index("byName", ["fullName"])
+    // .index("byUserId", ["userId"])
+    .index("byName", ["userName"])
 });
     // user: defineTable({ 
     //     userId: v.string(),
