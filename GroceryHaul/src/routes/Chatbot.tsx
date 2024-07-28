@@ -44,18 +44,30 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
   useEffect(() => { // get the calculated route
     const getStores = async () => {
       if (botResponse.includes('finalized')) {
-        const start = botResponse.indexOf(':') + 1;
-        const end = botResponse.lastIndexOf('.');
-        const storeList = botResponse.slice(start, end).trim();
-        const storesArray = storeList.split(',').map(store => store.trim());
+        // const start = botResponse.indexOf(':') + 1;
+        // const end = botResponse.lastIndexOf('.');
+        // const storeList = botResponse.slice(start, end).trim();
+        // const storesArray = storeList.split(',').map(store => store.trim());
+        const regex = /finalized list of stores you should stop at:\s*([^.]*)\./;
+        const match = botResponse.match(regex);
 
-        console.log("FINALIZED STORES: " + storesArray.join(', '));
+        if (match) {
+            const storeList = match[1].trim();
+            const storesArray = storeList.split(',').map((store: string) => store.trim());
 
-        setStores(storesArray);
+          console.log("FINALIZED STORES 1: " + storesArray.join(', '));
+
+          setStores(storesArray);
+          // console.log("FINALIZED STORES 2: " + stores);
+        }
       }
     };
     getStores();
   }, [botResponse]);
+
+  useEffect(() => { // get the calculated route
+    console.log("FINALIZED STORES 2: " + stores.join(', '));
+  }, [stores]);
 
   const getChatbotResponse = async (prompt: string): Promise<string> => {
     try { // generate the chatbot's response
