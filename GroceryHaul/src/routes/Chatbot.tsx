@@ -12,9 +12,6 @@ import rawExamples from '../prompt/examples.txt';
 const apiKey = 'AIzaSyBIrj-dFryj2Jbsb90WgMwrhl1L-2xHuLc';
 const genAI = new GoogleGenerativeAI(apiKey!);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
-const apiKey2 = 'AIzaSyDpQmeHNkykz0T6rFDsP4z8tMn3fl9hDRM'
-const genAI2 = new GoogleGenerativeAI(apiKey2!);
-const model2 = genAI2.getGenerativeModel({ model: 'gemini-1.5-pro' });
 
 interface ChatBotProps { onRouteButtonClick: () => void; }
 
@@ -47,31 +44,18 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
   useEffect(() => { // get the calculated route
     const getStores = async () => {
       if (botResponse.includes('finalized')) {
-        const responseText = botResponse;
-        const result = await getChatbotResponse2(`You will be given a response that has a list of stores. Your job is to parse that list and output the names of the stores in the list in a string format. Here is the response:\n${responseText}`);
-        // console.log("chat bot res: " + result);
-        const storeList = result.split(',').map(store => store.trim()); // parses result
-        console.log("FINALIZED STORES: " + storeList);
-        setStores(storeList);
+        const start = botResponse.indexOf(':') + 1;
+        const end = botResponse.lastIndexOf('.');
+        const storeList = botResponse.slice(start, end).trim();
+        const storesArray = storeList.split(',').map(store => store.trim());
+
+        console.log("FINALIZED STORES: " + storesArray.join(', '));
+
+        setStores(storesArray);
       }
     };
     getStores();
   }, [botResponse]);
-
-  const getChatbotResponse2 = async (prompt: string): Promise<string> => {
-    try { // generate the chatbot's response to parse the stores
-      const result = await model2.generateContent(prompt);
-      const response = await result.response;
-      const text = await response.text();
-      return text;
-    } catch {
-      if ((Error as unknown as AxiosError).response && (Error as unknown as AxiosError).response!.status === 429) {
-        throw new Error('Quota exceeded. Please try again later.');
-      } else {
-        throw new Error('An error occurred while fetching data.');
-      }
-    }
-  };
 
   const getChatbotResponse = async (prompt: string): Promise<string> => {
     try { // generate the chatbot's response
@@ -81,15 +65,19 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
       return text;
     } catch {
       if ((Error as unknown as AxiosError).response && (Error as unknown as AxiosError).response!.status === 429) {
-        throw new Error('Quota exceeded. Please try again later.');
+        throw new Error('Quota exceeded. Please try again later 1.');
       } else {
-        throw new Error('An error occurred while fetching data.');
+        throw new Error('An error occurred while fetching data 1.');
       }
     }
   };
 
   const outputChatbotResponse = async (input: string) => {
     // setHistory(JSON.stringify(parsedConvexMsgs));
+    // console.log("HISTORY: " + parsedConvexMsgs);
+    // console.log("USER INPUT: " + input);
+    // console.log("PROMPT: " + prompt);
+    // console.log("EXAMPLES: " + promptExamples);
     const result = await getChatbotResponse(`Here is the conversation history:\n${parsedConvexMsgs}\nThe user's most recent response: ${input}\nThe overarching prompt:\n${prompt}\nAnd an example to help guide you in conversing and helping the user:\n${promptExamples}\nPlease generate a response based on all this information.`);
     setBotResponse(result);
     saveChatMsgToConvex(result);

@@ -1,4 +1,5 @@
-*PLEASE NOTE THAT THESE ARE EXAMPLES AND ARE NOT PART OF THE CHAT HISTORY*
+*THE FOLLOWING ARE EXAMPLES!!!*
+*PLEASE NOTE THAT THESE ARE EXAMPLES AND ARE NOT PART OF THE CHAT HISTORY!!!*
 
 EXAMPLE ONE 
 ===========
@@ -55,10 +56,8 @@ preferential list
 CHATBOT:
 Okay, you prefer the Preferential List! Makes sense - sometimes it's best to stick with the stores you know and love. 😄
 
-Here is the finalized list of stores you should stop at:
+Here is the finalized list of stores you should stop at: Trader Joe's, Mochiko, Ralphs. 
 
-Trader Joe's (Westwood): Mochiko (Sweet Rice Flour) - $4.49, Sugar - $3.49, Salt - $1.79
-Ralphs (Westwood): Potato Starch - $2.79
 This should cover everything you need for your mochi! Let me know if you need anything else! 😊
 
 
@@ -120,9 +119,6 @@ economical one
 CHATBOT:
 Great! It sounds like you're going for the best bang for your buck today - I like your style! 😉
 
-Here is the finalized list of stores you should stop at:
+Here is the finalized list of stores you should stop at: Nijiya Market, 99 Ranch Market, Ralphs.
 
-Nijiya Market: Tteok, gochujang, gochugaru, soy sauce, sugar, onion, garlic, green onion
-99 Ranch Market: Fish cakes (optional)
-Ralphs: Eggs (optional)
 This should get you everything you need for some delicious tteokbokki! Let me know if there's anything else I can help you with! 😊
