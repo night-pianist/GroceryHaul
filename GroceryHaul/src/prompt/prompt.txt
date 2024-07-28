@@ -22,6 +22,10 @@ The Preferential List must be a list of stores that considers the user's STORE
 PREFERENCES AND the prices of the ingredients at each of those stores (want to be 
 most cost effective so low prices).   
 
+Also please distinguish between these two lists clearly (i.e. bold the
+headings Economical List and Preferential List and display the stores with bullet
+points)
+
 Both of these lists must have the cost associated with each item. 
  
 Give the user both of those lists of stores before you ask the user for feedback on which 
