@@ -22,12 +22,16 @@ http.route({
           });
 
           switch(result.type) { 
-              case 'user.created': 
-                  await ctx.runMutation(internal.user.createUser, { 
-                      userid: result.data.id, 
-                      email: result.data.email_addresses[0]?.email_address, 
-                      userName: result.data.first_name + ' ' + result.data.last_name,
-                  }); 
+            // case 'user.created': 
+            //     await ctx.runMutation(internal.user.createUser, { 
+            //         userId: result.data.id, 
+            //     //   email: result.data.email_addresses[0]?.email_address, 
+            //         userName: result.data.first_name + ' ' + result.data.last_name,
+            //     }); 
+            // case 'user.deleted':
+            //     await ctx.runMutation(internal.user.removeUser, {
+            //         userId: result.data.id || "Error",
+            //     })
           }
           return new Response(null, { 
               status: 200

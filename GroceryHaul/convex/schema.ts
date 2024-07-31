@@ -24,6 +24,8 @@ export default defineSchema({
     user: defineTable({
         userId: v.string(),
         userName: v.string(),
+        clerkId: v.string()
     })
-    .index("byUserId",["userId"]),
+    .index("byUserId",["userId"])
+    .index("byClerkId",["clerkId"]),
 });
