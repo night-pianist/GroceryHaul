@@ -14,10 +14,9 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc
 interface DestinationScreenProps {
     // center: [latitude: number, longitude: number]; // Define center as a tuple with named properties
     center: [ number, number ]; // Define center as a tuple with named properties
-    stores?: string[][];
 }
 
-const DestinationScreen: React.FC<DestinationScreenProps> = ({ center, stores = [] }) => {
+const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     <div className="user-button-container">
             <SignedIn>
               <UserButton />
@@ -105,11 +104,10 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center, stores = 
         const processRoutes = async () => {
             try {
                 // Processing Input Data
-                for (const route of inputData) {
-                    const coordDest = await getCoordinateForAddresses(route.storeList);
-                    const pathName = await formatPathName(route.storeList);
-                    await generateRouteInfo(coordDest.coordinates, route.routeName, route.storeList, coordDest.matchingPlaceNames, coordDest.geoPointsArr);
-                }
+                    const lastInput = inputData[inputData.length-1];
+                    const coordDest = await getCoordinateForAddresses(lastInput.storeList);
+                    const pathName = await formatPathName(lastInput.storeList);
+                    await generateRouteInfo(coordDest.coordinates, lastInput.routeName, lastInput.storeList, coordDest.matchingPlaceNames, coordDest.geoPointsArr);
             } catch (error) {
                 console.error('Error geocoding address:', error);
             }
@@ -130,6 +128,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center, stores = 
     };
 
     const handleStoreUpdate = (newStores: string[]) => {
+        console.log(inputData);
         addInputData(prevInputData => [
             ...prevInputData,
             { routeName: `Route ${prevInputData.length + 1}`, storeList: newStores }
