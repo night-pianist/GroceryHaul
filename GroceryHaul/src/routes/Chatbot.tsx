@@ -13,9 +13,12 @@ const apiKey = 'AIzaSyBIrj-dFryj2Jbsb90WgMwrhl1L-2xHuLc';
 const genAI = new GoogleGenerativeAI(apiKey!);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
 
-interface ChatBotProps { onRouteButtonClick: () => void; }
+interface ChatBotProps { 
+  onRouteButtonClick: () => void; 
+  onStoresUpdate: (stores: string[]) => void;
+}
 
-const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
+const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick, onStoresUpdate}) => {
   const savMsgToConvex = useMutation(api.functions.saveMsgs.saveMessage);
   const parsedConvexMsgs = useQuery(api.functions.fetchMsgs.fetchAllParsed);
   const convexMsgs = useQuery(api.functions.fetchMsgs.fetchAll);
@@ -58,6 +61,7 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick}) => {
           console.log("FINALIZED STORES 1: " + storesArray.join(', '));
 
           setStores(storesArray);
+          onStoresUpdate(storesArray);
           // console.log("FINALIZED STORES 2: " + stores);
         }
       }

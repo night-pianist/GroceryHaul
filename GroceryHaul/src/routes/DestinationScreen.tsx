@@ -14,9 +14,10 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc
 interface DestinationScreenProps {
     // center: [latitude: number, longitude: number]; // Define center as a tuple with named properties
     center: [ number, number ]; // Define center as a tuple with named properties
+    stores?: string[][];
 }
 
-const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
+const DestinationScreen: React.FC<DestinationScreenProps> = ({ center, stores = [] }) => {
     <div className="user-button-container">
             <SignedIn>
               <UserButton />
@@ -82,23 +83,23 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     }, [lng, lat, zoom]);
 
      // Add routes when map is loaded
-    useEffect(() => {
-        const addRoutes = async () => {
-            try {
-                addNewRoute('Route 1', ['Walmart', 'Ralphs']);
-                //console.log('Route 1 added');
-                addNewRoute('Route 2', ['99 Ranch', 'Home Depot']);
-                //console.log('Route 2 added');
-            } catch (error) {
-                console.error('Error adding routes:', error);
-            }
-        };
+    // useEffect(() => {
+        // const addRoutes = async () => {
+        //     try {
+        //         addNewRoute('Route 1', ['Walmart', 'Ralphs']);
+        //         //console.log('Route 1 added');
+        //         addNewRoute('Route 2', ['99 Ranch', 'Home Depot']);
+        //         //console.log('Route 2 added');
+        //     } catch (error) {
+        //         console.error('Error adding routes:', error);
+        //     }
+        // };
 
-        if (map.current) {
-            map.current.on('load', addRoutes);
-        }
-    }, []);
+        // if (map.current) {
+        //     map.current.on('load', addRoutes);
+        // }
 
+    // }, []);
 
     useEffect(() => {
         const processRoutes = async () => {
@@ -127,6 +128,13 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
             { routeName, storeList }
         ]);
     };
+
+    const handleStoreUpdate = (newStores: string[]) => {
+        addInputData(prevInputData => [
+            ...prevInputData,
+            { routeName: `Route ${prevInputData.length + 1}`, storeList: newStores }
+        ]);
+    }
 
     // Routing Function
     const fetchRouteInfo = async (coordRoute: string) => {
@@ -411,7 +419,10 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                     </SignedIn>
                 </div>
                 {showChatBot ? (
-                    <ChatBot onRouteButtonClick={routeDisplay}/> 
+                    <ChatBot 
+                        onRouteButtonClick={routeDisplay}
+                        onStoresUpdate={handleStoreUpdate}
+                    /> 
                 ) : (
                     <Routing
                         routeInfos={routeInfos}
