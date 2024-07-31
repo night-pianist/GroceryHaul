@@ -3,6 +3,17 @@ import { v } from "convex/values";
 
 
 export default defineSchema({
+    // users: defineTable({
+    //     userId: v.string(),
+    //     userName: v.string(),
+    //     email: v.string(),
+    //     chatHistory: v.array(v.object({
+    //         msg: v.string(),
+    //         type: v.string(), // e.g., 'user' or 'bot'
+    //       })),
+    // })
+    // .index("byUserId",["userId"]),
+
     message: defineTable({
         msg: v.string(),
         userId: v.string(),
@@ -10,23 +21,9 @@ export default defineSchema({
     })
     .index("byUserId",["userId"]),
 
-    // userHistory: defineTable({ 
-    users: defineTable({
-        name: v.string(),
-        // this the Clerk ID, stored in the subject JWT field
-        externalId: v.string(),
-      }).index("byExternalId", ["externalId"]),
-    // user: defineTable({ 
-    //     userId: v.string(),
-    //     userName: v.string(),
-    //     msg: v.string(),
-    //     chatHistory: v.optional(v.any()) // stores all messages
-    // })
-    // .index("byUserId", ["userId"])
-    // .index("byUserName", ["userName"]),
-
-    // chat: defineTable({
-    //     userId: v.string(),
-    //     timestamp: v.number(),
-    // })
+    user: defineTable({
+        userId: v.string(),
+        userName: v.string(),
+    })
+    .index("byUserId",["userId"]),
 });

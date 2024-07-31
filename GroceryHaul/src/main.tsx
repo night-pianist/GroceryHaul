@@ -18,6 +18,9 @@ import InvoicesPage from './routes/invoices';
 import DestinationScreenPage from './routes/DestinationScreen';
 
 import { ConvexReactClient } from 'convex/react';
+import { SignInButton, UserButton } from "@clerk/clerk-react";
+import { Authenticated, Unauthenticated, useQuery } from "convex/react";
+import { api } from "../convex/_generated/api";
 
 // Initialize Convex client
 const convex = new ConvexReactClient('https://fleet-guanaco-936.convex.cloud');
