@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../styles/index.css';
 import { SignedIn, UserButton } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
+import { SignInButton, SignUpButton } from "@clerk/nextjs";
 
 function Index(): JSX.Element {
   const mapAnimationPath = `/darkPinkMap.gif`;
