@@ -1,6 +1,18 @@
-// import { internalMutation, query, QueryCtx } from "./_generated/server";
-// import { UserJSON } from "@clerk/backend";
-// import { v, Validator } from "convex/values";
+import { internalMutation, query, QueryCtx } from "./_generated/server";
+import { UserJSON } from "@clerk/backend";
+import { v, Validator } from "convex/values";
+
+export const createUser = internalMutation({
+    args: { userName: v.string(), clerkId: v.string() },
+    handler: async (ctx, args) => {
+        const user = await ctx.db.insert("users", {
+            userName: args.userName,
+            clerkId: args.clerkId,
+        });
+        return user;
+    }
+});
+
 
 // export const getCurrentUser = query({
 //   args: {}, 

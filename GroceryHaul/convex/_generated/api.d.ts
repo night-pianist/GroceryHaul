@@ -19,6 +19,7 @@ import type * as functions_fetchMsgs from "../functions/fetchMsgs.js";
 import type * as functions_saveMsgs from "../functions/saveMsgs.js";
 import type * as functions_syncUsers from "../functions/syncUsers.js";
 import type * as http from "../http.js";
+import type * as users from "../users.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -34,6 +35,7 @@ declare const fullApi: ApiFromModules<{
   "functions/saveMsgs": typeof functions_saveMsgs;
   "functions/syncUsers": typeof functions_syncUsers;
   http: typeof http;
+  users: typeof users;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
