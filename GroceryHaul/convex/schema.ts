@@ -12,10 +12,9 @@ export default defineSchema({
 
     // userHistory: defineTable({ 
     users: defineTable({
-        name: v.string(),
-        // this the Clerk ID, stored in the subject JWT field
-        externalId: v.string(),
-      }).index("byExternalId", ["externalId"]),
+        userName: v.string(),
+        clerkId: v.string(), // this the Clerk ID, stored in the subject JWT field
+      }).index("byClerkId", ["clerkId"]),
     // user: defineTable({ 
     //     userId: v.string(),
     //     userName: v.string(),

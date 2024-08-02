@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../styles/index.css';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
+import SyncUser from './SyncUser';
 
 function Index(): JSX.Element {
   const mapAnimationPath = `/darkPinkMap.gif`;
@@ -48,6 +49,7 @@ function Index(): JSX.Element {
               </Link>
           </SignedOut>
           <SignedIn>
+            <SyncUser />
             <div className="btn btn-primary btn-lg" role="button">
               <UserButton />
             </div>  
