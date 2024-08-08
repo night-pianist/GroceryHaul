@@ -9,10 +9,10 @@ const chatMessageSchema = defineTable({
 export default defineSchema({
     message: defineTable({
         msg: v.string(),
-        userId: v.string(),
+        clerkId: v.string(),
         type: v.string(), // defines whether it's the chatbot or user's message
     })
-    .index("byUserId",["userId"]),
+    .index("byClerkId",["clerkId"]),
 
     // userHistory: defineTable({ 
     users: defineTable({

@@ -17,6 +17,7 @@ import type {
 import type * as clerk from "../clerk.js";
 import type * as functions_fetchMsgs from "../functions/fetchMsgs.js";
 import type * as functions_saveMsgs from "../functions/saveMsgs.js";
+import type * as functions_usersFunc from "../functions/usersFunc.js";
 import type * as http from "../http.js";
 import type * as users from "../users.js";
 
@@ -32,6 +33,7 @@ declare const fullApi: ApiFromModules<{
   clerk: typeof clerk;
   "functions/fetchMsgs": typeof functions_fetchMsgs;
   "functions/saveMsgs": typeof functions_saveMsgs;
+  "functions/usersFunc": typeof functions_usersFunc;
   http: typeof http;
   users: typeof users;
 }>;
