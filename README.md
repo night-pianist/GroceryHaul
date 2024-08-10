@@ -9,7 +9,7 @@ From personal experience, we have found that the process of meal planning and gr
 Currently you'll need to clone the repo. Then run npx convex dev and then npm run start.
 
 ## What it does
-
+GroceryHaul enables users to interact with a chatbot by typing in what they want to cook. The chatbot processes this input and determines the necessary ingredients and the stores where these ingredients can be purchased. The gathered data is then transported to Mapbox, allowing users to visualize the nearest locations to pick up their groceries. 
 
 ## How it works
 
