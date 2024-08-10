@@ -12,4 +12,4 @@ Currently you'll need to clone the repo. Then run npx convex dev and then npm ru
 GroceryHaul enables users to interact with a chatbot by typing in what they want to cook. The chatbot processes this input and determines the necessary ingredients and the stores where these ingredients can be purchased. The gathered data is then transported to Mapbox, allowing users to visualize the nearest locations to pick up their groceries. 
 
 ## How it works
-
+On the left side, users can interact with the chatbot. Once the chatbot determines the grocery store that the user needs to go to, the grocery store data is sent to Mapbox, which will determine the best routes to get to the stores.
