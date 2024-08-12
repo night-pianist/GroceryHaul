@@ -5,7 +5,7 @@ import { v } from "convex/values";
 
 export const updateChatHistory = mutation ({
   args: { 
-    clerkId: v.string(),
+    userId: v.string(),
     message: v.string(),
     type: v.string(), // will be "user" or "chat"
   }, 
@@ -25,14 +25,14 @@ export const updateChatHistory = mutation ({
 export const saveMessage = mutation({
   args: {
     msg: v.string(),
-    clerkId: v.optional(v.string()),
+    userId: v.optional(v.string()),
     type: v.string(),
   },
   handler: async (context, args) => {
     const document = await context.db.insert("message", // insert document into message collection in the database
     {
       msg: args.msg,
-      clerkId: args.clerkId ?? '',
+      userId: args.userId ?? '',
       type: args.type, 
     });
     
