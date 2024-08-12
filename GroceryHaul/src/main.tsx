@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { ClerkProvider, useAuth } from '@clerk/clerk-react';
 import { ConvexProviderWithClerk } from 'convex/react-clerk';
+import { ConvexReactClient } from "convex/react";
+
 
 // Import layouts
 import RootLayout from './layouts/root-layout';
@@ -16,11 +18,6 @@ import SignUpPage from './routes/sign-up';
 import DashboardPage from './routes/dashboard';
 import InvoicesPage from './routes/invoices';
 import DestinationScreenPage from './routes/DestinationScreen';
-
-import { ConvexReactClient } from 'convex/react';
-
-// Initialize Convex client
-const convex = new ConvexReactClient('https://fleet-guanaco-936.convex.cloud');
 
 function App() {
   const [center, setCenter] = useState<[number, number] | null>(null);
@@ -67,10 +64,23 @@ function App() {
   return <RouterProvider router={router} />;
 }
 
+// import your publishable key
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key")
+}
+
+// initialize convex client
+// const convex = new ConvexReactClient(import.meta.env.REACT_VITE_CONVEX_URL as string);
+const convex = new ConvexReactClient("https://fleet-guanaco-936.convex.cloud");
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
-    <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-      <App />
-    </ConvexProviderWithClerk>
-  </ClerkProvider>
+  <React.StrictMode>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+      <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+        <App />
+      </ConvexProviderWithClerk>
+    </ClerkProvider>
+  </React.StrictMode>
 );

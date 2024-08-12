@@ -1,4 +1,4 @@
-import { internalMutation, query, QueryCtx, mutation } from "./_generated/server";
+import { internalMutation, query, QueryCtx } from "../_generated/server";
 import { UserJSON } from "@clerk/backend";
 import { v, Validator } from "convex/values";
 
@@ -14,7 +14,7 @@ export const createUser = internalMutation({
     }
 });
 
-export const updateUser = mutation({
+export const updateUser = internalMutation({
     args: { userName: v.string(), clerkId: v.string(), chatHistory: v.any() },
     handler: async (ctx, args) => {
         let existingDoc = await ctx.db.query("users")

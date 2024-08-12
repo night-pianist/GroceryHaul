@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/index.css';
-import { SignedIn, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
 
 function Index(): JSX.Element {
@@ -39,12 +39,19 @@ function Index(): JSX.Element {
           </div>
         </div>
         <div className="buttons-container">
-          <Link to="/sign-in" className="btn btn-primary btn-lg" role="button">
-            LOGIN
-          </Link>
-          <Link to="/sign-up" className="btn btn-primary btn-lg" role="button">
-            SIGNUP
-          </Link>
+          <SignedOut>
+              <Link to="/sign-in" className="btn btn-primary btn-lg" role="button">
+                LOGIN
+              </Link>
+              <Link to="/sign-up" className="btn btn-primary btn-lg" role="button">
+                SIGNUP
+              </Link>
+          </SignedOut>
+          <SignedIn>
+            <div className="btn btn-primary btn-lg" role="button">
+              <UserButton />
+            </div>  
+          </SignedIn>
         </div>
           <div className="user-button-container">
             <SignedIn>
