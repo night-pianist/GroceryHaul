@@ -5,6 +5,7 @@ Traditionally, people might rely on cookbooks or recipe websites to plan their m
 
 From personal experience, we have found that the process of meal planning and grocery shopping can be time-consuming and tedious. It often leads to multiple trips to different stores or last-minute changes to the meal plan. GroceryHaul aims to alleviate these issues by providing a seamless experience that not only suggests meals but also ensures that you have easy access to all the ingredients, making meal preparation stress-free and efficient.
 
+
 ## Prerequistes
 Currently you'll need to clone the repo. Then run npx convex dev and then npm run start.
 
@@ -13,3 +14,4 @@ GroceryHaul enables users to interact with a chatbot by typing in what they want
 
 ## How it works
 On the left side, users can interact with the chatbot. Once the chatbot determines the grocery store that the user needs to go to, the grocery store data is sent to Mapbox, which will determine the best routes to get to the stores.
+
