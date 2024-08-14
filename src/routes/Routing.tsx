@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Dropdown from './DropdownBtn';
 import '../styles/Routing.css';
 import { SignedIn, UserButton } from '@clerk/clerk-react';

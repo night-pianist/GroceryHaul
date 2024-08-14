@@ -15,8 +15,8 @@ import IndexPage from './routes';
 import ContactPage from './routes/contact';
 import SignInPage from './routes/sign-in';
 import SignUpPage from './routes/sign-up';
-import DashboardPage from './routes/dashboard';
-import InvoicesPage from './routes/invoices';
+// import DashboardPage from './routes/dashboard';
+// import InvoicesPage from './routes/invoices';
 import DestinationScreenPage from './routes/DestinationScreen';
 
 function App() {

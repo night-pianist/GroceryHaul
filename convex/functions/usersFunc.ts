@@ -1,6 +1,6 @@
-import { internalMutation, query, QueryCtx } from "../_generated/server";
-import { UserJSON } from "@clerk/backend";
-import { v, Validator } from "convex/values";
+import { internalMutation/*, query, QueryCtx */} from "../_generated/server";
+// import { UserJSON } from "@clerk/backend";
+import { v/*, Validator */} from "convex/values";
 
 export const createUser = internalMutation({
     args: { userName: v.string(), clerkId: v.string() },

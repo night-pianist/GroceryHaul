@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import '../styles/root-layout.css';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { SignedIn } from '@clerk/clerk-react';
 
 export default function RootLayout({ center }: { center: [number, number] | null }) {

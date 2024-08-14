@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl, { Map, IControl, GeoJSONSource } from 'mapbox-gl'; 
+import mapboxgl/*, { Map, IControl, GeoJSONSource } */from 'mapbox-gl'; 
 import * as GeoJSON from 'geojson';
 
 import 'mapbox-gl/dist/mapbox-gl.css'; // for mapbox styling
@@ -41,9 +41,9 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
         setShowChatBot(!showChatBot);
       };
 
-    const mapDisplay = () => {
-        setShowRoutePage(!showRoutePage);
-    }
+    // const mapDisplay = () => {
+    //     setShowRoutePage(!showRoutePage);
+    // }
     
     useEffect(() => {
         if (map.current) return; // initialize map only once
@@ -106,7 +106,7 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
                 // Processing Input Data
                     const lastInput = inputData[inputData.length-1];
                     const coordDest = await getCoordinateForAddresses(lastInput.storeList);
-                    const pathName = await formatPathName(lastInput.storeList);
+                    // const pathName = await formatPathName(lastInput.storeList);
                     await generateRouteInfo(coordDest.coordinates, lastInput.routeName, lastInput.storeList, coordDest.matchingPlaceNames, coordDest.geoPointsArr);
             } catch (error) {
                 console.error('Error geocoding address:', error);
@@ -120,12 +120,12 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
 
     /* FUNCTION DEFINITIONS */
     // Adding a new route
-    const addNewRoute = (routeName: string, storeList: string[]) => {
-        addInputData(prevInputData => [
-            ...prevInputData,
-            { routeName, storeList }
-        ]);
-    };
+    // const addNewRoute = (routeName: string, storeList: string[]) => {
+    //     addInputData(prevInputData => [
+    //         ...prevInputData,
+    //         { routeName, storeList }
+    //     ]);
+    // };
 
     const handleStoreUpdate = (newStores: string[]) => {
         console.log(inputData);

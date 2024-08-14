@@ -1,6 +1,6 @@
 import { mutation } from '../_generated/server';
-import { useMutation, useQuery } from 'convex/react';
-import { api } from "../_generated/api";
+// import { useMutation, useQuery } from 'convex/react';
+// import { api } from "../_generated/api";
 import { v } from "convex/values";
 
 export const updateChatHistory = mutation ({
@@ -9,7 +9,7 @@ export const updateChatHistory = mutation ({
     message: v.string(),
     type: v.string(), // will be "user" or "chat"
   }, 
-  handler: async (ctx, args) => {
+  handler: async (ctx/*, args*/) => {
     const identity = await ctx.auth.getUserIdentity(); 
 
     if (!identity) {

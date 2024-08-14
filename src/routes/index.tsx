@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/index.css';
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
 
 function Index(): JSX.Element {
