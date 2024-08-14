@@ -5,7 +5,7 @@ interface BackgroundWrapperProps {
 }
 
 const BackgroundWrapper: React.FC<BackgroundWrapperProps> = ({ children }) => {
-  const mapAnimationPath = `/MapArrowAnimation.gif`;
+  const mapAnimationPath = `/darkPinkMap.gif`;
   const staticMapPath = `/StaticBackgroundMap.svg`;
 
   const [src, setSrc] = useState(mapAnimationPath);
