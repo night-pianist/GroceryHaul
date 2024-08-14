@@ -18,16 +18,18 @@ interface ChatBotProps {
 }
 
 const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick, onStoresUpdate}) => {
-  const savMsgToConvex = useMutation(api.functions.saveMsgs.saveMessage);
-  const parsedConvexMsgs = useQuery(api.functions.fetchMsgs.fetchAllParsed);
-  const convexMsgs = useQuery(api.functions.fetchMsgs.fetchAll);
+  // const savMsgToConvex = useMutation(api.functions.saveMsgs.saveMessage);
+  const savMsgToConvex2 = useMutation(api.functions.saveMsgs.saveMessage2);
+  // const parsedConvexMsgs = useQuery(api.functions.fetchMsgs.fetchAllParsed);
+  const parsedConvexMsgs2 = useQuery(api.functions.fetchMsgs.fetchAllParsed2);
+  // const convexMsgs = useQuery(api.functions.fetchMsgs.fetchAll);
+  const convexMsgs2 = useQuery(api.functions.fetchMsgs.fetchAll2);
 
   const [botResponse, setBotResponse] = useState('');
   const [userInput, setUserInput] = useState('');
   const [prompt, setPrompt] = useState('');
   const [promptExamples, setPromptExamples] = useState('');
   const [stores, setStores] = useState<string[]>([]); // used to get the finalized list of stores
-
 
   fetch(rawPrompt) // read in the chatbot overarching prompt from prompt.txt
     .then(r => r.text())
@@ -83,14 +85,16 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick, onStoresUpdate}) =
   };
 
   const outputChatbotResponse = async (input: string) => {
-    const result = await getChatbotResponse(`Here is the conversation history:\n${parsedConvexMsgs}\nThe user's most recent response: ${input}\nThe overarching prompt:\n${prompt}\nAnd an example to help guide you in conversing and helping the user:\n${promptExamples}\nPlease generate a response based on all this information.`);
+    const result = await getChatbotResponse(`Here is the conversation history:\n${parsedConvexMsgs2}\nThe user's most recent response: ${input}\nThe overarching prompt:\n${prompt}\nAnd an example to help guide you in conversing and helping the user:\n${promptExamples}\nPlease generate a response based on all this information.`);
     setBotResponse(result); // set the chatbot's response to check for finalized list
-    await savMsgToConvex({ msg: result, type: "chat" }); // save the chatbot's msg to convex
+    // await savMsgToConvex({ msg: result, type: "chat" }); // save the chatbot's msg to convex
+    await savMsgToConvex2({ msg: result, type: "chat" }); 
   };
 
   const onSubmit = async () => { 
     try {
-      await savMsgToConvex({ msg: userInput, type: "user" }); // save user's msg to convex
+      // await savMsgToConvex({ msg: userInput, type: "user" }); // save user's msg to convex
+      await savMsgToConvex2({ msg: userInput, type: "user" }); 
       outputChatbotResponse(userInput); 
       setUserInput(''); // clear the textarea
     } catch (error) {
@@ -108,7 +112,7 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick, onStoresUpdate}) =
   return (
     <div className="chat-container">
       <div className="chat-history">
-        {convexMsgs?.map((message, index) => (
+        {convexMsgs2?.map((message, index) => (
           <div key={index} className={`message ${message.type}`}>
             <div className="message-content">
               <ReactMarkdown>{message.msg}</ReactMarkdown>

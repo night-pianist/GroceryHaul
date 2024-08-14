@@ -26,6 +26,7 @@ http.route({
                 await ctx.runMutation(internal.users.createUser, { 
                   clerkId: result.data.id,
                   userName: result.data.first_name + ' ' + result.data.last_name,
+                //   token_identifier: "",
                 });
               // case 'user.updated':
               //   await ctx.runMutation(internal.users.updateUser, { 
