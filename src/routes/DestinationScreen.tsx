@@ -35,7 +35,6 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     const [selectedRoute, setSelectedRoute] = useState<{ distFormatted: string; duration: string; stepsInstr: string[]; stepsDist: string[]; routeCoordinates: any; routeName: string; storeList: string[]; addressList: string[]; geoPointsArr: any[] } | null>(null);
     const [prevMarkers, setPrevMarkers] = useState<mapboxgl.Marker[]>([]);
     const [showChatBot, setShowChatBot] = useState(true);
-    const [showRoutePage, setShowRoutePage] = useState(false);
 
     const routeDisplay = () => {
         setShowChatBot(!showChatBot);
@@ -303,18 +302,18 @@ const DestinationScreen: React.FC<DestinationScreenProps> = ({ center }) => {
     }
 
     // formatPathName
-    const formatPathName = (addressNameList: string[]) => {
-        let formattedPathName: string = "";
-        for (let addressName of addressNameList) {
-            formattedPathName += addressName + ' → ';
-        }
+    // const formatPathName = (addressNameList: string[]) => {
+    //     let formattedPathName: string = "";
+    //     for (let addressName of addressNameList) {
+    //         formattedPathName += addressName + ' → ';
+    //     }
 
-        if (formattedPathName.endsWith(' → ')) {
-            formattedPathName = formattedPathName.slice(0, -3);
-        }
+    //     if (formattedPathName.endsWith(' → ')) {
+    //         formattedPathName = formattedPathName.slice(0, -3);
+    //     }
 
-        return formattedPathName;
-    };
+    //     return formattedPathName;
+    // };
 
     // generateRouteInfo returning routeCoordinates or null if failed
     const generateRouteInfo = async (coordRoute: string, routeName: string, storeList: string[], addressList: string[], geoPointsArr: any[]) => {

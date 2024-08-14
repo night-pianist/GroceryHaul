@@ -112,7 +112,7 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick, onStoresUpdate}) =
   return (
     <div className="chat-container">
       <div className="chat-history">
-        {convexMsgs2?.map((message, index) => (
+        {convexMsgs2?.map((message: { type: string; msg: string | null | undefined; }, index: React.Key | null | undefined) => (
           <div key={index} className={`message ${message.type}`}>
             <div className="message-content">
               <ReactMarkdown>{message.msg}</ReactMarkdown>
