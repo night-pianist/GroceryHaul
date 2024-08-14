@@ -22,7 +22,7 @@ export const fetchAll2 = query({
     const chatHistory = user.chatHistory;
 
     // transform the chat history 
-    const transformedMsgs = chatHistory.map(msg => ({
+    const transformedMsgs = chatHistory.map((msg: { text: string; type: string; }) => ({
       msg: msg.text,
       type: msg.type,
     }));
@@ -52,7 +52,7 @@ export const fetchAllParsed2 = query({
     const chatHistory = user.chatHistory;
 
     // fransform the chat history 
-    const transformedMsgs = chatHistory.map(msg => ({
+    const transformedMsgs = chatHistory.map((msg: { text: string; type: string; }) => ({
       msg: msg.text,
       type: msg.type,
     }));
