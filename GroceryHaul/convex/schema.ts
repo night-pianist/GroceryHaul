@@ -7,22 +7,19 @@ const chatMessageSchema = defineTable({
 });
 
 export default defineSchema({
-    message: defineTable({
-        msg: v.string(),
-        userId: v.string(),
-        type: v.string(), // defines whether it's the chatbot or user's message
-    })
-    .index("byUserId",["userId"]),
-
-    // userHistory: defineTable({ 
     users: defineTable({
         userName: v.string(),
         clerkId: v.string(), // this the Clerk ID, stored in the subject JWT field
-        chatHistory: v.any(),
-        // chatHistory: v.array(v.object({
-        //     type: v.string(), // defines whether it's the chatbot or user's message
-        //     text: v.string(),
-        // })),
+        chatHistory: v.array(v.object({
+            type: v.string(), // defines whether it's the chatbot or user's message
+            text: v.string(),
+        })),
       }).index("byClerkId", ["clerkId"]),
 
+    // message: defineTable({
+    //     msg: v.string(),
+    //     clerkId: v.string(),
+    //     type: v.string(), // defines whether it's the chatbot or user's message
+    // })
+    // .index("byClerkId",["clerkId"]),
 });
