@@ -8,8 +8,12 @@ import { AxiosError } from 'axios';
 import rawPrompt from '../prompt/prompt.txt';
 import rawExamples from '../prompt/examples.txt';
 
-const apiKey = 'AIzaSyBIrj-dFryj2Jbsb90WgMwrhl1L-2xHuLc';
-const genAI = new GoogleGenerativeAI(apiKey!);
+const apiKey = import.meta.env.VITE_API_KEY;
+if (!apiKey) {
+  throw new Error("Missing API key");
+}
+const genAI = new GoogleGenerativeAI(apiKey);
+
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
 
 interface ChatBotProps { 
@@ -18,11 +22,8 @@ interface ChatBotProps {
 }
 
 const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick, onStoresUpdate}) => {
-  // const savMsgToConvex = useMutation(api.functions.saveMsgs.saveMessage);
   const savMsgToConvex2 = useMutation(api.functions.saveMsgs.saveMessage2);
-  // const parsedConvexMsgs = useQuery(api.functions.fetchMsgs.fetchAllParsed);
   const parsedConvexMsgs2 = useQuery(api.functions.fetchMsgs.fetchAllParsed2);
-  // const convexMsgs = useQuery(api.functions.fetchMsgs.fetchAll);
   const convexMsgs2 = useQuery(api.functions.fetchMsgs.fetchAll2);
 
   const [botResponse, setBotResponse] = useState('');
@@ -87,13 +88,11 @@ const ChatBot: React.FC<ChatBotProps> = ({onRouteButtonClick, onStoresUpdate}) =
   const outputChatbotResponse = async (input: string) => {
     const result = await getChatbotResponse(`Here is the conversation history:\n${parsedConvexMsgs2}\nThe user's most recent response: ${input}\nThe overarching prompt:\n${prompt}\nAnd an example to help guide you in conversing and helping the user:\n${promptExamples}\nPlease generate a response based on all this information.`);
     setBotResponse(result); // set the chatbot's response to check for finalized list
-    // await savMsgToConvex({ msg: result, type: "chat" }); // save the chatbot's msg to convex
     await savMsgToConvex2({ msg: result, type: "chat" }); 
   };
 
   const onSubmit = async () => { 
     try {
-      // await savMsgToConvex({ msg: userInput, type: "user" }); // save user's msg to convex
       await savMsgToConvex2({ msg: userInput, type: "user" }); 
       outputChatbotResponse(userInput); 
       setUserInput(''); // clear the textarea

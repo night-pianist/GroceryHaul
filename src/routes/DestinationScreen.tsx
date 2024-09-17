@@ -8,8 +8,12 @@ import Routing from './Routing';
 import ChatBot from './Chatbot';
 import { SignedIn, UserButton } from '@clerk/clerk-react';
 
-// mapboxgl.accessToken = String(process.env.REACT_APP_MAPBOX_TOKEN);
-mapboxgl.accessToken = 'pk.eyJ1IjoiaGthbmcyMDUiLCJhIjoiY2x4cGVzem5vMG80azJxb2Voc29xbHN5MCJ9.JCkz5uwtuod3GKDXOzA-hg';
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+
+if (!mapboxgl.accessToken) {
+  throw new Error("Missing Mapbox access token");
+}
+
 
 interface DestinationScreenProps {
     // center: [latitude: number, longitude: number]; // Define center as a tuple with named properties
