@@ -12,6 +12,9 @@ From personal experience, we have found that the process of meal planning and gr
 Please visit 
 https://groceryhaul-lilac.vercel.app/
 
+## How to run the app
+Run "npx convex dev" and "npm start" on two different terminals, but this only works locally and with all the proper environment variables.
+
 ## What it does
 MyGrocery enables users to interact with a chatbot by typing in what they want to cook. The chatbot processes this input and determines the necessary ingredients and the stores where these ingredients can be purchased. The gathered data is then transported to Mapbox, allowing users to visualize the nearest locations to pick up their groceries. 
 
